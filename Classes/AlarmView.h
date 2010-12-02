@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Note.h"
 #import "AlarmQuickTimes.h"
+#import "AlarmAbsoluteTimes.h"
 
 @class AlarmView;
 
@@ -24,10 +25,11 @@
 	NSArray *panels;
 	NSArray *quickChoices;
 	NSDictionary *choicesTimes;
-	AlarmQuickTimes *qt;
+	AlarmQuickTimes *quickTimes;
+	AlarmAbsoluteTimes *absTimes;
+	UISegmentedControl *typeCtrl;
 }
 
--(void)toggleShowing;
 -(void)setFromNote:(Note*)note;
 -(void)saveToNote:(Note*)note;
 

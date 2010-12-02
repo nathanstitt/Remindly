@@ -8,16 +8,16 @@
 
 #import "AlarmView.h"
 #import "AlarmQuickTimes.h"
-
+#import "GradientButton.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation AlarmView
 
 @synthesize wasSet,delegate;
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)init {
     
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:CGRectMake( 0, 480, 320, 320 )];
     if (self) {
         // Initialization code.
     }
@@ -25,7 +25,7 @@
 
 	self.layer.cornerRadius = 5;
 	
-	UISegmentedControl *typeCtrl = [[ UISegmentedControl alloc ] initWithItems:
+	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:
                                               [ NSArray arrayWithObjects: @"Quick Times", @"Custom Time", nil]      
 											];
 	
@@ -33,30 +33,87 @@
 	typeCtrl.frame = CGRectMake( 0, 0, 320, 30 );
 	typeCtrl.segmentedControlStyle = UISegmentedControlStyleBezeled;
 	typeCtrl.tintColor = [ UIColor blackColor ];
-                //sortBtns.momentary = YES;
-//                [ typeCtrl addTarget:self action:@selector(changeSort:) forControlEvents:UIControlEventValueChanged ];
+	[ typeCtrl addTarget:self action:@selector(typeCtrlChanged:) forControlEvents:UIControlEventValueChanged ];
 	[ self addSubview: typeCtrl ];
 	[ typeCtrl release ];
 	
+	
+	absTimes = [[AlarmAbsoluteTimes alloc ] init ];
+	[ self addSubview: absTimes.view ];
 
-	qt = [[ AlarmQuickTimes alloc ] initWithAlarmView:self ];
-	[ self addSubview: qt.view ];
+	quickTimes = [[ AlarmQuickTimes alloc ] initWithAlarmView:self ];
+	[ self addSubview: quickTimes.view ];
+	
+	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(35, 250, 80, 30 ) ];
+	[ b addTarget:self action:@selector(cancelTouched:) forControlEvents:UIControlEventTouchUpInside ];
+	[ b setTitle:@"Cancel" forState:UIControlStateNormal ];
+	[ b useBlackStyle ];
+	[ self addSubview: b ];
+	[ b release ];
+
+	b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(200, 250, 80, 30 ) ];
+	[ b addTarget:self action:@selector(saveTouched:) forControlEvents:UIControlEventTouchUpInside ];
+	[ b setTitle:@"Save" forState:UIControlStateNormal ];
+	[ b useBlackStyle ];
+	[ self addSubview: b ];
+	[ b release ];
 
     return self;
 }
 
+-(void)cancelTouched:(id)btn {
+	self.isShowing = NO;
+}
 
--(void)toggleShowing {
-	self.isShowing = ! self.isShowing;
+-(void)saveTouched:(id)btn {
+	self.isShowing = NO;
+	if ( delegate ){
+		[ delegate alarmSet:self ];
+	}
+}
+
+
+-(void)setFromNote:(Note*)note {
+	if ( note.alarmName ){
+		[ quickTimes setFromNote:note ];
+	} 
+	absTimes.date = note.fireDate;
+}
+
+-(void)saveToNote:(Note*)note {
+	[ note setFireDate: absTimes.date ];
+}
+
+-(void)selectIndex:(NSInteger)i {
+	typeCtrl.selectedSegmentIndex=i;
+
+}
+
+-(void)typeCtrlChanged:(id)tc {
+	if ( 0 == typeCtrl.selectedSegmentIndex ){
+		quickTimes.view.hidden = NO;
+		absTimes.view.hidden   = YES;
+	} else if ( 1 == typeCtrl.selectedSegmentIndex ){
+		quickTimes.view.hidden = YES;
+		absTimes.view.hidden   = NO;
+	}
+}
+
+-(void)quickSelectionMade {
+	NSDate *d = quickTimes.date;
+	if ( d ){
+		absTimes.date = d;
+	}
+	[ self selectIndex: 1 ];
 }
 
 -(void)setIsShowing:(BOOL)v {
 	CGRect frame = self.frame;
 	NSInteger ht = self.frame.size.height;
 	if ( v ){
-		frame.origin.y = 420 - ( ht - 20 );
+		frame.origin.y = 480 - ( ht - 20 );
 	} else {
-		frame.origin.y = 420;
+		frame.origin.y = 480;
 	}
 	[ UIView beginAnimations:nil context:NULL ];
 	[ UIView setAnimationDuration:0.45f ];
@@ -65,33 +122,12 @@
 	
 }
 
-
--(void)setFromNote:(Note*)note {
-	if ( note.alarmName ){
-		[ qt setFromNote:note ];
-	}
-}
-
--(void)saveToNote:(Note*)note {
-	if ( qt.wasSet ){
-		[ qt saveToNote:note ];
-	}
-}
-
-
--(void)quickSelectionMade {
-	self.isShowing = NO;
-	if ( delegate ){
-		[ delegate alarmSet:self ];
-	}
-}
-
 -(BOOL)isShowing{
 	return ( self.frame.origin.y < 420 );
 }
 
 - (void)dealloc {
-	[ qt           release ];
+	[ quickTimes   release ];
 	[ choicesTimes release ];
 	[ quickChoices release ];
     [super dealloc];

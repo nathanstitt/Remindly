@@ -10,16 +10,20 @@
 #import "DrawingViewController.h"
 #import "ScrollController.h"
 #import "AlarmView.h"
+#import "ColorButton.h"
+#import "DrawingColorManager.h"
 
-@interface MainViewController : UIViewController <AlarmViewDelegate> {
+@interface MainViewController : UIViewController <AlarmViewDelegate,DrawingColorManagerDelegate> {
 	ScrollController *scroll;
+	DrawingColorManager *dcm;
 	UIToolbar *mainToolbar;
 	UIToolbar *optionsToolbar;
 	DrawingViewController *draw;
 	UIButton *countBtn;
-	UIBarButtonItem *alarmBtn;
 	AlarmView *alarmView;
 	NSArray *toggledButtons;
+	NSArray *colorBtns;
+	ColorButton *colorBtn;
 }
 
 -(void) selectNote:(Note*)note;

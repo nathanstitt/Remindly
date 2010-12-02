@@ -8,10 +8,10 @@
 
 #import "MainViewController.h"
 #import "AlarmView.h"
+#import "ColorButton.h"
 
 
 @implementation MainViewController
-
 
 - (id)init {
     self = [super init ];
@@ -23,22 +23,18 @@
 	scroll.view.frame = CGRectMake(0, 0, 320, 420 );
 	scroll.view.hidden = YES;
 	[ self.view addSubview: scroll.view ];
-	
+
 	draw = [[ DrawingViewController alloc ] init ];
 	draw.view.frame = CGRectMake(0, 0, 320, 420 );
 	draw.note = [[ NotesManager instance ] defaultEditingNote ]; 
 	[ self.view addSubview: draw.view ];
 
-	alarmView = [[ AlarmView alloc ] initWithFrame:CGRectMake( 0, 420, 320, 270 ) ];
-	alarmView.delegate = self;
-	[ self.view addSubview: alarmView ];
-	
-	optionsToolbar = [[UIToolbar alloc] init];
-	optionsToolbar.barStyle = UIBarStyleBlack;
-	optionsToolbar.frame = CGRectMake( 0, 420, 320, 50 );
-	[optionsToolbar sizeToFit];
-	[self.view addSubview:optionsToolbar ];
-	
+
+
+	dcm = [[ DrawingColorManager alloc] initWithColor:[ UIColor redColor ] ];
+	dcm.delegate = self;
+	[ self.view addSubview: dcm.toolBar ];
+
 
 	mainToolbar = [[UIToolbar alloc] init];
 	mainToolbar.barStyle = UIBarStyleBlack;
@@ -60,24 +56,31 @@
 	[ countBtn addTarget:self action: @selector(selectNotes:) forControlEvents:UIControlEventTouchUpInside ];
     countBtn.frame = CGRectMake( 0, 0, icon.size.width + 15 + [count sizeWithFont:font].width, 30 );
 
-	alarmBtn =  [[UIBarButtonItem alloc ] initWithTitle:@"Alarm" style:UIBarButtonItemStyleBordered target:self action:@selector(setAlarm:) ];
+	UIBarButtonItem *opts = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(toggleOptions:) ];
+	UIBarButtonItem *alarm =  [[UIBarButtonItem alloc ] initWithTitle:@"Alarm" style:UIBarButtonItemStyleBordered target:self action:@selector(setAlarm:) ];
 	UIBarButtonItem *del = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
 	UIBarButtonItem *cnt = [[UIBarButtonItem alloc ] initWithCustomView:countBtn ];
 	UIBarButtonItem *clear =  [[UIBarButtonItem alloc ] initWithTitle:@"Clear" style:UIBarButtonItemStyleBordered target:self action:@selector(clearNote:) ];
 	UIBarButtonItem *add   =  [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 	UIBarButtonItem *space = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
+	
+	mainToolbar.items = [NSArray arrayWithObjects: dcm.pickerButton, opts, add, clear, alarm, del, space, cnt, NULL ];
 
-	mainToolbar.items = [NSArray arrayWithObjects: add, clear, alarmBtn, del, space, cnt, NULL ];
+	toggledButtons=[[NSArray alloc ] initWithObjects:clear,alarm,add, del, NULL ];
 
-	toggledButtons=[[NSArray alloc ] initWithObjects:clear,alarmBtn,add, del, NULL ];
-	[ cnt release ];
+	[ opts release  ];
+	[ alarm release ];
+	[ cnt release   ];
 	[ clear release ];
-	[ del release ];
+	[ del release   ];
 	[ add release   ];
 	[ space release ];
 
 	[self.view addSubview:mainToolbar ];
 	
+	alarmView = [[ AlarmView alloc ] init ];
+	alarmView.delegate = self;
+	[ self.view addSubview: alarmView ];
 
 	[ scroll addNotes:[ NotesManager instance ].notes ];
 
@@ -111,14 +114,12 @@
 -(void)alarmSet:(AlarmView*)av{
 	[ alarmView saveToNote: draw.note ];
 	[ draw noteUpdated ];
-	alarmBtn.title = @"Alarm";
 	[ draw.note scedule ];
 }
 
 
 -(void)setAlarm:(id)sel {
-	[ alarmView toggleShowing ];
-	alarmBtn.title = alarmView.isShowing ? @"Hide" : @"Alarm";
+	alarmView.isShowing = YES;
 }
 
 
@@ -178,10 +179,15 @@
 }
 
 
+#pragma mark DrawingColorManagerDelegate delegate methods 
+
+-(void)drawingColorManagerColorUpdated:(DrawingColorManager*)manager color:(CGColorRef)color{
+	draw.color = color;
+}
+
 - (void)dealloc {
 	[ alarmView release ];
 	[ countBtn release ];
-	[ alarmBtn release ];
 	[ draw release ];
 	[ scroll release ];
 	[ toggledButtons release ];

@@ -37,11 +37,8 @@
 -(NSString*)alarmDescription{
 	NSString *alarm = self.alarmName;
 	NSDate *fire = [ notification fireDate ];
-	if ( alarm && fire ){
-		return [NSString stringWithFormat:@"%@ timer\n%@ left",
-					alarm,
-					[ fire humanIntervalSinceNow] 
-				];
+	if ( alarm ){
+		return alarm;
 	} else if ( fire ){
 		return [ fire humanIntervalSinceNow];
 	} else { 
@@ -53,8 +50,17 @@
 	[plist setObject:name forKey:@"alarmName"];
 	[plist setObject:minutes forKey:@"alarmMinutes"];
 	if ( [ minutes boolValue ] ){
-		[ plist setObject: [ NSDate dateWithTimeIntervalSinceNow: [ minutes intValue ] * 60 ] forKey:@"fireDate" ];
+		NSInteger secs = [ minutes intValue ] * 60;
+		[ self setFireDate:[ NSDate dateWithTimeIntervalSinceNow: secs ] ];
 	}
+}
+
+-(NSDate*)fireDate{
+	return [ plist valueForKey:@"fireDate" ];
+}
+
+-(void)setFireDate:(NSDate*)date{
+	[ plist setValue: date forKey:@"fireDate" ];
 }
 
 -(void)deleteFromDisk {
@@ -95,8 +101,9 @@
 		notification = [[UILocalNotification alloc] init];
 	} else {
 		[ app cancelLocalNotification: notification ];
-	}
-	notification.fireDate = [ plist valueForKey: @"fireDate" ];
+	}	
+	NSDate *fd = [ plist valueForKey: @"fireDate" ];
+	notification.fireDate = fd;
 	notification.timeZone = [NSTimeZone defaultTimeZone];
 	notification.alertBody = self.alarmName ? self.alarmName : @"IoGee Alarm";
 	notification.alertLaunchImage = [ directory stringByAppendingPathComponent:@"image.png" ];

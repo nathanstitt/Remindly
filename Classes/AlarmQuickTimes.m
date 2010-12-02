@@ -17,7 +17,7 @@
 -(id)initWithAlarmView:(AlarmView*)view {
 	self = [ super init ];
 	alarmView = view;
-	picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 30, 320, 270)];
+	picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 30, 320, 220)];
     picker.delegate = self;
     picker.showsSelectionIndicator = YES;
 	picker.dataSource = self;
@@ -37,14 +37,9 @@
 	}
 }
 
--(void)saveToNote:(Note*)note{
-	NSString *name = [ quickChoices objectAtIndex:[ picker selectedRowInComponent:0 ] ];
-	[ note setFireName:name minutes: [ choicesTimes objectForKey:name ] ];
-}
-
 -(NSDate*)date{
 	NSNumber *minutes = [ choicesTimes valueForKey: [ quickChoices objectAtIndex: [ picker selectedRowInComponent:0 ] ] ];
-	if ( [ minutes boolValue ] ){
+	if ( ! [ minutes boolValue ] ){
 		return NULL;
 	} else {
 		return [ NSDate dateWithTimeIntervalSinceNow: [ minutes intValue ] * 60 ];

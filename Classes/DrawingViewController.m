@@ -10,25 +10,26 @@
 
 @implementation DrawingViewController
 
-@synthesize note;
+@synthesize note,color;
 
 - (id)init {
     self = [super init ];
 	self.view.backgroundColor = [ UIColor whiteColor ];
-	alarmLabel = [[UILabel alloc ] initWithFrame:CGRectMake(220, 10, 100, 50)];
-	alarmLabel.lineBreakMode = UILineBreakModeTailTruncation;
-	alarmLabel.textAlignment = UITextAlignmentRight;
-	alarmLabel.numberOfLines = 0;
-	alarmLabel.backgroundColor = [ UIColor clearColor ];
-	
-	[ self.view addSubview:alarmLabel ];
 	
 	drawImage = [[UIImageView alloc] initWithImage:nil];
 	drawImage.frame = CGRectMake(0, 0, self.view.frame.size.width, 420);
+
 	[ self.view addSubview:drawImage];
+	color = [ UIColor darkGrayColor ].CGColor;
+
+	alarmLabel = [[AlarmTitleLabel alloc ] initWithFrame:CGRectMake(200, 0, 120, 25 )];
+	[ self.view addSubview:alarmLabel ];
+
+	
 	mouseMoved = 0;
     return self;
 }
+
 
 -(void)setNote:(Note *)n{
 	if ( note != n ){
@@ -39,11 +40,13 @@
 	}
 }
 
-- (void)noteUpdated{
+
+- (void)noteUpdated {
 	mouseMoved = 0;
 	alarmLabel.text = [note alarmDescription];
    	drawImage.image = note.image;
 }
+
 
 -(Note*)note{
 	note.image = drawImage.image;
@@ -53,13 +56,15 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	
+	alarmLabel.hidden = YES;
+	
 	mouseSwiped = NO;
 	UITouch *touch = [touches anyObject];
-	
 	if ([touch tapCount] == 2) {
 		drawImage.image = nil;
 		return;
 	}
+		
 
 	lastPoint = [touch locationInView:self.view];
 	//lastPoint.y -= 20;
@@ -74,34 +79,33 @@
 	pointBeforeLast = lastPoint;
 
 	CGPoint currentPoint = [touch locationInView:self.view];
-
-//	NSLog(@"MOVED: y=%li",currentPoint.y );
-//	currentPoint.y -= 20;
-
+        
 	UIGraphicsBeginImageContext(self.view.frame.size);
-	[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-	
+	[ drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        
 	CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
 	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 5.0);
-	CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 1.0, 0.0, 0.0, 1.0);
-	CGContextBeginPath(UIGraphicsGetCurrentContext());
-	
-	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
 
+//  CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 1.0, 0.0, 0.0, 1.0);
+
+	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), color );
+	CGContextBeginPath(UIGraphicsGetCurrentContext());
+        
+	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
 	CGContextAddCurveToPoint(UIGraphicsGetCurrentContext(), 
-							 pointBeforeLast.x,
-							 pointBeforeLast.y,
-							 lastPoint.x,
-							 lastPoint.y,
-							 currentPoint.x,
-							 currentPoint.y );
-	
-	//CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
-	
+                                                         pointBeforeLast.x,
+                                                         pointBeforeLast.y,
+                                                         lastPoint.x,
+                                                         lastPoint.y,
+                                                         currentPoint.x,
+                                                         currentPoint.y );
+        
+//  CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
+        
 	CGContextStrokePath(UIGraphicsGetCurrentContext());
 	drawImage.image = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
-	
+
 	lastPoint = currentPoint;
 
 	mouseMoved++;
@@ -119,7 +123,9 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	
 	NSLog(@"Touches Ended");
-	
+
+	alarmLabel.hidden = NO;
+
 	if(!mouseSwiped) {
 		UIGraphicsBeginImageContext(self.view.frame.size);
 		[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];

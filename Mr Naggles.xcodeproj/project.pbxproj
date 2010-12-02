@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* IoGeeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* IoGeeAppDelegate.m */; };
+		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -28,13 +28,18 @@
 		459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 459402981296241000F11F95 /* AlarmQuickTimes.m */; };
 		45A6C30812A360280027AF86 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A6C30612A360280027AF86 /* Icon@2x.png */; };
 		45A6C30912A360280027AF86 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A6C30712A360280027AF86 /* Icon.png */; };
+		45A6C54812A492010027AF86 /* AlarmTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C54712A492010027AF86 /* AlarmTitleLabel.m */; };
+		45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C6E812A5F7E70027AF86 /* ColorButton.m */; };
+		45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C7F712A721430027AF86 /* DrawingColorManager.m */; };
+		45BFB93E12A732FB004EB7A2 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB93C12A732FB004EB7A2 /* GradientButton.m */; };
+		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* IoGeeAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IoGeeAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* IoGeeAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IoGeeAppDelegate.m; sourceTree = "<group>"; };
+		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Mr Naggles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mr Naggles.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -66,6 +71,16 @@
 		459402981296241000F11F95 /* AlarmQuickTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmQuickTimes.m; sourceTree = "<group>"; };
 		45A6C30612A360280027AF86 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
 		45A6C30712A360280027AF86 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
+		45A6C54612A492010027AF86 /* AlarmTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmTitleLabel.h; sourceTree = "<group>"; };
+		45A6C54712A492010027AF86 /* AlarmTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmTitleLabel.m; sourceTree = "<group>"; };
+		45A6C6E712A5F7E70027AF86 /* ColorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorButton.h; sourceTree = "<group>"; };
+		45A6C6E812A5F7E70027AF86 /* ColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorButton.m; sourceTree = "<group>"; };
+		45A6C7F612A721430027AF86 /* DrawingColorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingColorManager.h; sourceTree = "<group>"; };
+		45A6C7F712A721430027AF86 /* DrawingColorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingColorManager.m; sourceTree = "<group>"; };
+		45BFB93C12A732FB004EB7A2 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
+		45BFB93D12A732FB004EB7A2 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
+		45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAbsoluteTimes.h; sourceTree = "<group>"; };
+		45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAbsoluteTimes.m; sourceTree = "<group>"; };
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Mr Naggles-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mr Naggles-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +103,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				45BFB93C12A732FB004EB7A2 /* GradientButton.m */,
+				45BFB93D12A732FB004EB7A2 /* GradientButton.h */,
 				45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */,
 				45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */,
 				458235ED128903F200EC555C /* TapImage.h */,
@@ -104,9 +121,15 @@
 				450171A0128B84B1003E71FE /* Note.m */,
 				4501719C128B849A003E71FE /* NotesManager.h */,
 				4501719D128B849A003E71FE /* NotesManager.m */,
-				1D3623240D0F684500981E51 /* IoGeeAppDelegate.h */,
-				1D3623250D0F684500981E51 /* IoGeeAppDelegate.m */,
+				1D3623240D0F684500981E51 /* AppDelegate.h */,
+				1D3623250D0F684500981E51 /* AppDelegate.m */,
 				459402951296239800F11F95 /* AlarmsPanel */,
+				45A6C54612A492010027AF86 /* AlarmTitleLabel.h */,
+				45A6C54712A492010027AF86 /* AlarmTitleLabel.m */,
+				45A6C6E712A5F7E70027AF86 /* ColorButton.h */,
+				45A6C6E812A5F7E70027AF86 /* ColorButton.m */,
+				45A6C7F612A721430027AF86 /* DrawingColorManager.h */,
+				45A6C7F712A721430027AF86 /* DrawingColorManager.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -180,6 +203,8 @@
 				456FD35B1290EEC500076641 /* AlarmView.m */,
 				459402971296241000F11F95 /* AlarmQuickTimes.h */,
 				459402981296241000F11F95 /* AlarmQuickTimes.m */,
+				45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */,
+				45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */,
 			);
 			name = AlarmsPanel;
 			sourceTree = "<group>";
@@ -250,7 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				1D3623260D0F684500981E51 /* IoGeeAppDelegate.m in Sources */,
+				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				458234E21288FE1400EC555C /* PreviewScrollView.m in Sources */,
 				458235E31289034700EC555C /* ScrollController.m in Sources */,
 				458235EF128903F200EC555C /* TapImage.m in Sources */,
@@ -261,6 +286,11 @@
 				456FD35C1290EEC500076641 /* AlarmView.m in Sources */,
 				45792CC01294B4A2001C834B /* NSDate+HumanInterval.m in Sources */,
 				459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */,
+				45A6C54812A492010027AF86 /* AlarmTitleLabel.m in Sources */,
+				45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */,
+				45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */,
+				45BFB93E12A732FB004EB7A2 /* GradientButton.m in Sources */,
+				45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
