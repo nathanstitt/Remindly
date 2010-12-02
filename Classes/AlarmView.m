@@ -36,8 +36,7 @@
 	[ typeCtrl addTarget:self action:@selector(typeCtrlChanged:) forControlEvents:UIControlEventValueChanged ];
 	[ self addSubview: typeCtrl ];
 	[ typeCtrl release ];
-	
-	
+
 	absTimes = [[AlarmAbsoluteTimes alloc ] init ];
 	[ self addSubview: absTimes.view ];
 

@@ -22,7 +22,7 @@
 	[ self.view addSubview:drawImage];
 	color = [ UIColor darkGrayColor ].CGColor;
 
-	alarmLabel = [[AlarmTitleLabel alloc ] initWithFrame:CGRectMake(200, 0, 120, 25 )];
+	alarmLabel = [[AlarmTitleLabel alloc ] initWithFrame:CGRectMake( 120, 0, 200, 25 )];
 	[ self.view addSubview:alarmLabel ];
 
 	

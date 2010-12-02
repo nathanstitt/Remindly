@@ -80,6 +80,7 @@
 	[ scrollViewPreview reload ];
 }
 
+
 -(void)deleteNote:(Note*)note{
 	NSInteger i = 0;
 	TapImage *ti;
@@ -93,6 +94,7 @@
 	[ self refresh ];
 }
 
+
 -(void) addNote:(Note*) note {
 	[ notes insertObject: [[TapImage alloc ] 
 						initWithNote: note 
@@ -102,6 +104,7 @@
 
 	[ self refresh ];
 }
+
 
 -(void) selectNote:(Note*)note{
 	NSInteger index = 0;
@@ -113,6 +116,7 @@
 		index++;
 	}
 }
+
 
 -(void) noteWasSelected:(Note*)note{
 	[ mainView noteWasSelected:note ];

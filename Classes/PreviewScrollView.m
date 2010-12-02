@@ -65,7 +65,6 @@
 		
 		[ self reload ];
 		// Load the first two pages
-                
 
 		firstLayout = NO;
 	}

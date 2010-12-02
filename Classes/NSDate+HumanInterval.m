@@ -19,43 +19,42 @@
 @implementation NSDate (HumanInterval)
 
 - (NSString *) humanIntervalSinceNow {
-    int delta = [self timeIntervalSinceNow];
-    delta *= -1;
-    if (delta < 0) {
-        return [self description];
-    } else if (delta <= 30 * SECOND) {
-        return NSLocalizedString(@"just now", nil);
-    } else if (delta < 1 * MINUTE) {
-        return [NSString stringWithFormat:@"%u secs", delta];
-    } else if (delta < 2 * MINUTE) {
-        return @"1 min";
+	NSString *ret;
+    int secs = [self timeIntervalSinceNow];
+    int delta = secs < 0 ? secs * -1 : secs;
+    if (delta <= 30 * SECOND) {
+        ret = NSLocalizedString(@"a few secs", nil);
+    } else if (delta < 2 * MINUTE ) {
+        ret = @"around a minute";
     } else if (delta <= 45 * MINUTE) {
-        return [NSString stringWithFormat:@"%u mins", delta / MINUTE];
+        ret = [NSString stringWithFormat:@"%u mins", delta / MINUTE];
     } else if (delta <= 90 * MINUTE) {
-        return @"1 hour";
+        ret = @"1 hour";
     } else if (delta < 3 * HOUR) {
-        return @"2 hours";
+        ret = @"2 hours";
     } else if (delta < 23 * HOUR) {
-        return [NSString stringWithFormat:@"%u hours", delta / HOUR];
+        ret = [NSString stringWithFormat:@"%u hours", delta / HOUR];
     } else if (delta < 36 * HOUR) {
-        return @"1 day";
+        ret = @"1 day";
     } else if (delta < 72 * HOUR) {
-        return @"2 days";
+        ret = @"2 days";
     } else if (delta < 7 * DAY) {
-        return [NSString stringWithFormat:@"%u days", delta / DAY];
+        ret = [NSString stringWithFormat:@"%u days", delta / DAY];
     } else if (delta < 11 * DAY) {
-        return @"1 week";
+        ret = @"1 week";
     } else if (delta < 14 * DAY) {
-        return @"2 weeks";
+        ret = @"2 weeks";
     } else if (delta < 9 * WEEK) {
-        return [NSString stringWithFormat:@"%u weeks", delta / WEEK];
+        ret = [NSString stringWithFormat:@"%u weeks", delta / WEEK];
     } else if (delta < 19 * MONTH) {
-        return [NSString stringWithFormat:@"%u months", delta / MONTH];        
+        ret = [NSString stringWithFormat:@"%u months", delta / MONTH];        
     } else if (delta < 2 * YEAR) {
-        return @"1 year";
+        ret = @"1 year";
     } else {
-        return [NSString stringWithFormat:@"%u years", delta / YEAR];        
+        ret = [NSString stringWithFormat:@"%u years", delta / YEAR];        
     }
+	return [ NSString stringWithFormat:@"%@ %@", ret, 
+			secs < 0 ? @"ago" : @"from now" ];
 }
 
 @end

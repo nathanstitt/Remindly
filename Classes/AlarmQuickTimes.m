@@ -53,7 +53,6 @@
 
 #pragma mark PickerViewController delegate methods
 
-
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 	wasSet = YES;
 	[ alarmView quickSelectionMade ];

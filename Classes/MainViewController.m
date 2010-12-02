@@ -29,12 +29,9 @@
 	draw.note = [[ NotesManager instance ] defaultEditingNote ]; 
 	[ self.view addSubview: draw.view ];
 
-
-
 	dcm = [[ DrawingColorManager alloc] initWithColor:[ UIColor redColor ] ];
 	dcm.delegate = self;
 	[ self.view addSubview: dcm.toolBar ];
-
 
 	mainToolbar = [[UIToolbar alloc] init];
 	mainToolbar.barStyle = UIBarStyleBlack;
