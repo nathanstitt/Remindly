@@ -31,11 +31,22 @@
 	return self;
 }
 
+-(void)reset {
+	[ picker selectRow:0 inComponent:0 animated:YES ];
+}
+
+-(void)saveToNote:(Note*)note{
+	NSString *name = [ quickChoices objectAtIndex:[ picker selectedRowInComponent:0 ] ];
+	[ note setFireName:name minutes: [ choicesTimes objectForKey:name ] ];
+}
+
+
 -(void)setFromNote:(Note*)note{
 	if ( note.alarmName ){
 		[ picker selectRow:[ quickChoices indexOfObject: note.alarmName	] inComponent:0 animated:NO ];
 	}
 }
+
 
 -(NSDate*)date{
 	NSNumber *minutes = [ choicesTimes valueForKey: [ quickChoices objectAtIndex: [ picker selectedRowInComponent:0 ] ] ];
@@ -45,6 +56,7 @@
 		return [ NSDate dateWithTimeIntervalSinceNow: [ minutes intValue ] * 60 ];
 	}
 }
+
 
 - (void)dealloc {
 	[ picker release ];

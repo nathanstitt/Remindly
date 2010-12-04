@@ -13,6 +13,8 @@
 	UIDatePicker *picker;
 }
 
+-(void)reset;
+
 @property (readonly,nonatomic) UIView *view;
 @property (nonatomic,assign) NSDate *date;
 @end

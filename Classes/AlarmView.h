@@ -16,8 +16,9 @@
 @protocol AlarmViewDelegate
 @required
 -(void)alarmSet:(AlarmView*)av;
+-(void)alarmShowingChanged:(AlarmView*)av;
 @end
- 
+
 
 @interface AlarmView : UIView {
 	BOOL wasSet;
@@ -30,7 +31,8 @@
 	UISegmentedControl *typeCtrl;
 }
 
--(void)setFromNote:(Note*)note;
+-(void)showWithNote:(Note*)note;
+
 -(void)saveToNote:(Note*)note;
 
 -(void)quickSelectionMade;

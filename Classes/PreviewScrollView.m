@@ -5,9 +5,8 @@
 #define SHADOW_RATIO (SHADOW_INVERSE_HEIGHT / SHADOW_HEIGHT)
  
 @implementation	PreviewScrollView
+
 @synthesize scrollView, pageSize, dropShadow, delegate;
- 
- 
 
  
 - (id)initWithFrameAndPageSize:(CGRect)frame pageSize:(CGSize)size {    

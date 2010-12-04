@@ -9,21 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "NotesManager.h"
 #import "AlarmTitleLabel.h"
+#import "GradientButton.h"
 
 @interface DrawingViewController : UIViewController {
 	CGPoint lastPoint;
 	CGPoint pointBeforeLast;
 	UIImageView *drawImage;
 	Note *note;
-	BOOL mouseSwiped;
-	AlarmTitleLabel *alarmLabel;
+	BOOL isErasing;
+	GradientButton *alarmLabel;
 	int mouseMoved;
 	CGColorRef color;
 }
 
 - (void)clear;
 - (void)noteUpdated;
+@property (nonatomic,readonly) GradientButton *alarmLabel;
 @property (nonatomic) CGColorRef color;
 @property (nonatomic,retain) Note* note;
-
+@property (nonatomic) BOOL isErasing;
 @end

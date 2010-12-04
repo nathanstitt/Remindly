@@ -26,7 +26,7 @@
 	self.layer.cornerRadius = 5;
 	
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:
-                                              [ NSArray arrayWithObjects: @"Quick Times", @"Custom Time", nil]      
+                                              [ NSArray arrayWithObjects: @"Quick Selctions", @"Alarm Time", nil]      
 											];
 	
 	typeCtrl.selectedSegmentIndex = 0;
@@ -60,9 +60,11 @@
     return self;
 }
 
+
 -(void)cancelTouched:(id)btn {
 	self.isShowing = NO;
 }
+
 
 -(void)saveTouched:(id)btn {
 	self.isShowing = NO;
@@ -72,21 +74,35 @@
 }
 
 
--(void)setFromNote:(Note*)note {
-	if ( note.alarmName ){
-		[ quickTimes setFromNote:note ];
-	} 
-	absTimes.date = note.fireDate;
-}
-
--(void)saveToNote:(Note*)note {
-	[ note setFireDate: absTimes.date ];
-}
-
 -(void)selectIndex:(NSInteger)i {
 	typeCtrl.selectedSegmentIndex=i;
-
 }
+
+
+-(void)showWithNote:(Note*)note {
+	[ quickTimes reset ];
+	[ absTimes reset ];
+	if ( note.fireDate ){
+		if ( note.alarmName ){
+			[ quickTimes setFromNote:note ];
+			[ self selectIndex: 0 ];
+		} else {
+			[ self selectIndex: 1 ];
+		}
+		absTimes.date = note.fireDate;
+	}
+	self.isShowing = YES;
+}
+
+
+-(void)saveToNote:(Note*)note {
+	if ( quickTimes.date ){
+		[ quickTimes saveToNote: note ];
+	} else {
+		[ note setFireDate: absTimes.date ];
+	}
+}
+
 
 -(void)typeCtrlChanged:(id)tc {
 	if ( 0 == typeCtrl.selectedSegmentIndex ){
@@ -98,6 +114,7 @@
 	}
 }
 
+
 -(void)quickSelectionMade {
 	NSDate *d = quickTimes.date;
 	if ( d ){
@@ -105,6 +122,7 @@
 	}
 	[ self selectIndex: 1 ];
 }
+
 
 -(void)setIsShowing:(BOOL)v {
 	CGRect frame = self.frame;
@@ -118,12 +136,16 @@
 	[ UIView setAnimationDuration:0.45f ];
 	self.frame = frame;
 	[ UIView commitAnimations ];
-	
+	if ( delegate ){
+		[ delegate alarmShowingChanged: self ];
+	}
 }
+
 
 -(BOOL)isShowing{
 	return ( self.frame.origin.y < 420 );
 }
+
 
 - (void)dealloc {
 	[ quickTimes   release ];

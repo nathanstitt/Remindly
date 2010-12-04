@@ -15,10 +15,15 @@
 
 - (id)init {
 	self = [ super init ];
-	
 	picker = [[ UIDatePicker alloc ] initWithFrame:CGRectMake(0, 30, 320, 220) ];
 	return self;
 }
+
+-(void)reset {
+	picker.date = [ NSDate date ];
+	picker.minimumDate = picker.date;
+}
+
 
 -(NSDate*)date{
 	return picker.date;

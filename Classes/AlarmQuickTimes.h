@@ -20,7 +20,9 @@
 
 -(id)initWithAlarmView:(AlarmView*)view;
 -(void)setFromNote:(Note*)note;
+-(void)saveToNote:(Note*)note;
 -(NSDate*)date;
+-(void)reset;
 
 @property (readonly,nonatomic) UIView *view;
 @property (nonatomic,readonly ) BOOL wasSet;

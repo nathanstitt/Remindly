@@ -27,7 +27,7 @@
     } else if (delta < 2 * MINUTE ) {
         ret = @"around a minute";
     } else if (delta <= 45 * MINUTE) {
-        ret = [NSString stringWithFormat:@"%u mins", delta / MINUTE];
+        ret = [NSString stringWithFormat:@"%u minutes", delta / MINUTE];
     } else if (delta <= 90 * MINUTE) {
         ret = @"1 hour";
     } else if (delta < 3 * HOUR) {
@@ -53,6 +53,12 @@
     } else {
         ret = [NSString stringWithFormat:@"%u years", delta / YEAR];        
     }
+	if ( delta > 72 * HOUR ){
+		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+		[formatter setDateFormat:@"h:mm a"];
+		[ NSString stringWithFormat:@"%@ %@", [formatter stringFromDate:self], ret ]; 
+		[ formatter release ];
+	}
 	return [ NSString stringWithFormat:@"%@ %@", ret, 
 			secs < 0 ? @"ago" : @"from now" ];
 }

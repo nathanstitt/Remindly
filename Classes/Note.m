@@ -102,7 +102,7 @@
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
 	notification.fireDate = fd;
 	notification.timeZone = [NSTimeZone defaultTimeZone];
-	notification.alertBody = self.alarmName ? self.alarmName : @"IoGee Alarm";
+	notification.alertBody = self.alarmName ? self.alarmName : @"Alarm is Good";
 	notification.alertLaunchImage = [ directory stringByAppendingPathComponent:@"image.png" ];
 	notification.alertAction = @"View Note";
 	notification.soundName = UILocalNotificationDefaultSoundName;

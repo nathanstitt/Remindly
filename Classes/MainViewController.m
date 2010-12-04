@@ -27,10 +27,12 @@
 	draw = [[ DrawingViewController alloc ] init ];
 	draw.view.frame = CGRectMake(0, 0, 320, 420 );
 	draw.note = [[ NotesManager instance ] defaultEditingNote ]; 
+	[ draw.alarmLabel addTarget:self action:@selector(setAlarm:) forControlEvents:UIControlEventTouchUpInside ];
 	[ self.view addSubview: draw.view ];
 
 	dcm = [[ DrawingColorManager alloc] initWithColor:[ UIColor redColor ] ];
 	dcm.delegate = self;
+	draw.color = dcm.selectedColor;
 	[ self.view addSubview: dcm.toolBar ];
 
 	mainToolbar = [[UIToolbar alloc] init];
@@ -38,40 +40,26 @@
 	mainToolbar.frame = CGRectMake( 0, 420, 320, 50 );
 	[mainToolbar sizeToFit];
 
-	UIImage *icon = [ UIImage imageNamed:@"photos_icon.png" ];
-	NSString *count = @"1";
-	countBtn = [ UIButton buttonWithType: UIButtonTypeCustom ];
-    UIFont *font = [UIFont boldSystemFontOfSize:13];
-    countBtn.titleLabel.font = font;
-    countBtn.titleLabel.shadowOffset = CGSizeMake(0, -1);
-    countBtn.titleEdgeInsets = UIEdgeInsetsMake( 0, -25, 0, 0);
-    [ countBtn setImage:icon forState:UIControlStateNormal ];
-    [ countBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [ countBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [ countBtn setTitleShadowColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateNormal];
-    [ countBtn setBackgroundImage:[UIImage imageNamed:@"bar-button-item-background.png"] forState:UIControlStateNormal];
-	[ countBtn addTarget:self action: @selector(selectNotes:) forControlEvents:UIControlEventTouchUpInside ];
-    countBtn.frame = CGRectMake( 0, 0, icon.size.width + 15 + [count sizeWithFont:font].width, 30 );
+	countBtn = [[ CountingButton alloc ] initWithCount: [[[ NotesManager instance ] notes ] count] ];
+	[ countBtn.button addTarget:self action: @selector(selectNotes:) forControlEvents:UIControlEventTouchUpInside ];
 
-	UIBarButtonItem *opts = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(toggleOptions:) ];
-	UIBarButtonItem *alarm =  [[UIBarButtonItem alloc ] initWithTitle:@"Alarm" style:UIBarButtonItemStyleBordered target:self action:@selector(setAlarm:) ];
-	UIBarButtonItem *del = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
-	UIBarButtonItem *cnt = [[UIBarButtonItem alloc ] initWithCustomView:countBtn ];
-	UIBarButtonItem *clear =  [[UIBarButtonItem alloc ] initWithTitle:@"Clear" style:UIBarButtonItemStyleBordered target:self action:@selector(clearNote:) ];
-	UIBarButtonItem *add   =  [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
-	UIBarButtonItem *space = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 	
-	mainToolbar.items = [NSArray arrayWithObjects: dcm.pickerButton, opts, add, clear, alarm, del, space, cnt, NULL ];
+	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
 
-	toggledButtons=[[NSArray alloc ] initWithObjects:clear,alarm,add, del, NULL ];
+	UIBarButtonItem *clear  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(clearNote:) ];
+	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
+	UIBarButtonItem *erase  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(toggleErase:) ];
+	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-	[ opts release  ];
-	[ alarm release ];
-	[ cnt release   ];
-	[ clear release ];
-	[ del release   ];
-	[ add release   ];
-	[ space release ];
+	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, add, clear, del, erase, space, countBtn, NULL ];
+
+	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, clear, add, erase, space, del, NULL ];
+
+	[ clear release  ];
+	[ erase release  ];
+	[ del   release  ];
+	[ add   release  ];
+	[ space release  ];
 
 	[self.view addSubview:mainToolbar ];
 	
@@ -83,7 +71,6 @@
 
 	self.view.backgroundColor = [UIColor grayColor ];
 
-	[ self updateCount ];
 }
 
 
@@ -99,6 +86,9 @@
 	[ self updateCount ];
 }
 
+-(void)toggleErase:(id)sel{
+	draw.isErasing = ! draw.isErasing;
+}
 
 -(void)addNote:(id)sel{
 	Note *n = [[ NotesManager instance ] addNote ];
@@ -108,21 +98,14 @@
 }
 
 
--(void)alarmSet:(AlarmView*)av{
-	[ alarmView saveToNote: draw.note ];
-	[ draw noteUpdated ];
-	[ draw.note scedule ];
-}
-
-
 -(void)setAlarm:(id)sel {
-	alarmView.isShowing = YES;
+	[ draw.note save ];
+	[ alarmView showWithNote: draw.note ];
 }
 
 
 -(void) updateCount {
-	NSInteger c = [[[ NotesManager instance ] notes ] count];
-	[ countBtn setTitle: [ NSString stringWithFormat:@"%ld", c ]	forState:UIControlStateNormal ];
+	[ countBtn setCount:[[[ NotesManager instance ] notes ] count] ];
 }
 
 
@@ -175,6 +158,17 @@
 	}
 }
 
+#pragma mark AlarmView delegate methods
+
+-(void)alarmShowingChanged:(AlarmView*)av{
+	draw.alarmLabel.hidden = av.isShowing;
+}
+
+-(void)alarmSet:(AlarmView*)av{
+	[ alarmView saveToNote: draw.note ];
+	[ draw.note scedule ];
+	[ draw noteUpdated ];
+}
 
 #pragma mark DrawingColorManagerDelegate delegate methods 
 

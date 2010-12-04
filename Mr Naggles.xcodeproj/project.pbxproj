@@ -34,6 +34,7 @@
 		45BFB93E12A732FB004EB7A2 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB93C12A732FB004EB7A2 /* GradientButton.m */; };
 		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
+		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,8 @@
 		45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAbsoluteTimes.h; sourceTree = "<group>"; };
 		45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAbsoluteTimes.m; sourceTree = "<group>"; };
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
+		45EE569112A9F04D00732503 /* CountingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountingButton.h; sourceTree = "<group>"; };
+		45EE569212A9F04D00732503 /* CountingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountingButton.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Mr Naggles-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mr Naggles-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,8 +106,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				45BFB93C12A732FB004EB7A2 /* GradientButton.m */,
 				45BFB93D12A732FB004EB7A2 /* GradientButton.h */,
+				45BFB93C12A732FB004EB7A2 /* GradientButton.m */,
 				45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */,
 				45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */,
 				458235ED128903F200EC555C /* TapImage.h */,
@@ -130,6 +133,8 @@
 				45A6C6E812A5F7E70027AF86 /* ColorButton.m */,
 				45A6C7F612A721430027AF86 /* DrawingColorManager.h */,
 				45A6C7F712A721430027AF86 /* DrawingColorManager.m */,
+				45EE569112A9F04D00732503 /* CountingButton.h */,
+				45EE569212A9F04D00732503 /* CountingButton.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 				45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */,
 				45BFB93E12A732FB004EB7A2 /* GradientButton.m in Sources */,
 				45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */,
+				45EE569312A9F04D00732503 /* CountingButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

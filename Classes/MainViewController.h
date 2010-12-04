@@ -12,6 +12,7 @@
 #import "AlarmView.h"
 #import "ColorButton.h"
 #import "DrawingColorManager.h"
+#import "CountingButton.h"
 
 @interface MainViewController : UIViewController <AlarmViewDelegate,DrawingColorManagerDelegate> {
 	ScrollController *scroll;
@@ -19,7 +20,7 @@
 	UIToolbar *mainToolbar;
 	UIToolbar *optionsToolbar;
 	DrawingViewController *draw;
-	UIButton *countBtn;
+	CountingButton *countBtn;
 	AlarmView *alarmView;
 	NSArray *toggledButtons;
 	NSArray *colorBtns;
