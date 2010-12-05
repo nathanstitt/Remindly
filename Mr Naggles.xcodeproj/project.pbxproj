@@ -17,7 +17,6 @@
 		45017382128CE74F003E71FE /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 45017381128CE74F003E71FE /* blank.png */; };
 		45017392128CE8C7003E71FE /* empty.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45017391128CE8C7003E71FE /* empty.plist */; };
 		450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED516128B71E600E7E0C6 /* MainViewController.m */; };
-		456FD147128FA16700076641 /* photos_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 456FD146128FA16700076641 /* photos_icon.png */; };
 		456FD35C1290EEC500076641 /* AlarmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 456FD35B1290EEC500076641 /* AlarmView.m */; };
 		45792CC01294B4A2001C834B /* NSDate+HumanInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */; };
 		458234E21288FE1400EC555C /* PreviewScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458234E11288FE1400EC555C /* PreviewScrollView.m */; };
@@ -38,6 +37,7 @@
 		45EE56F712AB2CC900732503 /* pencil-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE56F512AB2CC900732503 /* pencil-icon.png */; };
 		45EE571D12AB359200732503 /* EraseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE571C12AB359200732503 /* EraseButton.m */; };
 		45EE572F12AB383700732503 /* erase-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE572E12AB383700732503 /* erase-icon.png */; };
+		45EE582612AB5F2D00732503 /* photos_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE582512AB5F2D00732503 /* photos_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,7 +57,6 @@
 		45017391128CE8C7003E71FE /* empty.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = empty.plist; sourceTree = "<group>"; };
 		450ED515128B71E600E7E0C6 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		450ED516128B71E600E7E0C6 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		456FD146128FA16700076641 /* photos_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photos_icon.png; sourceTree = "<group>"; };
 		456FD35A1290EEC500076641 /* AlarmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmView.h; sourceTree = "<group>"; };
 		456FD35B1290EEC500076641 /* AlarmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmView.m; sourceTree = "<group>"; };
 		45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HumanInterval.h"; sourceTree = "<group>"; };
@@ -92,6 +91,7 @@
 		45EE571B12AB359200732503 /* EraseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EraseButton.h; sourceTree = "<group>"; };
 		45EE571C12AB359200732503 /* EraseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EraseButton.m; sourceTree = "<group>"; };
 		45EE572E12AB383700732503 /* erase-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "erase-icon.png"; path = "Images/erase-icon.png"; sourceTree = "<group>"; };
+		45EE582512AB5F2D00732503 /* photos_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = photos_icon.png; path = Images/photos_icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Mr Naggles-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mr Naggles-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				45D0BB9D1293874100470D80 /* alarm_times.plist */,
-				456FD146128FA16700076641 /* photos_icon.png */,
 				45017391128CE8C7003E71FE /* empty.plist */,
 				45823602128904C600EC555C /* Images */,
 				8D1107310486CEB800E47090 /* Mr Naggles-Info.plist */,
@@ -203,6 +202,7 @@
 		45823602128904C600EC555C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				45EE582512AB5F2D00732503 /* photos_icon.png */,
 				45EE572E12AB383700732503 /* erase-icon.png */,
 				45EE56F512AB2CC900732503 /* pencil-icon.png */,
 				45A6C30612A360280027AF86 /* Icon@2x.png */,
@@ -276,12 +276,12 @@
 			files = (
 				45017382128CE74F003E71FE /* blank.png in Resources */,
 				45017392128CE8C7003E71FE /* empty.plist in Resources */,
-				456FD147128FA16700076641 /* photos_icon.png in Resources */,
 				45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */,
 				45A6C30812A360280027AF86 /* Icon@2x.png in Resources */,
 				45A6C30912A360280027AF86 /* Icon.png in Resources */,
 				45EE56F712AB2CC900732503 /* pencil-icon.png in Resources */,
 				45EE572F12AB383700732503 /* erase-icon.png in Resources */,
+				45EE582612AB5F2D00732503 /* photos_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
