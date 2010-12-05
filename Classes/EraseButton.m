@@ -22,8 +22,6 @@
     [ button setImage: ( v ? drawImg : eraseImg ) forState:UIControlStateNormal ];
 	button.frame = CGRectMake(0, 0, drawImg.size.width, drawImg.size.height);
 
-    //[ button setBackgroundImage: ( v ? drawImg : eraseImg ) forState:UIControlStateNormal];
-
 	self = [ super initWithCustomView: button ];
 	return self;
 }
