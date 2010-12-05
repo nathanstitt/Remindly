@@ -31,12 +31,19 @@
 	[ toolBar sizeToFit];
 	
 	toolBar.items = [NSArray arrayWithObjects:
-					 [ self makeBarButton:[UIColor redColor ] ],
-					 [ self makeBarButton:[UIColor blueColor ] ],
-					 [ self makeBarButton:[UIColor yellowColor ] ],
+					 [ self makeBarButton:[UIColor blackColor] ],
+					 [ self makeBarButton:[UIColor darkGrayColor ] ],
+					 [ self makeBarButton:[UIColor lightGrayColor ] ],
 					 [ self makeBarButton:[UIColor grayColor ] ],
+					 [ self makeBarButton:[UIColor redColor ] ],
 					 [ self makeBarButton:[UIColor greenColor ] ],
-					 [ self makeBarButton:[UIColor whiteColor ] ],
+					 [ self makeBarButton:[UIColor blueColor ] ],
+					 [ self makeBarButton:[UIColor cyanColor ] ],
+					 [ self makeBarButton:[UIColor yellowColor ] ],
+					 [ self makeBarButton:[UIColor magentaColor ] ],
+					 [ self makeBarButton:[UIColor orangeColor ] ],
+					 [ self makeBarButton:[UIColor purpleColor ] ],
+					 [ self makeBarButton:[UIColor brownColor ] ],
 					 NULL ];
 	
 	

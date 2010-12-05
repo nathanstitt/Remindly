@@ -136,20 +136,21 @@
 	NSLog(@"Touches Ended");
 
 	alarmLabel.hidden = NO;
+	
+	UIGraphicsBeginImageContext(self.view.frame.size);
+	[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+	CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
 
-//	if(!mouseSwiped) {
-		UIGraphicsBeginImageContext(self.view.frame.size);
-		[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-		CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-		CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 5.0);
-		CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 1.0, 0.0, 0.0, 1.0);
-		CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-		CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-		CGContextStrokePath(UIGraphicsGetCurrentContext());
-		CGContextFlush(UIGraphicsGetCurrentContext());
-		drawImage.image = UIGraphicsGetImageFromCurrentImageContext();
-		UIGraphicsEndImageContext();
-	//}
+	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  5.0 );
+	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
+									 self.isErasing ? [ UIColor whiteColor].CGColor : color );
+
+	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
+	CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
+	CGContextStrokePath(UIGraphicsGetCurrentContext());
+	CGContextFlush(UIGraphicsGetCurrentContext());
+	drawImage.image = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
 }
 
 

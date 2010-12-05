@@ -29,6 +29,8 @@
     [ button setTitleShadowColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateNormal];
     [ button setBackgroundImage:[UIImage imageNamed:@"bar-button-item-background.png"] forState:UIControlStateNormal];
 
+	button.frame = CGRectMake( 0, 0, icon.size.width + 15 + [ @"  " sizeWithFont:font].width, 30 );
+
 	self = [ super initWithCustomView: button ];
 	[ self setCount: c ];
 	return self;
@@ -36,9 +38,12 @@
 
 -(void)setCount:(NSInteger)c {
 	NSString *cnt = [ NSString stringWithFormat:@"%ld", c ];
-	button.frame = CGRectMake( 0, 0, icon.size.width + 15 + [ cnt sizeWithFont:font].width, 30 );
 	[ button setTitle: cnt forState:UIControlStateNormal ];
 }
 
+- (void)dealloc {
+	[ button release ];
+    [super dealloc];
+}
 
 @end

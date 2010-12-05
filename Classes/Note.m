@@ -107,10 +107,16 @@
 	notification.alertAction = @"View Note";
 	notification.soundName = UILocalNotificationDefaultSoundName;
 	notification.applicationIconBadgeNumber = 1;
-		
+
 	NSDictionary *infoDict = [NSDictionary dictionaryWithObject: directory forKey:@"directory"];
 	notification.userInfo = infoDict;
 	[ app scheduleLocalNotification:notification ];
+	
+	for ( UILocalNotification *nt in [UIApplication sharedApplication].scheduledLocalNotifications ){
+		NSLog(@"dir %@", [ nt.userInfo objectForKey:@"directory" ] );
+	}
+	
+	
 }
 
 

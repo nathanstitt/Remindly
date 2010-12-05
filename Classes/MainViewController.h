@@ -13,6 +13,7 @@
 #import "ColorButton.h"
 #import "DrawingColorManager.h"
 #import "CountingButton.h"
+#import "EraseButton.h"
 
 @interface MainViewController : UIViewController <AlarmViewDelegate,DrawingColorManagerDelegate> {
 	ScrollController *scroll;
@@ -25,6 +26,7 @@
 	NSArray *toggledButtons;
 	NSArray *colorBtns;
 	ColorButton *colorBtn;
+	EraseButton *eraseBtn;
 }
 
 -(void) selectNote:(Note*)note;

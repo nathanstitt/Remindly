@@ -30,7 +30,7 @@
 	[ draw.alarmLabel addTarget:self action:@selector(setAlarm:) forControlEvents:UIControlEventTouchUpInside ];
 	[ self.view addSubview: draw.view ];
 
-	dcm = [[ DrawingColorManager alloc] initWithColor:[ UIColor redColor ] ];
+	dcm = [[ DrawingColorManager alloc] initWithColor:[ UIColor darkGrayColor ] ];
 	dcm.delegate = self;
 	draw.color = dcm.selectedColor;
 	[ self.view addSubview: dcm.toolBar ];
@@ -48,15 +48,17 @@
 
 	UIBarButtonItem *clear  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(clearNote:) ];
 	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
-	UIBarButtonItem *erase  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(toggleErase:) ];
+
+	eraseBtn = [[EraseButton alloc ] initWithDrawingState: YES ];
+	[ eraseBtn.button addTarget:self action: @selector(toggleErase:) forControlEvents:UIControlEventTouchUpInside ];
+
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, add, clear, del, erase, space, countBtn, NULL ];
+	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, add, clear, del, eraseBtn, space, countBtn, NULL ];
 
-	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, clear, add, erase, space, del, NULL ];
+	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, clear, del, eraseBtn, NULL ];
 
 	[ clear release  ];
-	[ erase release  ];
 	[ del   release  ];
 	[ add   release  ];
 	[ space release  ];
@@ -79,7 +81,7 @@
 }
 
 
--(void)deleteNote:(id)sel{
+-(void)deleteNote:(id)sel {
 	[ scroll deleteNote: draw.note ];
 	draw.note = [[ NotesManager instance ] deleteNote:draw.note ];
 	[ scroll selectNote: draw.note ];
@@ -88,6 +90,7 @@
 
 -(void)toggleErase:(id)sel{
 	draw.isErasing = ! draw.isErasing;
+	eraseBtn.isErasing = draw.isErasing;
 }
 
 -(void)addNote:(id)sel{

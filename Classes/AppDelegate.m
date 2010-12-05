@@ -74,7 +74,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
 
-		application.applicationIconBadgeNumber = 0;
+	application.applicationIconBadgeNumber = 0;
 
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateInactive) {

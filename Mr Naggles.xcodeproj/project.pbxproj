@@ -35,6 +35,9 @@
 		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
 		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
+		45EE56F712AB2CC900732503 /* pencil-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE56F512AB2CC900732503 /* pencil-icon.png */; };
+		45EE571D12AB359200732503 /* EraseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE571C12AB359200732503 /* EraseButton.m */; };
+		45EE572F12AB383700732503 /* erase-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE572E12AB383700732503 /* erase-icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +88,10 @@
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
 		45EE569112A9F04D00732503 /* CountingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountingButton.h; sourceTree = "<group>"; };
 		45EE569212A9F04D00732503 /* CountingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountingButton.m; sourceTree = "<group>"; };
+		45EE56F512AB2CC900732503 /* pencil-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pencil-icon.png"; path = "Images/pencil-icon.png"; sourceTree = "<group>"; };
+		45EE571B12AB359200732503 /* EraseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EraseButton.h; sourceTree = "<group>"; };
+		45EE571C12AB359200732503 /* EraseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EraseButton.m; sourceTree = "<group>"; };
+		45EE572E12AB383700732503 /* erase-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "erase-icon.png"; path = "Images/erase-icon.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Mr Naggles-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Mr Naggles-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +142,8 @@
 				45A6C7F712A721430027AF86 /* DrawingColorManager.m */,
 				45EE569112A9F04D00732503 /* CountingButton.h */,
 				45EE569212A9F04D00732503 /* CountingButton.m */,
+				45EE571B12AB359200732503 /* EraseButton.h */,
+				45EE571C12AB359200732503 /* EraseButton.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -194,6 +203,8 @@
 		45823602128904C600EC555C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				45EE572E12AB383700732503 /* erase-icon.png */,
+				45EE56F512AB2CC900732503 /* pencil-icon.png */,
 				45A6C30612A360280027AF86 /* Icon@2x.png */,
 				45A6C30712A360280027AF86 /* Icon.png */,
 				45017381128CE74F003E71FE /* blank.png */,
@@ -269,6 +280,8 @@
 				45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */,
 				45A6C30812A360280027AF86 /* Icon@2x.png in Resources */,
 				45A6C30912A360280027AF86 /* Icon.png in Resources */,
+				45EE56F712AB2CC900732503 /* pencil-icon.png in Resources */,
+				45EE572F12AB383700732503 /* erase-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +310,7 @@
 				45BFB93E12A732FB004EB7A2 /* GradientButton.m in Sources */,
 				45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */,
 				45EE569312A9F04D00732503 /* CountingButton.m in Sources */,
+				45EE571D12AB359200732503 /* EraseButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
