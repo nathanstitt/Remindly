@@ -11,7 +11,7 @@
 
 @implementation DrawingViewController
 
-@synthesize note,color,alarmLabel,isErasing;
+@synthesize note,color,isErasing;
 
 - (id)init {
     self = [super init ];
@@ -23,9 +23,12 @@
 	[ self.view addSubview:drawImage];
 	color = [ UIColor darkGrayColor ].CGColor;
 
-	alarmLabel = [[GradientButton alloc ] initWithFrame:CGRectMake( 0, 0, 320, 25 ) ];
-	[ alarmLabel useWhiteStyle ];
-
+	alarmLabel = [[UILabel alloc ] initWithFrame:CGRectMake( 0, 0, 320, 25 ) ];
+	alarmLabel.textAlignment = UITextAlignmentCenter;
+	alarmLabel.backgroundColor = [UIColor clearColor];
+	alarmLabel.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.35];
+    alarmLabel.shadowOffset = CGSizeMake(0, -1.0);
+	
 	[ self.view addSubview:alarmLabel ];
 
 	[ NSTimer scheduledTimerWithTimeInterval:30
@@ -41,8 +44,8 @@
 
 
 
--(void)updateTitle:(id)tm {
-	[ alarmLabel setTitle:[note alarmDescription] forState:UIControlStateNormal ];
+-(void)updateTitle:(id)sel {
+	alarmLabel.text = [note alarmDescription];
 }
 
 -(void)setNote:(Note *)n{

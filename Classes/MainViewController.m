@@ -19,6 +19,7 @@
 }
 
 - (void)viewDidLoad {
+
 	scroll = [[ ScrollController alloc ] initWithMainView:self ];
 	scroll.view.frame = CGRectMake(0, 0, 320, 420 );
 	scroll.view.hidden = YES;
@@ -27,12 +28,11 @@
 	draw = [[ DrawingViewController alloc ] init ];
 	draw.view.frame = CGRectMake(0, 0, 320, 420 );
 	draw.note = [[ NotesManager instance ] defaultEditingNote ]; 
-	[ draw.alarmLabel addTarget:self action:@selector(setAlarm:) forControlEvents:UIControlEventTouchUpInside ];
 	[ self.view addSubview: draw.view ];
 
-	dcm = [[ DrawingColorManager alloc] initWithColor:[ UIColor darkGrayColor ] ];
+	dcm = [[ DrawingColorManager alloc] initWithLastColor ];
 	dcm.delegate = self;
-	draw.color = dcm.selectedColor;
+	draw.color = dcm.selectedColor.CGColor;
 	[ self.view addSubview: dcm.toolBar ];
 
 	mainToolbar = [[UIToolbar alloc] init];
@@ -45,22 +45,23 @@
 
 	
 	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
-
+	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm-clock-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarm:) ];
 	UIBarButtonItem *clear  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(clearNote:) ];
 	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
-	eraseBtn = [[EraseButton alloc ] initWithDrawingState: YES ];
+	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];
 	[ eraseBtn.button addTarget:self action: @selector(toggleErase:) forControlEvents:UIControlEventTouchUpInside ];
 
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, add, clear, del, eraseBtn, space, countBtn, NULL ];
+	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, space, add, space, clear, space, del, space, eraseBtn, space, alarm, space, countBtn, NULL ];
 
-	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, clear, del, eraseBtn, NULL ];
+	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, clear, del, eraseBtn, alarm,  NULL ];
 
 	[ clear release  ];
 	[ del   release  ];
 	[ add   release  ];
+	[ alarm release ];
 	[ space release  ];
 
 	[self.view addSubview:mainToolbar ];
@@ -164,7 +165,7 @@
 #pragma mark AlarmView delegate methods
 
 -(void)alarmShowingChanged:(AlarmView*)av{
-	draw.alarmLabel.hidden = av.isShowing;
+//	draw.alarmLabel.hidden = av.isShowing;
 }
 
 -(void)alarmSet:(AlarmView*)av{

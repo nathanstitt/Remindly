@@ -25,11 +25,10 @@
 	MainViewController *mvc;
 }
 
--(id)initWithColor:(UIColor*)c;
-
+-(id)initWithLastColor;
+@property (nonatomic, retain) UIColor *selectedColor;
 @property (nonatomic, assign ) id<DrawingColorManagerDelegate> delegate;
 @property (nonatomic, readonly) UIToolbar *toolBar;
-@property (nonatomic) CGColorRef selectedColor;
 @property (nonatomic, readonly) UIBarButtonItem *pickerButton;
 @property (nonatomic) BOOL toolBarShowing;
 @end

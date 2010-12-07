@@ -9,11 +9,10 @@
 #import <Foundation/Foundation.h>
 
 
-@interface EraseButton : UIBarButtonItem {
+@interface DrawEraseButton : UIBarButtonItem {
 	UIButton *button;
 	UIImage *drawImg;
 	UIImage *eraseImg;
-	
 }
 
 -(id)initWithDrawingState:(BOOL)drawing;

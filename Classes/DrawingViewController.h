@@ -17,14 +17,15 @@
 	UIImageView *drawImage;
 	Note *note;
 	BOOL isErasing;
-	GradientButton *alarmLabel;
+	UILabel *alarmLabel;
 	int mouseMoved;
 	CGColorRef color;
 }
 
 - (void)clear;
 - (void)noteUpdated;
-@property (nonatomic,readonly) GradientButton *alarmLabel;
+
+
 @property (nonatomic) CGColorRef color;
 @property (nonatomic,retain) Note* note;
 @property (nonatomic) BOOL isErasing;

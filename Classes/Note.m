@@ -112,9 +112,6 @@
 	notification.userInfo = infoDict;
 	[ app scheduleLocalNotification:notification ];
 	
-	for ( UILocalNotification *nt in [UIApplication sharedApplication].scheduledLocalNotifications ){
-		NSLog(@"dir %@", [ nt.userInfo objectForKey:@"directory" ] );
-	}
 	
 	
 }

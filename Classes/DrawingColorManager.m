@@ -9,10 +9,11 @@
 #import "DrawingColorManager.h"
 #import "MainViewController.h"
 #import "ColorButton.h"
+#import "UIColor+FromToRGB.h"
 
 @implementation DrawingColorManager
 
-@synthesize toolBar,delegate,pickerButton;
+@synthesize toolBar,delegate,pickerButton,selectedColor;
 
 -(UIBarButtonItem*)makeBarButton:(UIColor*)c{
 	ColorButton *b = [[ ColorButton alloc ] iniWithColor: c.CGColor ];
@@ -22,7 +23,7 @@
 	return [ bbt autorelease ];
 }
 
--(id)initWithColor:(UIColor*)c{
+-(id)initWithLastColor {
 	self = [ super init ];
 
 	toolBar = [[UIToolbar alloc] init];
@@ -47,7 +48,16 @@
 					 NULL ];
 	
 	
-	pickerButton = [ self makeBarButton: c ];
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	NSUInteger df =[ prefs doubleForKey:@"lastColorSelected" ];
+	if ( ! df ){
+		df = [[ UIColor darkGrayColor ] toRGBInt ];
+		[prefs synchronize];
+	}
+	
+	self.selectedColor = [ UIColor UIColorFromRGBInt:df ];
+	pickerButton = [ self makeBarButton: self.selectedColor ];
+
 	[ pickerButton retain ];
 	[ ((ColorButton*)pickerButton.customView) removeTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
 	
@@ -57,20 +67,17 @@
 }
 
 -(void)colorSelected:(ColorButton*)cv {
-	self.selectedColor = [ cv color ];
+	self.selectedColor = [ UIColor colorWithCGColor: [ cv color ] ];
+	((ColorButton*)pickerButton.customView).color = self.selectedColor.CGColor;
 	self.toolBarShowing = NO;
 	if ( delegate ){
-		[ delegate drawingColorManagerColorUpdated:self color:[cv color ] ];
+		[ delegate drawingColorManagerColorUpdated:self color:self.selectedColor.CGColor];
 	}
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	[ prefs setInteger: [  self.selectedColor toRGBInt ] forKey:@"lastColorSelected"];
+	[ prefs synchronize ];
 }
 
--(CGColorRef) selectedColor{
-	return  ((ColorButton*)pickerButton.customView).color;
-}
-
--(void)setSelectedColor:(CGColorRef)c{
-	((ColorButton*)pickerButton.customView).color = c;	
-}
 
 -(BOOL)toolBarShowing{
 	return 420 != toolBar.frame.origin.y;

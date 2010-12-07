@@ -6,15 +6,14 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "EraseButton.h"
+#import "DrawEraseButton.h"
 
-
-@implementation EraseButton
+@implementation DrawEraseButton
 
 @synthesize button;
 
 -(id)initWithDrawingState:(BOOL)v {
-	drawImg  = [UIImage imageNamed:@"pencil-icon"];
+	drawImg  = [UIImage imageNamed:@"draw-icon"];
 	eraseImg = [UIImage imageNamed:@"erase-icon"];
 
 	button = [ UIButton buttonWithType: UIButtonTypeCustom ];
@@ -32,7 +31,7 @@
 }
 
 -(BOOL)isErasing {
-	return ( eraseImg == [button imageForState:UIControlStateNormal ] );
+	return ( [UIImage imageNamed:@"erase-icon"] == [button imageForState:UIControlStateNormal ] );
 }
 
 -(void)setIsErasing:(BOOL)v{
