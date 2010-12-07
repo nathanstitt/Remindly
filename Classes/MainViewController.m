@@ -46,7 +46,6 @@
 	
 	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
 	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm-clock-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarm:) ];
-	UIBarButtonItem *clear  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(clearNote:) ];
 	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
 	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];
@@ -54,11 +53,10 @@
 
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, space, add, space, clear, space, del, space, eraseBtn, space, alarm, space, countBtn, NULL ];
+	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, space, add, space, del, space, eraseBtn, space, alarm, space, countBtn, NULL ];
 
-	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, clear, del, eraseBtn, alarm,  NULL ];
+	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, del, eraseBtn, alarm,  NULL ];
 
-	[ clear release  ];
 	[ del   release  ];
 	[ add   release  ];
 	[ alarm release ];
@@ -77,9 +75,6 @@
 }
 
 
--(void)clearNote:(id)sel {
-	[ draw clear ];
-}
 
 
 -(void)deleteNote:(id)sel {

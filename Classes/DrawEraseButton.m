@@ -14,12 +14,13 @@
 
 -(id)initWithDrawingState:(BOOL)v {
 	drawImg  = [UIImage imageNamed:@"draw-icon"];
+	[ drawImg retain ];
 	eraseImg = [UIImage imageNamed:@"erase-icon"];
-
+	[eraseImg retain ];
 	button = [ UIButton buttonWithType: UIButtonTypeCustom ];
-
-    [ button setImage: ( v ? drawImg : eraseImg ) forState:UIControlStateNormal ];
-	button.frame = CGRectMake(0, 0, drawImg.size.width, drawImg.size.height);
+	[ button retain ];
+    [ button setImage: ( v ? eraseImg : drawImg ) forState:UIControlStateNormal ];
+	button.frame = CGRectMake(0, 0, eraseImg.size.width, eraseImg.size.height);
 
 	self = [ super initWithCustomView: button ];
 	return self;
@@ -27,18 +28,20 @@
 
 - (void)dealloc {
 	[ button release ];
+	[ drawImg release ];
+	[ eraseImg release ];
     [super dealloc];
 }
 
 -(BOOL)isErasing {
-	return ( [UIImage imageNamed:@"erase-icon"] == [button imageForState:UIControlStateNormal ] );
+	return ( drawImg == [ button imageForState:UIControlStateNormal ] );
 }
 
 -(void)setIsErasing:(BOOL)v{
 	if ( v ){
-		[ button setImage: eraseImg forState:UIControlStateNormal ];
-	} else {
 		[ button setImage: drawImg forState:UIControlStateNormal ];
+	} else {
+		[ button setImage: eraseImg forState:UIControlStateNormal ];
 	}
 }
 

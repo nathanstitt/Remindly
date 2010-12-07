@@ -120,7 +120,6 @@
 	if ( d ){
 		absTimes.date = d;
 	}
-	[ self selectIndex: 1 ];
 }
 
 
