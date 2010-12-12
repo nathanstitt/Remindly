@@ -74,9 +74,6 @@
 
 }
 
-
-
-
 -(void)deleteNote:(id)sel {
 	[ scroll deleteNote: draw.note ];
 	draw.note = [[ NotesManager instance ] deleteNote:draw.note ];
@@ -95,7 +92,6 @@
 	[ scroll addNote:n ];
 	[ self updateCount ];
 }
-
 
 -(void)setAlarm:(id)sel {
 	[ draw.note save ];
@@ -147,13 +143,10 @@
 	for ( UIBarButtonItem *btn in toggledButtons ){
 		[ btn setEnabled: draw.view.hidden ];
 	}
-	if ( draw.view.hidden  ){
-		draw.view.hidden = NO;
-		scroll.view.hidden = YES;
-	} else {
+	draw.hidden = ! draw.hidden;
+	scroll.hidden = ! scroll.hidden;
+	if ( ! scroll.hidden ) {
 		[ scroll reload:draw.note ];
-		draw.view.hidden = YES;
-		scroll.view.hidden = NO;
 	}
 }
 

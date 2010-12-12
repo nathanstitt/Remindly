@@ -43,14 +43,10 @@
 	}
 }
 
--(void)setFireName:(NSString*)name minutes:(NSNumber*)minutes{
+-(void)setAlarmName:(NSString *)name {
 	[plist setObject:name forKey:@"alarmName"];
-	[plist setObject:minutes forKey:@"alarmMinutes"];
-	if ( [ minutes boolValue ] ){
-		NSInteger secs = [ minutes intValue ] * 60;
-		[ self setFireDate:[ NSDate dateWithTimeIntervalSinceNow: secs ] ];
-	}
 }
+
 
 -(NSDate*)fireDate{
 	return [ plist valueForKey:@"fireDate" ];
@@ -102,7 +98,7 @@
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
 	notification.fireDate = fd;
 	notification.timeZone = [NSTimeZone defaultTimeZone];
-	notification.alertBody = self.alarmName ? self.alarmName : @"Alarm is Good";
+	notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmName ];
 	notification.alertLaunchImage = [ directory stringByAppendingPathComponent:@"image.png" ];
 	notification.alertAction = @"View Note";
 	notification.soundName = UILocalNotificationDefaultSoundName;

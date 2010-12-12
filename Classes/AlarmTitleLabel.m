@@ -19,59 +19,62 @@
 - (id)initWithFrame:(CGRect)frame {
    self = [super initWithFrame:frame];
 
+	self.backgroundColor = [UIColor clearColor];
 	self.lineBreakMode = UILineBreakModeTailTruncation;
 	self.textAlignment = UITextAlignmentCenter;
 	self.numberOfLines = 0;
-	self.backgroundColor = [ UIColor lightGrayColor ];
 	
-	self.borderWidth = 1.0;
-	self.borderRadius = 10.0;
 	self.borderColor = [UIColor colorWithWhite:0.65 alpha:1.0];
 	self.fillColor = [UIColor whiteColor];
-	self.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0]; 
 
-
-//	self.layer.shadowOffset = CGSizeMake(3.0, 3.0);
-//	self.layer.shadowOpacity = float;
 
     return self;
 }
 
+#define borderWidth   1.0
+#define borderRadius 10.0
+
 
 - (void)drawRect:(CGRect)rect {
+
+	CGSize size = [[self text] sizeWithFont:[self font]];
 	
-	CGRect localRect = CGRectInset(rect, self.borderWidth / 2, self.borderWidth / 2);
+	CGRect localRect = CGRectInset(rect, borderWidth / 2, borderWidth / 2);
+	
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGContextSaveGState(context);
 	
+	NSInteger leftBorder = 155-(size.width/2);
+	NSInteger bottom = localRect.size.height-5;
+	NSInteger rightBorder = 320-leftBorder;
+	CGContextTranslateCTM(context, borderWidth / 2, borderWidth / 2);
 	
-	CGContextTranslateCTM(context, self.borderWidth / 2, self.borderWidth / 2);
+	CGContextMoveToPoint(context, leftBorder, 0.0 );
+	CGContextAddLineToPoint(context, leftBorder, ( - borderRadius));
 	
-	// create the border - we start at the top left edge (without including the edge itself) and move around counter-clockwise
-	CGContextMoveToPoint(context, 0.0, 0.0 );
-	CGContextAddLineToPoint(context, 0.0, (localRect.size.height - self.borderRadius));
-	CGContextAddCurveToPoint(context, 0.0, localRect.size.height,
-							 self.borderRadius, localRect.size.height,
-							 self.borderRadius, localRect.size.height);
+	CGContextAddCurveToPoint(context, 
+							 leftBorder, bottom-borderRadius,
+							 leftBorder, bottom,
+							 leftBorder + borderRadius, bottom );
 
-	CGContextAddLineToPoint(context, localRect.size.width , localRect.size.height);
-
-	CGContextAddLineToPoint(context, localRect.size.width, 0 );
-
-	CGContextAddLineToPoint(context, 0.0 , 0.0);
-
-	CGContextRestoreGState(context);
+	CGContextAddLineToPoint(context, rightBorder-borderRadius, bottom);
+	
+	CGContextAddCurveToPoint(context, 
+							 rightBorder-borderRadius, bottom,
+							 rightBorder, bottom,
+							 rightBorder, bottom - borderRadius );
+	
+	CGContextAddLineToPoint(context, rightBorder, 0 );
 
 	[self.fillColor setFill];
 	[self.borderColor setStroke];
-	CGContextSetLineWidth(context, self.borderWidth);
+	CGContextSetLineWidth(context, borderWidth);
 
-//	CGContextSetShadowWithColor(context, CGSizeMake(0, 20), 3.0, [UIColor redColor ].CGColor );
+	CGContextSetShadowWithColor(context, CGSizeMake(0, 2), 1.0, [UIColor grayColor ].CGColor );
 	
 	CGContextDrawPath(context, kCGPathFillStroke);
 	
-	CGContextSaveGState(context);
-
+	CGContextRestoreGState(context);
 
 	[ super drawRect:rect ];
 

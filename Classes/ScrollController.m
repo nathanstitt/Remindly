@@ -14,7 +14,6 @@
 #import "MainViewController.h"
 
 @implementation ScrollController
-@synthesize scrollPages, scrollViewPreview;
 
 -(id) initWithMainView:(MainViewController*)mv {
 	self = [ super init ];
@@ -30,63 +29,79 @@
 	// Position the scrollview. It will be centered in the portrait view. The viewSize defines the size 
 	// of each item you want to display in your scroll view. The size of the "preview" on each side equals the
 	// width of the frame minus the width of the "view", ie, 320 - 240 = 60 / 2 = 30. 
-	scrollViewPreview = [ [PreviewScrollView alloc]	initWithFrameAndPageSize: CGRectMake(0, 70, 320, 320) 
+	scroller = [ [NotesScrollView alloc]	initWithFrameAndPageSize: CGRectMake(0, 70, 320, 320) 
 													pageSize: CGSizeMake( 213, 280 ) ];
 
-	[ scrollViewPreview setBackgroundColor: [ UIColor grayColor ] ];
+	[ scroller setBackgroundColor: [ UIColor grayColor ] ];
+	noteHeader = [[ UILabel alloc ] initWithFrame:CGRectMake( 0, 20, 320, 60 ) ];
+	noteHeader.lineBreakMode = UILineBreakModeWordWrap;
+	noteHeader.numberOfLines = 0;
+	noteHeader.textColor = [ UIColor whiteColor ];
+	noteHeader.font = [ UIFont systemFontOfSize:18.0];
+	noteHeader.backgroundColor = [ UIColor clearColor ];
+	noteHeader.text = @"Foo Bar Bang Bing";
+	noteHeader.textAlignment = UITextAlignmentCenter;
 	
-	scrollViewPreview.delegate = self;
-	[self.view addSubview:scrollViewPreview];
-	[ scrollViewPreview selectPage:0 ];
+	[ self.view addSubview:noteHeader ];
 	
-	pageControl = [[ UIPageControl alloc ] init ];
-	pageControl.backgroundColor = [ UIColor grayColor ];
-	pageControl.frame = CGRectMake( 0, 390, 320, 30 );
-	[pageControl addTarget:self action:@selector(pageControlMoved:) forControlEvents:UIControlEventValueChanged];
+	scroller.delegate = self;
+	[self.view addSubview:scroller];
+	[ scroller selectPage:0 ];
 	
-	[ self.view addSubview:pageControl ];
+	dots = [[ UIPageControl alloc ] init ];
+	dots.backgroundColor = [ UIColor grayColor ];
+	dots.frame = CGRectMake( 0, 390, 320, 30 );
+	[dots addTarget:self action:@selector(dotsMoved:) forControlEvents:UIControlEventValueChanged];
 	
-	notes = [[ NSMutableArray alloc ] init ];
+	[ self.view addSubview:dots ];
+	
+	images = [[ NSMutableArray alloc ] init ];
 }
 
 -(void)reload:(Note*)note{
-	for ( TapImage *image in notes ){
+	NSInteger i = 0;
+	for ( NotePreviewView *image in images ){
 		if ( note == image.note ){
 			[ image reload ];
+			break;
 		}
-	}
+		i++;
+	}	
+	noteHeader.text = [ note alarmDescription ];
+	dots.currentPage = i;
 }
 
--(void)pageControlMoved:(id)ctrl{
-	[ scrollViewPreview selectPage:	pageControl.currentPage ];
+-(void)dotsMoved:(id)ctrl{
+	[ scroller selectPage:	dots.currentPage ];
+	
 }
 
 -(void) addNotes:(NSArray*)nts{
 	for( Note *note in nts ){
-		[ notes addObject: [[TapImage alloc ] 
+		[ images addObject: [[NotePreviewView alloc ] 
 						   initWithNote: note 
-						   frame:CGRectMake(0, 0, scrollViewPreview.pageSize.width, scrollViewPreview.pageSize.height)
+						   frame:CGRectMake(0, 0, scroller.pageSize.width, scroller.pageSize.height)
 						   scroller:self ] 
 				 ];
 	}
-	pageControl.numberOfPages = [ notes count ];
-	[ scrollViewPreview reload ];
+	dots.numberOfPages = [ images count ];
+	[ scroller reload ];
 }
 
 -(void)refresh {
-	pageControl.numberOfPages = [ notes count ];
-	pageControl.currentPage = 0;
-	[scrollViewPreview selectPage: 0];
-	[ scrollViewPreview reload ];
+	dots.numberOfPages = [ images count ];
+	dots.currentPage = 0;
+	[ scroller selectPage: 0];
+	[ scroller reload ];
 }
 
 
 -(void)deleteNote:(Note*)note{
 	NSInteger i = 0;
-	TapImage *ti;
-	for ( ti in notes ){
+	NotePreviewView *ti;
+	for ( ti in images ){
 		if ( ti.note == note ){
-			[ notes removeObjectAtIndex:i ];
+			[ images removeObjectAtIndex:i ];
 			break;
 		}
 		i++;
@@ -96,9 +111,9 @@
 
 
 -(void) addNote:(Note*) note {
-	[ notes insertObject: [[TapImage alloc ] 
+	[ images insertObject: [[NotePreviewView alloc ] 
 						initWithNote: note 
-						frame:CGRectMake(0, 0, scrollViewPreview.pageSize.width, scrollViewPreview.pageSize.height)
+						frame:CGRectMake(0, 0, scroller.pageSize.width, scroller.pageSize.height)
 						scroller:self ] 
 			  atIndex: 0 ];
 
@@ -108,13 +123,16 @@
 
 -(void) selectNote:(Note*)note{
 	NSInteger index = 0;
-	for (TapImage *img in notes ){
+	for (NotePreviewView *img in images ){
 		if ( note ==  img.note ){
-			[scrollViewPreview selectPage:index ];
+			[scroller selectPage:index ];
 			return;
 		}
 		index++;
 	}
+	[ self addNote:note     ];
+	[ scroller selectPage:0 ];
+	dots.currentPage = 0;
 }
 
 
@@ -122,28 +140,42 @@
 	[ mainView noteWasSelected:note ];
 }
 
+
 -(void)pageChanged:(NSInteger)noteIndex{
-	pageControl.currentPage = noteIndex;
-//-(void)noteScrolled:(Note*)current {
-    // Switch the indicator when more than 50% of the previous/next page is visible
-//    CGFloat pageWidth = scrollView.frame.size.width;
-//  int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-//    pageControl.currentPage = page;
-	
+	NotePreviewView *ti = [ images objectAtIndex:noteIndex ];
+	noteHeader.text = [ ti.note alarmDescription ];
+	dots.currentPage = noteIndex;
 }
+
+
+-(BOOL)hidden {
+	return self.view.hidden;
+}
+
+
+-(void)setHidden:(BOOL)h {
+	self.view.hidden = h;
+}
+
 
 #pragma mark -
 #pragma mark PreviewScrollViewDelegate methods
--(UIView*)viewForItemAtIndex:(PreviewScrollView*)scrollView index:(int)index {
-	
-	return [ notes objectAtIndex:index ];
+-(UIView*)viewForItemAtIndex:(NotesScrollView*)scrollView index:(int)index {
+	return [ images objectAtIndex:index ];
 }
 
--(int)itemCount:(PreviewScrollView*)scrollView {
+-(int)itemCount {
 	// Return the number of pages we intend to display
-	return [ notes count ];
+	return [ images count ];
 }
 
+-(void)startScrolling{
+	noteHeader.hidden = YES;
+}
+
+-(void)endScrolling{
+	noteHeader.hidden = NO;
+}
 
 #pragma mark -
 #pragma mark Memory management
@@ -162,9 +194,8 @@
 
 
 - (void)dealloc {
-	[ scrollViewPreview release];
-	[ scrollPages release];
-	[ notes release ];
+	[ scroller release];
+	[ images release ];
     [ super dealloc];
 }
 

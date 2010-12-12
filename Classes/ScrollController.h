@@ -11,16 +11,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PreviewScrollView.h"
-#import "TapImage.h"
+#import "NotesScrollView.h"
+#import "NotePreviewView.h"
 #import "Note.h"
 
 @class MainViewController;
 
-@interface ScrollController : UIViewController<PreviewScrollViewDelegate> {
-	PreviewScrollView *scrollViewPreview;
-	UIPageControl *pageControl;
-	NSMutableArray *notes;
+@interface ScrollController : UIViewController<NotesScrollViewDelegate> {
+	NotesScrollView *scroller;
+	UILabel *noteHeader;
+	UIPageControl *dots;
+	NSMutableArray *images;
 	MainViewController *mainView;
 }
 
@@ -33,8 +34,7 @@
 -(void) noteWasSelected:(Note*)note;
 -(id)   initWithMainView:(MainViewController*)mv;
 
-@property (nonatomic, retain) NSArray *scrollPages;
-@property (nonatomic, retain) IBOutlet PreviewScrollView *scrollViewPreview;
+@property (nonatomic) BOOL hidden;
 
 @end
 

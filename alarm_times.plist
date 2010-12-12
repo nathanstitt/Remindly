@@ -6,8 +6,6 @@
 	<integer>0</integer>
 	<key>3 Minutes</key>
 	<integer>3</integer>
-	<key>testing</key>
-	<integer>1</integer>
 	<key>5 Minutes</key>
 	<integer>5</integer>
 	<key>10 Minutes</key>
@@ -16,6 +14,8 @@
 	<integer>15</integer>
 	<key>Half Hour</key>
 	<integer>30</integer>
+	<key>Top of the Hour</key>
+	<integer>31</integer>
 	<key>One Hour</key>
 	<integer>60</integer>
 	<key>Hour and a half</key>

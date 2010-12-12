@@ -7,7 +7,7 @@
 //
 
 #import "AlarmAbsoluteTimes.h"
-
+#import "Note.h"
 
 @implementation AlarmAbsoluteTimes
 
@@ -37,5 +37,15 @@
     [super dealloc];
 }
 
+-(void)saveToNote:(Note*)note{
+	static NSDateFormatter *formmatter;
+	if ( ! formmatter ){
+		formmatter = [[NSDateFormatter alloc] init];
+        [ formmatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+        [ formmatter setDateFormat:@"hh:mm a EEE, MMM dd, YYYY" ];
+	}
+	[ note setFireDate: self.date ];
+	[ note setAlarmName:[ formmatter stringFromDate: self.date ]  ];
+}
 
 @end

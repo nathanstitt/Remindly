@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class Note;
 
 @interface AlarmAbsoluteTimes : NSObject {
 	UIDatePicker *picker;
 }
 
 -(void)reset;
+-(void)saveToNote:(Note*)note;
 
 @property (readonly,nonatomic) UIView *view;
 @property (nonatomic,assign) NSDate *date;

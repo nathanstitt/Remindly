@@ -36,8 +36,8 @@
 }
 
 -(void)saveToNote:(Note*)note{
-	NSString *name = [ quickChoices objectAtIndex:[ picker selectedRowInComponent:0 ] ];
-	[ note setFireName:name minutes: [ choicesTimes objectForKey:name ] ];
+	note.alarmName = [ quickChoices objectAtIndex:[ picker selectedRowInComponent:0 ] ];
+	note.fireDate  = [ self date ];
 }
 
 
@@ -50,7 +50,11 @@
 
 -(NSDate*)date{
 	NSNumber *minutes = [ choicesTimes valueForKey: [ quickChoices objectAtIndex: [ picker selectedRowInComponent:0 ] ] ];
-	if ( ! [ minutes boolValue ] ){
+	if ( 31 == [ minutes intValue] ){
+		NSDate *now = [ NSDate date ];
+		NSDateComponents *components = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:now];
+		return [ now dateByAddingTimeInterval: (( 60 -  [components minute] )*60) ];
+	} else if ( ! [ minutes boolValue ] ){
 		return NULL;
 	} else {
 		return [ NSDate dateWithTimeIntervalSinceNow: [ minutes intValue ] * 60 ];

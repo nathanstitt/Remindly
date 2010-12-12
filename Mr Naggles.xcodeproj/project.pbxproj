@@ -17,12 +17,13 @@
 		45017382128CE74F003E71FE /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 45017381128CE74F003E71FE /* blank.png */; };
 		45017392128CE8C7003E71FE /* empty.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45017391128CE8C7003E71FE /* empty.plist */; };
 		450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED516128B71E600E7E0C6 /* MainViewController.m */; };
+		4563DFB012B06C01004588A6 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4563DFAE12B06C01004588A6 /* GradientButton.m */; };
 		456FD35C1290EEC500076641 /* AlarmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 456FD35B1290EEC500076641 /* AlarmView.m */; };
 		45792CC01294B4A2001C834B /* NSDate+HumanInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */; };
-		458234E21288FE1400EC555C /* PreviewScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458234E11288FE1400EC555C /* PreviewScrollView.m */; };
+		458234E21288FE1400EC555C /* NotesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458234E11288FE1400EC555C /* NotesScrollView.m */; };
 		458234E61288FE8F00EC555C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458234E51288FE8F00EC555C /* QuartzCore.framework */; };
 		458235E31289034700EC555C /* ScrollController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235E21289034700EC555C /* ScrollController.m */; };
-		458235EF128903F200EC555C /* TapImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235EE128903F200EC555C /* TapImage.m */; };
+		458235EF128903F200EC555C /* NotePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235EE128903F200EC555C /* NotePreviewView.m */; };
 		4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45853369128B69BC00793A24 /* DrawingViewController.m */; };
 		459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 459402981296241000F11F95 /* AlarmQuickTimes.m */; };
 		45A6C30812A360280027AF86 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A6C30612A360280027AF86 /* Icon@2x.png */; };
@@ -30,7 +31,6 @@
 		45A6C54812A492010027AF86 /* AlarmTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C54712A492010027AF86 /* AlarmTitleLabel.m */; };
 		45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C6E812A5F7E70027AF86 /* ColorButton.m */; };
 		45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C7F712A721430027AF86 /* DrawingColorManager.m */; };
-		45BFB93E12A732FB004EB7A2 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB93C12A732FB004EB7A2 /* GradientButton.m */; };
 		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
 		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
@@ -59,17 +59,19 @@
 		45017391128CE8C7003E71FE /* empty.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = empty.plist; sourceTree = "<group>"; };
 		450ED515128B71E600E7E0C6 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		450ED516128B71E600E7E0C6 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		4563DFAE12B06C01004588A6 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
+		4563DFAF12B06C01004588A6 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
 		456FD35A1290EEC500076641 /* AlarmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmView.h; sourceTree = "<group>"; };
 		456FD35B1290EEC500076641 /* AlarmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmView.m; sourceTree = "<group>"; };
 		45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HumanInterval.h"; sourceTree = "<group>"; };
 		45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+HumanInterval.m"; sourceTree = "<group>"; };
-		458234E01288FE1400EC555C /* PreviewScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewScrollView.h; sourceTree = "<group>"; };
-		458234E11288FE1400EC555C /* PreviewScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewScrollView.m; sourceTree = "<group>"; };
+		458234E01288FE1400EC555C /* NotesScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesScrollView.h; sourceTree = "<group>"; };
+		458234E11288FE1400EC555C /* NotesScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesScrollView.m; sourceTree = "<group>"; };
 		458234E51288FE8F00EC555C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		458235E11289034700EC555C /* ScrollController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollController.h; sourceTree = "<group>"; };
 		458235E21289034700EC555C /* ScrollController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollController.m; sourceTree = "<group>"; };
-		458235ED128903F200EC555C /* TapImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapImage.h; sourceTree = "<group>"; };
-		458235EE128903F200EC555C /* TapImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapImage.m; sourceTree = "<group>"; };
+		458235ED128903F200EC555C /* NotePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePreviewView.h; sourceTree = "<group>"; };
+		458235EE128903F200EC555C /* NotePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePreviewView.m; sourceTree = "<group>"; };
 		45853368128B69BC00793A24 /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
 		45853369128B69BC00793A24 /* DrawingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingViewController.m; sourceTree = "<group>"; };
 		459402971296241000F11F95 /* AlarmQuickTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmQuickTimes.h; sourceTree = "<group>"; };
@@ -82,8 +84,6 @@
 		45A6C6E812A5F7E70027AF86 /* ColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorButton.m; sourceTree = "<group>"; };
 		45A6C7F612A721430027AF86 /* DrawingColorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingColorManager.h; sourceTree = "<group>"; };
 		45A6C7F712A721430027AF86 /* DrawingColorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingColorManager.m; sourceTree = "<group>"; };
-		45BFB93C12A732FB004EB7A2 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
-		45BFB93D12A732FB004EB7A2 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
 		45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAbsoluteTimes.h; sourceTree = "<group>"; };
 		45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAbsoluteTimes.m; sourceTree = "<group>"; };
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
@@ -118,18 +118,13 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				45BFB93D12A732FB004EB7A2 /* GradientButton.h */,
-				45BFB93C12A732FB004EB7A2 /* GradientButton.m */,
-				45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */,
-				45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */,
-				45EE58AD12ADC16600732503 /* UIColor+FromToRGB.h */,
-				45EE58AE12ADC16600732503 /* UIColor+FromToRGB.m */,
-				458235ED128903F200EC555C /* TapImage.h */,
-				458235EE128903F200EC555C /* TapImage.m */,
+				4563DFB112B06C05004588A6 /* Misc */,
+				458235ED128903F200EC555C /* NotePreviewView.h */,
+				458235EE128903F200EC555C /* NotePreviewView.m */,
+				458234E01288FE1400EC555C /* NotesScrollView.h */,
+				458234E11288FE1400EC555C /* NotesScrollView.m */,
 				458235E11289034700EC555C /* ScrollController.h */,
 				458235E21289034700EC555C /* ScrollController.m */,
-				458234E01288FE1400EC555C /* PreviewScrollView.h */,
-				458234E11288FE1400EC555C /* PreviewScrollView.m */,
 				45853368128B69BC00793A24 /* DrawingViewController.h */,
 				45853369128B69BC00793A24 /* DrawingViewController.m */,
 				450ED515128B71E600E7E0C6 /* MainViewController.h */,
@@ -204,6 +199,19 @@
 				458234E51288FE8F00EC555C /* QuartzCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4563DFB112B06C05004588A6 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				4563DFAE12B06C01004588A6 /* GradientButton.m */,
+				4563DFAF12B06C01004588A6 /* GradientButton.h */,
+				45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */,
+				45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */,
+				45EE58AD12ADC16600732503 /* UIColor+FromToRGB.h */,
+				45EE58AE12ADC16600732503 /* UIColor+FromToRGB.m */,
+			);
+			name = Misc;
 			sourceTree = "<group>";
 		};
 		45823602128904C600EC555C /* Images */ = {
@@ -303,9 +311,9 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
-				458234E21288FE1400EC555C /* PreviewScrollView.m in Sources */,
+				458234E21288FE1400EC555C /* NotesScrollView.m in Sources */,
 				458235E31289034700EC555C /* ScrollController.m in Sources */,
-				458235EF128903F200EC555C /* TapImage.m in Sources */,
+				458235EF128903F200EC555C /* NotePreviewView.m in Sources */,
 				4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */,
 				450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */,
 				4501719E128B849A003E71FE /* NotesManager.m in Sources */,
@@ -316,11 +324,11 @@
 				45A6C54812A492010027AF86 /* AlarmTitleLabel.m in Sources */,
 				45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */,
 				45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */,
-				45BFB93E12A732FB004EB7A2 /* GradientButton.m in Sources */,
 				45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */,
 				45EE569312A9F04D00732503 /* CountingButton.m in Sources */,
 				45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */,
 				45EE58AF12ADC16600732503 /* UIColor+FromToRGB.m in Sources */,
+				4563DFB012B06C01004588A6 /* GradientButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,12 +366,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: nathan stitt (N2BSSH8J3G)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PREBINDING = NO;
+				PROVISIONING_PROFILE = "8AA9454F-6025-4FC4-B52B-2A8BE407FFB1";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

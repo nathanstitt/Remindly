@@ -62,7 +62,7 @@ static NotesManager *_instance;
 				note.notification = notification;
 		}
 	}
-	NSSortDescriptor *dateSorter = [[NSSortDescriptor alloc] initWithKey:@"lastSave" ascending:NO ];
+	NSSortDescriptor *dateSorter = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:NO ];
 	[ notes sortUsingDescriptors:[NSArray arrayWithObject:dateSorter]];
     return self;
 }

@@ -83,12 +83,7 @@
 	[ quickTimes reset ];
 	[ absTimes reset ];
 	if ( note.fireDate ){
-		if ( note.alarmName ){
-			[ quickTimes setFromNote:note ];
-			[ self selectIndex: 0 ];
-		} else {
-			[ self selectIndex: 1 ];
-		}
+		[ self selectIndex: 1 ];
 		absTimes.date = note.fireDate;
 	}
 	self.isShowing = YES;
@@ -99,7 +94,7 @@
 	if ( quickTimes.date ){
 		[ quickTimes saveToNote: note ];
 	} else {
-		[ note setFireDate: absTimes.date ];
+		[ absTimes saveToNote: note ];
 	}
 }
 
@@ -116,10 +111,11 @@
 
 
 -(void)quickSelectionMade {
-	NSDate *d = quickTimes.date;
+	NSDate *d = [ quickTimes.date retain ];
 	if ( d ){
 		absTimes.date = d;
 	}
+	[ d release ];
 }
 
 

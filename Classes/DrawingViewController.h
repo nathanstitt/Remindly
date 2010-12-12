@@ -13,11 +13,12 @@
 
 @interface DrawingViewController : UIViewController {
 	CGPoint lastPoint;
-	CGPoint pointBeforeLast;
+	CGPoint points[5];
+	
 	UIImageView *drawImage;
 	Note *note;
 	BOOL isErasing;
-	UILabel *alarmLabel;
+	AlarmTitleLabel *alarmLabel;
 	int mouseMoved;
 	CGColorRef color;
 }
@@ -25,7 +26,7 @@
 - (void)clear;
 - (void)noteUpdated;
 
-
+@property (nonatomic) BOOL hidden;
 @property (nonatomic) CGColorRef color;
 @property (nonatomic,retain) Note* note;
 @property (nonatomic) BOOL isErasing;
