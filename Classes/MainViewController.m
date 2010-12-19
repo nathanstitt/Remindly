@@ -9,7 +9,8 @@
 #import "MainViewController.h"
 #import "AlarmView.h"
 #import "ColorButton.h"
-
+#import "DrawingViewController.h"
+#import "NotesManager.h"
 
 @implementation MainViewController
 
@@ -25,7 +26,7 @@
 	scroll.view.hidden = YES;
 	[ self.view addSubview: scroll.view ];
 
-	draw = [[ DrawingViewController alloc ] init ];
+	draw = [[ DrawingViewController alloc ] initWithMainView:self ];
 	draw.view.frame = CGRectMake(0, 0, 320, 420 );
 	draw.note = [[ NotesManager instance ] defaultEditingNote ]; 
 	[ self.view addSubview: draw.view ];
@@ -45,7 +46,7 @@
 
 	
 	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
-	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm-clock-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarm:) ];
+	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm-clock-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
 	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];
@@ -93,11 +94,14 @@
 	[ self updateCount ];
 }
 
--(void)setAlarm:(id)sel {
+-(void)setAlarmPressed:(id)sel {
+	[ self showAlarm ];
+}
+
+-(void)showAlarm{
 	[ draw.note save ];
 	[ alarmView showWithNote: draw.note ];
 }
-
 
 -(void) updateCount {
 	[ countBtn setCount:[[[ NotesManager instance ] notes ] count] ];

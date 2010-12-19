@@ -7,11 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "ScrollController.h"
-#import "DrawingViewController.h"
 #import "MainViewController.h"
 #import "NotesManager.h"
-#import "UIColor+FromToRGB.h"
+
 @implementation AppDelegate
 
 @synthesize window;

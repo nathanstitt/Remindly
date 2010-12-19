@@ -6,15 +6,20 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "DrawingViewController.h"
 #import <QuartzCore/QuartzCore.h>
+
+#import "MainViewController.h"
+#import "AlarmTitleLabel.h"
+#import "NotesManager.h"
+#import "DrawingViewController.h"
 
 @implementation DrawingViewController
 
 @synthesize note,color,isErasing;
 
-- (id)init {
+- (id)initWithMainView:(MainViewController*)mv {
     self = [super init ];
+	mainView = mv;
 	self.view.backgroundColor = [ UIColor whiteColor ];
 
 	drawImage = [[UIImageView alloc] initWithImage:nil];
@@ -69,12 +74,9 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	
-//	alarmLabel.hidden = YES;
-	
 	UITouch *touch = [touches anyObject];
 	if ([touch tapCount] == 2) {
-//		drawImage.image = nil;
-//		return;
+		[ mainView showAlarm ];
 	}
 		
 	for ( NSInteger i=0; i<5; i++){
@@ -83,8 +85,6 @@
 	points[0] = [touch locationInView:self.view];
 
 	lastPoint = [touch locationInView:self.view];
-	//lastPoint.y -= 20;
-
 }
 
 
@@ -92,7 +92,7 @@
 
 	UITouch *touch = [touches anyObject];	
 	
-	
+	wasMoved = NO;
 
 	CGPoint currentPoint = [touch locationInView:self.view];
 	for ( NSInteger i=4; i>0; i--){
@@ -103,7 +103,7 @@
 	if ( CGPointEqualToPoint( CGPointZero , points[2] ) ){
 		return;
 	}
-
+	wasMoved = YES;
 	UIGraphicsBeginImageContext(self.view.frame.size);
 	[ drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
@@ -173,6 +173,9 @@
 	
 	NSLog(@"Touches Ended");
 
+	if ( ! wasMoved ){
+		return;
+	}
 //	alarmLabel.hidden = NO;
 	
 	UIGraphicsBeginImageContext(self.view.frame.size);

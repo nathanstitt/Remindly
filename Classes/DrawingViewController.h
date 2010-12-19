@@ -7,22 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NotesManager.h"
-#import "AlarmTitleLabel.h"
 #import "GradientButton.h"
+
+@class MainViewController,AlarmTitleLabel,Note;
 
 @interface DrawingViewController : UIViewController {
 	CGPoint lastPoint;
 	CGPoint points[5];
-	
+	MainViewController *mainView;
 	UIImageView *drawImage;
 	Note *note;
 	BOOL isErasing;
+	BOOL wasMoved;
 	AlarmTitleLabel *alarmLabel;
 	int mouseMoved;
 	CGColorRef color;
 }
 
+- (id)initWithMainView:(MainViewController*)mv;
 - (void)clear;
 - (void)noteUpdated;
 

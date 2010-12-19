@@ -34,6 +34,7 @@
 	return self;
 }
 
+
 -(NSString*)alarmDescription{
 	NSDate *fire = [ notification fireDate ];
 	if ( fire ){
@@ -43,6 +44,7 @@
 	}
 }
 
+
 -(void)setAlarmName:(NSString *)name {
 	[plist setObject:name forKey:@"alarmName"];
 }
@@ -51,6 +53,7 @@
 -(NSDate*)fireDate{
 	return [ plist valueForKey:@"fireDate" ];
 }
+
 
 -(void)setFireDate:(NSDate*)date{
 	[ plist setValue: date forKey:@"fireDate" ];
@@ -123,7 +126,10 @@
 }
 
 - (void)dealloc {
-	[ notification release];
+	if ( notification ){
+		[ [ UIApplication sharedApplication] cancelLocalNotification: notification ];
+		[ notification release];
+	}
 	[ directory    release ];
 	[ image release ];
 	[ plist release ];

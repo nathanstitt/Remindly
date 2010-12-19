@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DrawingViewController.h"
 #import "ScrollController.h"
 #import "AlarmView.h"
 #import "ColorButton.h"
 #import "DrawingColorManager.h"
 #import "CountingButton.h"
 #import "DrawEraseButton.h"
+
+@class DrawingViewController;
 
 @interface MainViewController : UIViewController <AlarmViewDelegate,DrawingColorManagerDelegate> {
 	ScrollController *scroll;
@@ -32,5 +33,5 @@
 -(void) selectNote:(Note*)note;
 -(void) noteWasSelected:(Note*)note;
 -(void) updateCount;
-
+-(void) showAlarm;
 @end

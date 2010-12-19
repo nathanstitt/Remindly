@@ -64,6 +64,7 @@ static NotesManager *_instance;
 	}
 	NSSortDescriptor *dateSorter = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:NO ];
 	[ notes sortUsingDescriptors:[NSArray arrayWithObject:dateSorter]];
+	[ dateSorter release ];
     return self;
 }
 
@@ -123,7 +124,7 @@ static NotesManager *_instance;
 	Note *note = [[ Note alloc ] initWithDirectoryName: [ self createNoteDirectory ] ];
 	[ note save ];
 	[ notes insertObject:note atIndex:0];
-	return note;
+	return [ note autorelease ];
 }
 
 -(Note*)defaultEditingNote{

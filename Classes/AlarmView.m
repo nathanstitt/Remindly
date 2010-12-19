@@ -82,11 +82,11 @@
 -(void)showWithNote:(Note*)note {
 	[ quickTimes reset ];
 	[ absTimes reset ];
+	self.isShowing = YES;
 	if ( note.fireDate ){
 		[ self selectIndex: 1 ];
 		absTimes.date = note.fireDate;
 	}
-	self.isShowing = YES;
 }
 
 
@@ -123,6 +123,7 @@
 	CGRect frame = self.frame;
 	NSInteger ht = self.frame.size.height;
 	if ( v ){
+		[ self selectIndex:0 ];
 		frame.origin.y = 480 - ( ht - 20 );
 	} else {
 		frame.origin.y = 480;
