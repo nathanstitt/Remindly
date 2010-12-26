@@ -17,6 +17,7 @@
 		45017382128CE74F003E71FE /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 45017381128CE74F003E71FE /* blank.png */; };
 		45017392128CE8C7003E71FE /* empty.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45017391128CE8C7003E71FE /* empty.plist */; };
 		450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED516128B71E600E7E0C6 /* MainViewController.m */; };
+		4548DEAC12C55D0200815580 /* StoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4548DEAB12C55D0200815580 /* StoreView.m */; };
 		4563DFB012B06C01004588A6 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4563DFAE12B06C01004588A6 /* GradientButton.m */; };
 		456FD35C1290EEC500076641 /* AlarmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 456FD35B1290EEC500076641 /* AlarmView.m */; };
 		45792CC01294B4A2001C834B /* NSDate+HumanInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */; };
@@ -33,6 +34,8 @@
 		45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C7F712A721430027AF86 /* DrawingColorManager.m */; };
 		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
+		45EBDA3312BEFB4F001999A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EBDA3212BEFB4F001999A4 /* StoreKit.framework */; };
+		45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EBDA3712BEFC72001999A4 /* PurchaseManager.m */; };
 		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
 		45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE571C12AB359200732503 /* DrawEraseButton.m */; };
 		45EE572F12AB383700732503 /* erase-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE572E12AB383700732503 /* erase-icon.png */; };
@@ -59,6 +62,8 @@
 		45017391128CE8C7003E71FE /* empty.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = empty.plist; sourceTree = "<group>"; };
 		450ED515128B71E600E7E0C6 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		450ED516128B71E600E7E0C6 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		4548DEAA12C55D0200815580 /* StoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreView.h; sourceTree = "<group>"; };
+		4548DEAB12C55D0200815580 /* StoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreView.m; sourceTree = "<group>"; };
 		4563DFAE12B06C01004588A6 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
 		4563DFAF12B06C01004588A6 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
 		456FD35A1290EEC500076641 /* AlarmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmView.h; sourceTree = "<group>"; };
@@ -87,6 +92,9 @@
 		45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAbsoluteTimes.h; sourceTree = "<group>"; };
 		45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAbsoluteTimes.m; sourceTree = "<group>"; };
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
+		45EBDA3212BEFB4F001999A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		45EBDA3612BEFC72001999A4 /* PurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseManager.h; sourceTree = "<group>"; };
+		45EBDA3712BEFC72001999A4 /* PurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseManager.m; sourceTree = "<group>"; };
 		45EE569112A9F04D00732503 /* CountingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountingButton.h; sourceTree = "<group>"; };
 		45EE569212A9F04D00732503 /* CountingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountingButton.m; sourceTree = "<group>"; };
 		45EE571B12AB359200732503 /* DrawEraseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawEraseButton.h; sourceTree = "<group>"; };
@@ -109,6 +117,7 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				458234E61288FE8F00EC555C /* QuartzCore.framework in Frameworks */,
+				45EBDA3312BEFB4F001999A4 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +155,8 @@
 				45EE569212A9F04D00732503 /* CountingButton.m */,
 				45EE571B12AB359200732503 /* DrawEraseButton.h */,
 				45EE571C12AB359200732503 /* DrawEraseButton.m */,
+				4548DEAA12C55D0200815580 /* StoreView.h */,
+				4548DEAB12C55D0200815580 /* StoreView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -197,6 +208,7 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				458234E51288FE8F00EC555C /* QuartzCore.framework */,
+				45EBDA3212BEFB4F001999A4 /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -210,6 +222,8 @@
 				45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */,
 				45EE58AD12ADC16600732503 /* UIColor+FromToRGB.h */,
 				45EE58AE12ADC16600732503 /* UIColor+FromToRGB.m */,
+				45EBDA3612BEFC72001999A4 /* PurchaseManager.h */,
+				45EBDA3712BEFC72001999A4 /* PurchaseManager.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -329,6 +343,8 @@
 				45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */,
 				45EE58AF12ADC16600732503 /* UIColor+FromToRGB.m in Sources */,
 				4563DFB012B06C01004588A6 /* GradientButton.m in Sources */,
+				45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */,
+				4548DEAC12C55D0200815580 /* StoreView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,14 +382,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nathan stitt";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A11406B1-C54B-4BB1-BC0A-AC2A9F5D60C0";
 				SDKROOT = iphoneos;
 			};
 			name = Distribution;
@@ -382,13 +398,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nathan stitt";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Remindly_Prefix.pch;
 				INFOPLIST_FILE = "Remindly-Info.plist";
 				PRODUCT_NAME = Remindly;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A11406B1-C54B-4BB1-BC0A-AC2A9F5D60C0";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -404,7 +420,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "8AA9454F-6025-4FC4-B52B-2A8BE407FFB1";
+				PROVISIONING_PROFILE = "AC1419C9-8195-4826-92C6-B8D09C8CC7DD";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

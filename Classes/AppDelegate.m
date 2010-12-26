@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "NotesManager.h"
+#import "PurchaseManager.h"
 
 @implementation AppDelegate
 
@@ -20,6 +21,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     [ NotesManager start ];
+	
+	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+	if ( ! [ defs integerForKey:@"numberNotesAllowed" ] ){
+		[ defs setInteger:2 forKey:@"numberNotesAllowed" ];
+		[ defs synchronize ];
+	}
  
 	application.applicationIconBadgeNumber = 0;
  
@@ -33,9 +40,12 @@
 		}
     }
 	
-	for ( UILocalNotification *sced in [[UIApplication sharedApplication] scheduledLocalNotifications ]){
-		NSLog(@"Notification on: %@", [ sced.userInfo objectForKey:@"directory"] );
-	}
+	purchaseManager = [[PurchaseManager alloc] init ];
+
+//	
+//	for ( UILocalNotification *sced in [[UIApplication sharedApplication] scheduledLocalNotifications ]){
+//		NSLog(@"Notification on: %@", [ sced.userInfo objectForKey:@"directory"] );
+//	}
 	
     //CGRect appFrame = [UIScreen mainScreen].applicationFrame;
     

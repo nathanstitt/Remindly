@@ -11,6 +11,7 @@
 #import "ColorButton.h"
 #import "DrawingViewController.h"
 #import "NotesManager.h"
+#import "StoreView.h"
 
 @implementation MainViewController
 
@@ -70,6 +71,9 @@
 	[ self.view addSubview: alarmView ];
 
 	[ scroll addNotes:[ NotesManager instance ].notes ];
+	
+	StoreView *store = [[ StoreView alloc ] initAndShowInto: self.view ];
+		[ store release ];
 
 	self.view.backgroundColor = [UIColor grayColor ];
 
@@ -88,10 +92,19 @@
 }
 
 -(void)addNote:(id)sel{
-	Note *n = [[ NotesManager instance ] addNote ];
-	draw.note = n;
-	[ scroll addNote:n ];
-	[ self updateCount ];
+	NotesManager *manager = [ NotesManager instance ];
+	if ( [ manager isAllowedMoreNotes ] ){
+		Note *n = [ manager addNote ];
+		draw.note = n;
+		[ scroll addNote:n ];
+		[ self updateCount ];
+	} else {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more reminders"
+									message:@"You've reached the maximum number of reminders allowed.\n\nWould you like to upgrade to a version allowing additional reminders?"  
+									delegate:self cancelButtonTitle:@"No" otherButtonTitles: @"Yes", nil];
+		[alert show];
+		[alert release];
+	}
 }
 
 -(void)setAlarmPressed:(id)sel {
@@ -164,6 +177,14 @@
 	[ alarmView saveToNote: draw.note ];
 	[ draw.note scedule ];
 	[ draw noteUpdated ];
+}
+
+#pragma mark UIAlertViewDelegate delegate methods
+- (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if ( 1 == buttonIndex ){
+		StoreView *store = [[ StoreView alloc ] initAndShowInto: self.view ];
+		[ store release ];
+	}
 }
 
 #pragma mark DrawingColorManagerDelegate delegate methods 

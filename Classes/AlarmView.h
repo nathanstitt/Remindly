@@ -29,6 +29,7 @@
 	AlarmQuickTimes *quickTimes;
 	AlarmAbsoluteTimes *absTimes;
 	UISegmentedControl *typeCtrl;
+	UITabBar *tabBar;
 }
 
 -(void)showWithNote:(Note*)note;

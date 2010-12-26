@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
 #import "Note.h"
+#import "PurchaseManager.h"
 
 @interface AppDelegate : NSObject <UIApplicationDelegate,UIAlertViewDelegate> {
     UIWindow *window;
 	MainViewController *mvc;
 	Note *pendingNote;
+	PurchaseManager *purchaseManager;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

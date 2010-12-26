@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface NSDate (HumanInterval)
-- (NSString *) humanIntervalSinceNow;
+- (NSString *) humanIntervalFromNow;
 @end

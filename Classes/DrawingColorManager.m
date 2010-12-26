@@ -11,6 +11,10 @@
 #import "ColorButton.h"
 #import "UIColor+FromToRGB.h"
 
+@interface DrawingColorManager()
+-(void)colorSelected:(ColorButton*)cv;
+@end
+
 @implementation DrawingColorManager
 
 @synthesize toolBar,delegate,pickerButton,selectedColor;
@@ -30,8 +34,8 @@
 	toolBar.barStyle = UIBarStyleBlack;
 	toolBar.frame = CGRectMake( 0, 420, 320, 50 );
 	[ toolBar sizeToFit];
-	
-	toolBar.items = [NSArray arrayWithObjects:
+
+	toolBar.items = [ NSArray arrayWithObjects:
 					 [ self makeBarButton:[UIColor blackColor] ],
 					 [ self makeBarButton:[UIColor darkGrayColor ] ],
 					 [ self makeBarButton:[UIColor lightGrayColor ] ],
@@ -46,23 +50,41 @@
 					 [ self makeBarButton:[UIColor purpleColor ] ],
 					 [ self makeBarButton:[UIColor brownColor ] ],
 					 NULL ];
-	
-	
-	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-	NSUInteger df =[ prefs doubleForKey:@"lastColorSelected" ];
-	if ( ! df ){
-		df = [[ UIColor darkGrayColor ] toRGBInt ];
-		[prefs synchronize];
+
+	NSEnumerator *enumerator = [ toolBar.items objectEnumerator];
+	id btn;
+	NSInteger tag = 0;
+	while ( btn = [enumerator nextObject]) {
+		tag++;
+		((ColorButton*)( (UIBarButtonItem*) btn ).customView ).tag = tag;
 	}
-	
-	self.selectedColor = [ UIColor UIColorFromRGBInt:df ];
-	pickerButton = [ self makeBarButton: self.selectedColor ];
+
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSInteger df =[ prefs integerForKey: @"lastColorSelected" ];
+    if ( ! df ){
+		df = 2;
+		[ prefs setInteger:df forKey: @"lastColorSelected" ];
+		[ prefs synchronize ];
+	}
+
+	pickerButton = [ self makeBarButton: [UIColor lightGrayColor]];
 
 	[ pickerButton retain ];
+
 	[ ((ColorButton*)pickerButton.customView) removeTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
-	
 	[ ((ColorButton*)pickerButton.customView) addTarget:self action:@selector(toggleToolBar:) forControlEvents:UIControlEventTouchUpInside ];
-	
+
+	@try {
+		 [ self colorSelected:
+                ((ColorButton*)( (UIBarButtonItem*) [ toolBar.items objectAtIndex:df-1 ] ).customView ) ];
+	}
+	@catch (NSException *exception) {
+		NSLog( @"main: Caught %@: %@, probably bad color index %ld was stored", 
+				[ exception name   ],
+				[ exception reason ],
+				df );
+
+	}
 	return self;
 }
 
@@ -73,8 +95,9 @@
 	if ( delegate ){
 		[ delegate drawingColorManagerColorUpdated:self color:self.selectedColor.CGColor];
 	}
+	
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-	[ prefs setInteger: [  self.selectedColor toRGBInt ] forKey:@"lastColorSelected"];
+	[ prefs setInteger: cv.tag forKey:@"lastColorSelected"];
 	[ prefs synchronize ];
 }
 

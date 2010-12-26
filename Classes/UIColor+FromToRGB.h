@@ -11,7 +11,7 @@
 
 @interface UIColor(FromToRGB) 
 
-+(UIColor*)UIColorFromRGBInt:(NSUInteger)rgb;
--(NSUInteger)toRGBInt;
++(UIColor*)UIColorFromRGBUInt:(NSUInteger)rgb;
+-(NSInteger)toRGBUInt;
 
 @end

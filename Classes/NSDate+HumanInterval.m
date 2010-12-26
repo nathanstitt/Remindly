@@ -18,47 +18,70 @@
 
 @implementation NSDate (HumanInterval)
 
-- (NSString *) humanIntervalSinceNow {
-	NSString *ret;
+- (NSString *) humanIntervalFromNow {
+	NSMutableArray *segments = [ NSMutableArray arrayWithCapacity:1 ];
     int secs = [self timeIntervalSinceNow];
+
     int delta = secs < 0 ? secs * -1 : secs;
-    if (delta <= 30 * SECOND) {
-        ret = NSLocalizedString(@"a few secs", nil);
-    } else if (delta < 2 * MINUTE ) {
-        ret = @"around a minute";
-    } else if (delta <= 45 * MINUTE) {
-        ret = [NSString stringWithFormat:@"%u minutes", delta / MINUTE];
-    } else if (delta <= 90 * MINUTE) {
-        ret = @"1 hour";
-    } else if (delta < 3 * HOUR) {
-        ret = @"2 hours";
-    } else if (delta < 23 * HOUR) {
-        ret = [NSString stringWithFormat:@"%u hours", delta / HOUR];
-    } else if (delta < 36 * HOUR) {
-        ret = @"1 day";
-    } else if (delta < 72 * HOUR) {
-        ret = @"2 days";
-    } else if (delta < 7 * DAY) {
-        ret = [NSString stringWithFormat:@"%u days", delta / DAY];
-    } else if (delta < 11 * DAY) {
-        ret = @"1 week";
-    } else if (delta < 14 * DAY) {
-        ret = @"2 weeks";
-    } else if (delta < 9 * WEEK) {
-        ret = [NSString stringWithFormat:@"%u weeks", delta / WEEK];
-    } else if (delta < 19 * MONTH) {
-        ret = [NSString stringWithFormat:@"%u months", delta / MONTH];        
-    } else if (delta < 2 * YEAR) {
-        ret = @"1 year";
-    } else {
-        ret = [NSString stringWithFormat:@"%u years", delta / YEAR];        
-    }
-	if ( delta > 72 * HOUR ){
+	int remain = delta;
+	
+	if ( remain > 2 * YEAR) {
+		[ segments  addObject: [ NSString stringWithFormat:@"%u years", remain / YEAR ] ];
+	} else if ( remain > 1 * YEAR ){
+		[ segments addObject: [ NSString stringWithFormat:@"1 year" ] ];
+	}
+	
+	remain -= ( remain / YEAR ) * YEAR;
+	
+	if ( remain > 2 * MONTH ){
+		[ segments  addObject: [ NSString stringWithFormat:@"%u months", remain / MONTH ] ];
+	} else if ( remain > 1 * MONTH ){
+		[ segments  addObject: [ NSString stringWithFormat:@"1 month"] ];
+	}
+
+	remain -= ( remain / MONTH ) * MONTH;
+		
+	if ( remain > 2 * DAY ){
+		[ segments  addObject: [ NSString stringWithFormat:@"%u days", remain / DAY ] ];
+	} else if ( remain > 1 * DAY ){
+		[ segments  addObject: [ NSString stringWithFormat:@"1 day"] ];
+	}
+	
+	remain -= ( remain / DAY ) * DAY;
+	
+	if ( delta < MONTH ){
+		if ( remain > 2 * HOUR ){
+			[ segments  addObject: [ NSString stringWithFormat:@"%u hours", remain / HOUR ] ];
+		} else if ( remain > 1 * DAY ){
+			[ segments  addObject: [ NSString stringWithFormat:@"1 hour"] ];
+		}
+	
+		remain -= ( remain / HOUR ) * HOUR;
+
+		if ( remain > 2 * MINUTE ){
+			[ segments  addObject: [ NSString stringWithFormat:@"%u minutes", remain / MINUTE ] ];
+		} else if ( remain > 1 * DAY ){
+			[ segments  addObject: [ NSString stringWithFormat:@"1 minute"] ];
+		}
+	}
+	NSString *ret;
+	if ( [ segments count ] > 1 ){
+		NSString *last = [ segments lastObject ];
+		[ segments removeLastObject ];
+		ret = [ NSString stringWithFormat:@"%@,%@",
+			   [ segments componentsJoinedByString:@"," ],
+			   last ];
+	} else if ( [ segments count ] ){
+		ret = [ segments lastObject ];
+	}
+
+	if ( delta > DAY*3 ){
 		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 		[formatter setDateFormat:@"h:mm a"];
-		[ NSString stringWithFormat:@"%@ %@", [formatter stringFromDate:self], ret ]; 
+		ret = [ NSString stringWithFormat:@"%@ %@", [formatter stringFromDate:self], ret ]; 
 		[ formatter release ];
 	}
+	
 	return [ NSString stringWithFormat:@"%@ %@", ret, 
 			secs < 0 ? @"ago" : @"from now" ];
 }

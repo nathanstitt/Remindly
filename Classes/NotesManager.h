@@ -20,6 +20,9 @@
 -(Note*)addNote;
 -(Note*)noteWithDirectory:(NSString*)dir;
 -(Note*)deleteNote:(Note*)note;
+-(BOOL)isAllowedMoreNotes;
 
+
+@property ( nonatomic ) NSInteger maxNumberOfNotes;
 @property (readonly,nonatomic) NSArray *notes;
 @end

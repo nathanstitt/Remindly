@@ -21,7 +21,6 @@
 
 -(void)reset {
 	picker.date = [ NSDate date ];
-	picker.minimumDate = picker.date;
 }
 
 

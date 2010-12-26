@@ -75,10 +75,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	
 	UITouch *touch = [touches anyObject];
-	if ([touch tapCount] == 2) {
-		[ mainView showAlarm ];
-	}
-		
+
 	for ( NSInteger i=0; i<5; i++){
 		points[i] = CGPointZero;
 	}

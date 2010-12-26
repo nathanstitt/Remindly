@@ -127,6 +127,21 @@ static NotesManager *_instance;
 	return [ note autorelease ];
 }
 
+-(NSInteger)maxNumberOfNotes{
+	return [[NSUserDefaults standardUserDefaults] integerForKey:@"numberNotesAllowed"];
+}
+
+-(void)setMaxNumberOfNotes:(NSInteger)n{
+	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+	[ defs setInteger:n forKey:@"numberNotesAllowed"];
+	[ defs synchronize ];
+}
+
+
+-(BOOL)isAllowedMoreNotes {
+	return ( [ notes count ] < self.maxNumberOfNotes );
+}
+
 -(Note*)defaultEditingNote{
 	return [ notes count ] ? [ notes objectAtIndex: 0 ] : [ self addNote ];
 }

@@ -16,7 +16,7 @@
 
 @class DrawingViewController;
 
-@interface MainViewController : UIViewController <AlarmViewDelegate,DrawingColorManagerDelegate> {
+@interface MainViewController : UIViewController <AlarmViewDelegate,UIAlertViewDelegate,DrawingColorManagerDelegate> {
 	ScrollController *scroll;
 	DrawingColorManager *dcm;
 	UIToolbar *mainToolbar;

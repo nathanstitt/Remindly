@@ -24,15 +24,13 @@
 	self.backgroundColor = [ UIColor blackColor ];
 
 	self.layer.cornerRadius = 5;
-	
+
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:
-                                              [ NSArray arrayWithObjects: @"Quick Selctions", @"Alarm Time", nil]      
-											];
-	
+                          [ NSArray arrayWithObjects: @"Quick Selctions", @"Alarm Time", nil] ];
 	typeCtrl.selectedSegmentIndex = 0;
 	typeCtrl.frame = CGRectMake( 0, 0, 320, 30 );
 	typeCtrl.segmentedControlStyle = UISegmentedControlStyleBezeled;
-	typeCtrl.tintColor = [ UIColor blackColor ];
+	typeCtrl.tintColor = [ UIColor darkGrayColor	];
 	[ typeCtrl addTarget:self action:@selector(typeCtrlChanged:) forControlEvents:UIControlEventValueChanged ];
 	[ self addSubview: typeCtrl ];
 	[ typeCtrl release ];
@@ -42,7 +40,7 @@
 
 	quickTimes = [[ AlarmQuickTimes alloc ] initWithAlarmView:self ];
 	[ self addSubview: quickTimes.view ];
-	
+
 	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(35, 250, 80, 30 ) ];
 	[ b addTarget:self action:@selector(cancelTouched:) forControlEvents:UIControlEventTouchUpInside ];
 	[ b setTitle:@"Cancel" forState:UIControlStateNormal ];

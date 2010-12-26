@@ -38,7 +38,7 @@
 -(NSString*)alarmDescription{
 	NSDate *fire = [ notification fireDate ];
 	if ( fire ){
-		return [ fire humanIntervalSinceNow ];
+		return [ fire humanIntervalFromNow ];
 	} else { 
 		return @"alarm not set";
 	}
