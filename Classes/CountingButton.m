@@ -17,11 +17,10 @@
 
     font = [UIFont boldSystemFontOfSize:13];
 	icon = [ UIImage imageNamed:@"photos_icon.png" ];
-
+	
 	button = [ UIButton buttonWithType: UIButtonTypeCustom ];
     button.titleLabel.font = font;
     button.titleLabel.shadowOffset = CGSizeMake(0, -1);
-    button.titleEdgeInsets = UIEdgeInsetsMake( 0, -25, 0, 0);
 
     [ button setImage:icon forState:UIControlStateNormal ];
     [ button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -38,6 +37,8 @@
 
 -(void)setCount:(NSInteger)c {
 	NSString *cnt = [ NSString stringWithFormat:@"%ld", c ];
+	CGSize size = [ cnt sizeWithFont: button.titleLabel.font ];
+    button.titleEdgeInsets = UIEdgeInsetsMake( 0, ( -23 - size.width), 0, 0);
 	[ button setTitle: cnt forState:UIControlStateNormal ];
 }
 

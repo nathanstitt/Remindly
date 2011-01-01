@@ -42,31 +42,13 @@
 	
 	purchaseManager = [[PurchaseManager alloc] init ];
 
-//	
-//	for ( UILocalNotification *sced in [[UIApplication sharedApplication] scheduledLocalNotifications ]){
-//		NSLog(@"Notification on: %@", [ sced.userInfo objectForKey:@"directory"] );
-//	}
-	
-    //CGRect appFrame = [UIScreen mainScreen].applicationFrame;
-    
-    // Create the window that will host the viewController
-    
-    // windowRect must start at 0, 0
-    // if (SHOW_SB == YES), appFrame will be '{{0, 20}, {320, 460}}'
     CGRect windowRect = CGRectMake(0, 0, 320, 480 );
     self.window = [[[UIWindow alloc] initWithFrame:windowRect] autorelease];    
-
-//	DrawingViewController *v = [[ DrawingViewController alloc ] init ];
-//	[ window addSubview:v.view ];
 	
 	mvc = [[MainViewController alloc ] init ];
 	mvc.view.frame = CGRectMake(0, 20, 320, 460 );
 	[ mvc viewWillAppear:NO ];
 	[ window addSubview:mvc.view ];
-
-//	ScrollViewPreviewViewController *pvc = [[ ScrollViewPreviewViewController alloc ] init ];
-//	[ window addSubview: pvc.view ] ; // accounts_view.view ];
-//	PreviewScrollView *pvs = [[ PreviewScrollView alloc ] initWithFrame: CGRectZero ];
 
     [self.window makeKeyAndVisible];
     return YES;

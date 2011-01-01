@@ -73,6 +73,8 @@
 			   last ];
 	} else if ( [ segments count ] ){
 		ret = [ segments lastObject ];
+	} else {
+		ret = @"under a minute";
 	}
 
 	if ( delta > DAY*3 ){

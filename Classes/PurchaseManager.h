@@ -12,7 +12,6 @@
 
 #define LIMITED_PRODUCT_ID @"com.iogee.remindly.limited"
 #define UNLIMITED_PRODUCT_ID @"com.iogee.remindly.unlimited"
-#define UNLIMITED_UPGRADE_PRODUCT_ID @"com.iogee.remindly.unlimited-upgrade"
 
 #define IN_APP_PURCHASE_MADE @"InAppPurchaseMade"
 #define IN_APP_PURCHASE_CANCELED @"InAppPurchaseCanceled"
