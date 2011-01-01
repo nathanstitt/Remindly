@@ -23,7 +23,6 @@
 
 	NSSet *productIdentifiers = [NSSet setWithObjects: LIMITED_PRODUCT_ID,
 								 UNLIMITED_PRODUCT_ID,
-								 UNLIMITED_UPGRADE_PRODUCT_ID,
 								 NULL
 								 ];
 
@@ -177,10 +176,6 @@
 			secondOption.textLabel.text       = product.localizedTitle;
 			secondOption.detailTextLabel.text = [ priceFormatter stringFromNumber: product.price ];
 			[ self setDesc: secondDesc text:product.localizedDescription ];
-		} else if ( [product.productIdentifier isEqualToString:UNLIMITED_UPGRADE_PRODUCT_ID ] ){
-			firstOption.textLabel.text        = product.localizedTitle;
-			firstOption.detailTextLabel.text  = [ priceFormatter stringFromNumber: product.price ];
-			[ self setDesc:firstDesc text:product.localizedDescription ];
 		}
 	}
 

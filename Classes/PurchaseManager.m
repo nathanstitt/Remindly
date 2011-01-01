@@ -21,13 +21,9 @@
 
 -(void)unlockReminders:(NSString*)productIdentifier{
 	if ( [ productIdentifier isEqualToString: LIMITED_PRODUCT_ID ] ) {
-		if ( [ NotesManager instance ].maxNumberOfNotes < 5 ){
-			[ NotesManager instance ].maxNumberOfNotes = 5;
-		}
+		[ NotesManager instance ].maxNumberOfNotes += 3;
 	} else if ( [ productIdentifier isEqualToString: UNLIMITED_PRODUCT_ID ] ) {
-			[ NotesManager instance ].maxNumberOfNotes = 9999999;
-	} else if ( [ productIdentifier isEqualToString: UNLIMITED_UPGRADE_PRODUCT_ID ]) {
-			[ NotesManager instance ].maxNumberOfNotes = 9999999;
+		[ NotesManager instance ].maxNumberOfNotes = 9999999;
 	} else {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unknown Appstore Response"
 									message:@"Received an unknown response from Apple, please report to IoGee Support"  

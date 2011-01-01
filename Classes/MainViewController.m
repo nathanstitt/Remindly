@@ -40,11 +40,10 @@
 	mainToolbar = [[UIToolbar alloc] init];
 	mainToolbar.barStyle = UIBarStyleBlack;
 	mainToolbar.frame = CGRectMake( 0, 420, 320, 50 );
-	[mainToolbar sizeToFit];
+	[ mainToolbar sizeToFit ];
 
 	countBtn = [[ CountingButton alloc ] initWithCount: [[[ NotesManager instance ] notes ] count] ];
 	[ countBtn.button addTarget:self action: @selector(selectNotes:) forControlEvents:UIControlEventTouchUpInside ];
-
 	
 	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
 	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm-clock-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
@@ -71,9 +70,6 @@
 	[ self.view addSubview: alarmView ];
 
 	[ scroll addNotes:[ NotesManager instance ].notes ];
-	
-	StoreView *store = [[ StoreView alloc ] initAndShowInto: self.view ];
-		[ store release ];
 
 	self.view.backgroundColor = [UIColor grayColor ];
 
