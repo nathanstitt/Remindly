@@ -137,9 +137,19 @@ static NotesManager *_instance;
 	[ defs synchronize ];
 }
 
+-(BOOL)hasBeenUpgraded {
+	return ( [ self maxNumberOfNotes ] > 2 );
+}
+
+-(void)upgradeAllowedNoteCount:(BOOL)unlimited{
+	if ( unlimited ){
+		[ self setMaxNumberOfNotes:99999];
+	} else if ( [ self maxNumberOfNotes ] < 5 ){
+		[ self setMaxNumberOfNotes: 5 ];
+	}
+}
 
 -(BOOL)isAllowedMoreNotes {
-	return YES;
 	return ( [ notes count ] < self.maxNumberOfNotes );
 }
 

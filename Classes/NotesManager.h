@@ -21,8 +21,10 @@
 -(Note*)noteWithDirectory:(NSString*)dir;
 -(Note*)deleteNote:(Note*)note;
 -(BOOL)isAllowedMoreNotes;
+-(BOOL)hasBeenUpgraded;
+-(void)upgradeAllowedNoteCount:(BOOL)unlimited;
 
 
-@property ( nonatomic ) NSInteger maxNumberOfNotes;
+//@property ( nonatomic, readonly ) BOOL isUnlimited;
 @property (readonly,nonatomic) NSArray *notes;
 @end

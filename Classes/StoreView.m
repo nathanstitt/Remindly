@@ -11,6 +11,7 @@
 #import "StoreView.h"
 #import "PurchaseManager.h"
 #import "GradientButton.h"
+#import "NotesManager.h"
 
 @implementation StoreView
 
@@ -23,6 +24,7 @@
 
 	NSSet *productIdentifiers = [NSSet setWithObjects: LIMITED_PRODUCT_ID,
 								 UNLIMITED_PRODUCT_ID,
+								 PRIOR_TO_UNLIMITED_PRODUCT_ID,
 								 NULL
 								 ];
 
@@ -80,15 +82,16 @@
 	[ UIView setAnimationDuration:0.45f ];
 	self.frame = CGRectMake(0, 0, 320, 480 );
 	[ UIView commitAnimations ];
-	
+
 	firstOption  = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil ];
-	firstOption.textLabel.text = @"3 more reminders (5 total)";
+	firstOption.textLabel.text = [[NotesManager instance] hasBeenUpgraded] ?
+						@"Unlimited Reminders" : @"3 more reminders (5 total)";
 	firstDesc = [[UILabel alloc ] initWithFrame:CGRectMake(20, 0, 280, 40 ) ];
 	firstDesc.lineBreakMode = UILineBreakModeWordWrap;
 	firstDesc.numberOfLines = 0;
-	
+
 	secondOption = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil ];
-	secondOption.textLabel.text = @"unlimited reminders";
+	secondOption.textLabel.text = @"Unlimited Reminders";
 	secondDesc = [[UILabel alloc ] initWithFrame:CGRectMake(20, 0, 280, 40 ) ];
 	secondDesc.lineBreakMode = UILineBreakModeWordWrap;
 	secondDesc.numberOfLines = 0;
@@ -168,14 +171,17 @@
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
 	for ( SKProduct *product in response.products ){
-		if ( [product.productIdentifier isEqualToString:LIMITED_PRODUCT_ID ] ){
-			firstOption.textLabel.text        = product.localizedTitle;
-			firstOption.detailTextLabel.text  = [ priceFormatter stringFromNumber: product.price ];
-			[ self setDesc:firstDesc text:product.localizedDescription ];
+		if ( ( [product.productIdentifier isEqualToString:LIMITED_PRODUCT_ID ] )
+			|| ( [ product.productIdentifier isEqualToString:PRIOR_TO_UNLIMITED_PRODUCT_ID ] ) ) {
+				firstOption.textLabel.text        = product.localizedTitle;
+				firstOption.detailTextLabel.text  = [ priceFormatter stringFromNumber: product.price ];
+				[ self setDesc:firstDesc text:product.localizedDescription ];
 		} else if ( [product.productIdentifier isEqualToString:UNLIMITED_PRODUCT_ID ] ){
 			secondOption.textLabel.text       = product.localizedTitle;
 			secondOption.detailTextLabel.text = [ priceFormatter stringFromNumber: product.price ];
 			[ self setDesc: secondDesc text:product.localizedDescription ];
+		} else if ( [ product.productIdentifier isEqualToString:PRIOR_TO_UNLIMITED_PRODUCT_ID ] ){
+			
 		}
 	}
 
@@ -205,7 +211,7 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 2;
+	return [[ NotesManager instance ] hasBeenUpgraded ] ? 1 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
