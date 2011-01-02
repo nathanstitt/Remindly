@@ -34,6 +34,9 @@
 		45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C7F712A721430027AF86 /* DrawingColorManager.m */; };
 		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
+		45D19A0712CFDD33009E2E49 /* alarm.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D19A0412CFDD33009E2E49 /* alarm.png */; };
+		45D19A0812CFDD33009E2E49 /* alarm@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D19A0512CFDD33009E2E49 /* alarm@2X.png */; };
+		45D19A0912CFDD33009E2E49 /* erase-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D19A0612CFDD33009E2E49 /* erase-icon@2x.png */; };
 		45EBDA3312BEFB4F001999A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EBDA3212BEFB4F001999A4 /* StoreKit.framework */; };
 		45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EBDA3712BEFC72001999A4 /* PurchaseManager.m */; };
 		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
@@ -92,6 +95,9 @@
 		45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAbsoluteTimes.h; sourceTree = "<group>"; };
 		45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAbsoluteTimes.m; sourceTree = "<group>"; };
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
+		45D19A0412CFDD33009E2E49 /* alarm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alarm.png; path = Images/alarm.png; sourceTree = "<group>"; };
+		45D19A0512CFDD33009E2E49 /* alarm@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarm@2X.png"; path = "Images/alarm@2X.png"; sourceTree = "<group>"; };
+		45D19A0612CFDD33009E2E49 /* erase-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "erase-icon@2x.png"; path = "Images/erase-icon@2x.png"; sourceTree = "<group>"; };
 		45EBDA3212BEFB4F001999A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		45EBDA3612BEFC72001999A4 /* PurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseManager.h; sourceTree = "<group>"; };
 		45EBDA3712BEFC72001999A4 /* PurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseManager.m; sourceTree = "<group>"; };
@@ -231,10 +237,13 @@
 		45823602128904C600EC555C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				45D19A0412CFDD33009E2E49 /* alarm.png */,
+				45D19A0512CFDD33009E2E49 /* alarm@2X.png */,
 				45EE587412ADBC0900732503 /* alarm-clock-icon.png */,
 				45EE584A12ADB86900732503 /* draw-icon.png */,
 				45EE582512AB5F2D00732503 /* photos_icon.png */,
 				45EE572E12AB383700732503 /* erase-icon.png */,
+				45D19A0612CFDD33009E2E49 /* erase-icon@2x.png */,
 				45A6C30612A360280027AF86 /* Icon@2x.png */,
 				45A6C30712A360280027AF86 /* Icon.png */,
 				45017381128CE74F003E71FE /* blank.png */,
@@ -313,6 +322,9 @@
 				45EE582612AB5F2D00732503 /* photos_icon.png in Resources */,
 				45EE584B12ADB86900732503 /* draw-icon.png in Resources */,
 				45EE587512ADBC0900732503 /* alarm-clock-icon.png in Resources */,
+				45D19A0712CFDD33009E2E49 /* alarm.png in Resources */,
+				45D19A0812CFDD33009E2E49 /* alarm@2X.png in Resources */,
+				45D19A0912CFDD33009E2E49 /* erase-icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

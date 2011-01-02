@@ -139,6 +139,7 @@ static NotesManager *_instance;
 
 
 -(BOOL)isAllowedMoreNotes {
+	return YES;
 	return ( [ notes count ] < self.maxNumberOfNotes );
 }
 

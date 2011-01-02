@@ -99,6 +99,9 @@
 		[ app cancelLocalNotification: notification ];
 	}	
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
+	if ( [ fd timeIntervalSinceNow ] > 0 ){
+		
+	}
 	notification.fireDate = fd;
 	notification.timeZone = [NSTimeZone defaultTimeZone];
 	notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmName ];

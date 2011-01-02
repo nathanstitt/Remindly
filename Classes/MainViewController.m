@@ -46,7 +46,7 @@
 	[ countBtn.button addTarget:self action: @selector(selectNotes:) forControlEvents:UIControlEventTouchUpInside ];
 	
 	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
-	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm-clock-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
+	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
 	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];

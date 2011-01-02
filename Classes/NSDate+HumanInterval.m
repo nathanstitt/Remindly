@@ -57,13 +57,19 @@
 		}
 	
 		remain -= ( remain / HOUR ) * HOUR;
-
-		if ( remain > 2 * MINUTE ){
+		
+		if ( remain > 2 * MINUTE ){	
 			[ segments  addObject: [ NSString stringWithFormat:@"%u minutes", remain / MINUTE ] ];
-		} else if ( remain > 1 * DAY ){
+		} else {
 			[ segments  addObject: [ NSString stringWithFormat:@"1 minute"] ];
 		}
+	
+		if ( delta < 10 * MINUTE ){
+			remain -= ( remain / MINUTE ) * MINUTE;
+			[ segments  addObject: [ NSString stringWithFormat:@"%u seconds", remain ] ];
+		}
 	}
+	
 	NSString *ret;
 	if ( [ segments count ] > 1 ){
 		NSString *last = [ segments lastObject ];
@@ -74,10 +80,10 @@
 	} else if ( [ segments count ] ){
 		ret = [ segments lastObject ];
 	} else {
-		ret = @"under a minute";
+		ret = @"a few seconds";
 	}
 
-	if ( delta > DAY*3 ){
+	if ( delta > MONTH ){
 		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 		[formatter setDateFormat:@"h:mm a"];
 		ret = [ NSString stringWithFormat:@"%@ %@", [formatter stringFromDate:self], ret ]; 

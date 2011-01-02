@@ -32,13 +32,12 @@
 	
 	[ self.view addSubview:alarmLabel ];
 
-	[ NSTimer scheduledTimerWithTimeInterval:30
+	[ NSTimer scheduledTimerWithTimeInterval:1
 									target:self 
-								   selector:@selector(updateTitle:) 
+									selector:@selector(updateTitle:) 
 									userInfo:nil 
 									repeats:YES ];
-
-
+	
 	mouseMoved = 0;
     return self;
 }
