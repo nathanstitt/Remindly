@@ -10,8 +10,8 @@
 #import <StoreKit/StoreKit.h>
 
 
-#define LIMITED_PRODUCT_ID @"com.iogee.remindly.limited"
-#define UNLIMITED_PRODUCT_ID @"com.iogee.remindly.unlimited"
+#define LIMITED_PRODUCT_ID            @"com.iogee.remindly.limited"
+#define UNLIMITED_PRODUCT_ID          @"com.iogee.remindly.unlimited"
 #define PRIOR_TO_UNLIMITED_PRODUCT_ID @"com.iogee.remindly.prior_to_unlimited"
 
 #define IN_APP_PURCHASE_MADE @"InAppPurchaseMade"

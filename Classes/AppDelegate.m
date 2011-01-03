@@ -80,7 +80,7 @@
 			pendingNote = note;
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"
 												 message:notification.alertBody
-												 delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"View Note",NULL];
+												 delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"View",NULL];
 			[alert show];
 			[alert release];	
 		}
