@@ -21,14 +21,15 @@
     if (self) {
         // Initialization code.
     }
+	NSSet *productIDs;
 
-	NSSet *productIdentifiers = [NSSet setWithObjects: LIMITED_PRODUCT_ID,
-								 UNLIMITED_PRODUCT_ID,
-								 PRIOR_TO_UNLIMITED_PRODUCT_ID,
-								 NULL
-								 ];
-
-	SKProductsRequest *iap_req = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
+	if (  [[NotesManager instance] hasBeenUpgraded] ){
+		productIDs = [NSSet setWithObjects: PRIOR_TO_UNLIMITED_PRODUCT_ID, NULL ];
+	} else {
+		productIDs = [NSSet setWithObjects: LIMITED_PRODUCT_ID, UNLIMITED_PRODUCT_ID, NULL ];
+	}
+	
+	SKProductsRequest *iap_req = [[SKProductsRequest alloc] initWithProductIdentifiers: productIDs ];
 	iap_req.delegate = self;
     [ iap_req start ];
 	[ iap_req release ];
@@ -51,7 +52,7 @@
 
 	[ view addSubview: self ];
 
-	message = [[UILabel alloc ] initWithFrame:CGRectMake( 20, 80, 280, 60 ) ];
+	message = [[UILabel alloc ] initWithFrame:CGRectMake( 20, 80, 280, 120 ) ];
 	message.textAlignment = UITextAlignmentCenter;
 	message.font = [ UIFont systemFontOfSize: 18 ];
 	message.numberOfLines = 0;
@@ -239,6 +240,7 @@
 		message.text = [ NSString stringWithFormat:@"Purchasing %@", secondOption.textLabel.text ];
 		payment = [SKPayment paymentWithProductIdentifier: UNLIMITED_PRODUCT_ID ];
 	}
+
 	[[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 

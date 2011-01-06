@@ -23,6 +23,7 @@
 -(void)saveToNote:(Note*)note;
 -(NSDate*)date;
 -(void)reset;
+-(BOOL)hasDateType:(NSString*)name;
 
 @property (readonly,nonatomic) UIView *view;
 @property (nonatomic,readonly ) BOOL wasSet;

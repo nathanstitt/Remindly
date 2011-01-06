@@ -9,13 +9,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-@interface GradientButton : UIButton 
-{
+@interface GradientButton : UIButton  {
     // These two arrays define the gradient that will be used
     // when the button is in UIControlStateNormal
     NSArray  *normalGradientColors;     // Colors
     NSArray  *normalGradientLocations;  // Relative locations
-    
+
     // These two arrays define the gradient that will be used
     // when the button is in UIControlStateHighlighted 
     NSArray  *highlightGradientColors;     // Colors

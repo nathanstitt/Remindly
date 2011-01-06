@@ -96,7 +96,7 @@
 		[ self updateCount ];
 	} else {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more reminders"
-									message:@"You've reached the maximum number of reminders allowed.\n\nWould you like to upgrade to a version allowing additional reminders?"  
+									message:@"You've reached the maximum number of reminders.\n\nWould you like to view options for purchasing additional reminders?"  
 									delegate:self cancelButtonTitle:@"No" otherButtonTitles: @"Yes", nil];
 		[alert show];
 		[alert release];

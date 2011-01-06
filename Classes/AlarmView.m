@@ -81,9 +81,16 @@
 	[ quickTimes reset ];
 	[ absTimes reset ];
 	self.isShowing = YES;
-	if ( note.fireDate ){
-		[ self selectIndex: 1 ];
-		absTimes.date = note.fireDate;
+	if ( NSOrderedDescending == [ note.fireDate compare:[NSDate date] ] ){
+		if ( [ quickTimes hasDateType: note.alarmName ] ){
+			[ quickTimes setFromNote: note ];
+			[ self selectIndex: 0 ];
+		} else {
+			absTimes.date = note.fireDate;
+			[ self selectIndex: 1 ];
+		}
+	} else {
+		[ self selectIndex: 0 ];
 	}
 }
 

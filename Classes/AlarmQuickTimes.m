@@ -47,6 +47,9 @@
 	}
 }
 
+-(BOOL)hasDateType:(NSString*)name{
+	return ( -1 != [ quickChoices indexOfObject: name ] );
+}
 
 -(NSDate*)date{
 	NSNumber *minutes = [ choicesTimes valueForKey: [ quickChoices objectAtIndex: [ picker selectedRowInComponent:0 ] ] ];
