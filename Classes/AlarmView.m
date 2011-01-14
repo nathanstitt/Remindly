@@ -76,7 +76,7 @@
 	typeCtrl.selectedSegmentIndex=i;
 }
 
-
+	
 -(void)showWithNote:(Note*)note {
 	[ quickTimes reset ];
 	[ absTimes reset ];
@@ -109,6 +109,7 @@
 		quickTimes.view.hidden = NO;
 		absTimes.view.hidden   = YES;
 	} else if ( 1 == typeCtrl.selectedSegmentIndex ){
+		absTimes.date = quickTimes.date;
 		quickTimes.view.hidden = YES;
 		absTimes.view.hidden   = NO;
 	}

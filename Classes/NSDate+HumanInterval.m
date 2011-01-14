@@ -40,24 +40,24 @@
 	}
 
 	remain -= ( remain / MONTH ) * MONTH;
-		
+
 	if ( remain > 2 * DAY ){
 		[ segments  addObject: [ NSString stringWithFormat:@"%u days", remain / DAY ] ];
 	} else if ( remain > 1 * DAY ){
 		[ segments  addObject: [ NSString stringWithFormat:@"1 day"] ];
 	}
-	
+
 	remain -= ( remain / DAY ) * DAY;
 	
 	if ( delta < MONTH ){
 		if ( remain > 2 * HOUR ){
 			[ segments  addObject: [ NSString stringWithFormat:@"%u hours", remain / HOUR ] ];
-		} else if ( remain > 1 * DAY ){
+		} else if ( remain > 1 * HOUR ){
 			[ segments  addObject: [ NSString stringWithFormat:@"1 hour"] ];
 		}
-	
+
 		remain -= ( remain / HOUR ) * HOUR;
-		
+
 		if ( remain > 2 * MINUTE ){	
 			[ segments  addObject: [ NSString stringWithFormat:@"%u minutes", remain / MINUTE ] ];
 		} else {
