@@ -13,7 +13,7 @@
 
 @interface DrawingViewController : UIViewController {
 	CGPoint lastPoint;
-	CGPoint points[5];
+	CGPoint points[4];
 	MainViewController *mainView;
 	UIImageView *drawImage;
 	Note *note;

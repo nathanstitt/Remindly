@@ -42,6 +42,12 @@
     return self;
 }
 
+- (void)clearPoints {
+        for ( NSInteger i=0; i<4; i++){
+                points[i] = CGPointZero;
+        }       
+}
+
 
 
 -(void)updateTitle:(id)sel {
@@ -75,31 +81,37 @@
 	
 	UITouch *touch = [touches anyObject];
 
-	for ( NSInteger i=0; i<5; i++){
-		points[i] = CGPointZero;
-	}
-	points[0] = [touch locationInView:self.view];
-
-	lastPoint = [touch locationInView:self.view];
+	[ self clearPoints ];
+	points[0] = lastPoint = [touch locationInView:self.view];
 }
 
+- (CGFloat)distanceBetweenPoint:(CGPoint)a andPoint:(CGPoint)b {
+    CGFloat a2 = powf(a.x-b.x, 2.f);
+    CGFloat b2 = powf(a.y-b.y, 2.f);
+    return sqrtf(a2 + b2);
+}
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 
 	UITouch *touch = [touches anyObject];	
 	
-	wasMoved = NO;
+	wasMoved = YES;
 
 	CGPoint currentPoint = [touch locationInView:self.view];
-	for ( NSInteger i=4; i>0; i--){
-		points[i] = points[i-1];
-	}
-	points[0] = [touch locationInView:self.view];
-	
-	if ( CGPointEqualToPoint( CGPointZero , points[2] ) ){
+        
+    if ( [ self distanceBetweenPoint:points[0] andPoint: currentPoint ] < 10 ){
 		return;
 	}
-	wasMoved = YES;
+
+	for ( NSInteger i=3; i>0; i--){
+		points[i] = points[i-1];
+	}
+	points[0] = currentPoint;
+
+	if ( CGPointEqualToPoint( CGPointZero , points[3] ) ){
+		return;
+	}
+
 	UIGraphicsBeginImageContext(self.view.frame.size);
 	[ drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
@@ -111,39 +123,33 @@
 
 	CGContextBeginPath(UIGraphicsGetCurrentContext());
 
-	// need to do something like
-	// http://stackoverflow.com/questions/1052119/how-can-i-trace-the-finger-movement-on-touch-for-drawing-smooth-curves
-//	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), points[0].x, points[0].y );
-//	CGContextAddQuadCurveToPoint( UIGraphicsGetCurrentContext(), 
-//								 points[1].x,
-//                                 points[1].y,
-//                                 points[0].x,
-//                                 points[0].y );
-	
-//	for ( NSInteger i=0; i<5; i++){
-//		points[i] = CGPointZero;
-//	}
-//	CGContextAddCurveToPoint(UIGraphicsGetCurrentContext(), 
-//                                                         points[3].x,
-//                                                         points[3].y,
-//                                                         points[2].x,
-//                                                         points[2].y,
-//                                                         points[1].x,
-//                                                         points[1].y );
+	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), points[3].x, points[3].y);
 
-	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
+	CGPoint first = points[0];
 
-	CGContextSetInterpolationQuality(UIGraphicsGetCurrentContext(),  kCGInterpolationLow);
-	CGContextSetAllowsAntialiasing(UIGraphicsGetCurrentContext(), true);
-	
-	CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
-	
+	points[0].y = (points[0].y + points[1].y) / 2;
+	points[0].x = (points[0].x + points[1].x) / 2;
+
+	CGPoint end = points[0];
+
+	CGContextAddCurveToPoint(UIGraphicsGetCurrentContext(), 
+                                                         points[2].x,
+                                                         points[2].y,
+                                                         points[1].x,
+                                                         points[1].y,
+                                                         points[0].x,
+                                                         points[0].y );
+
+	[ self clearPoints ];
+	points[0] = first;
+	points[1] = end;
+
 	CGContextStrokePath(UIGraphicsGetCurrentContext());
 	
 	drawImage.image = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
 
-	lastPoint = currentPoint;
+	lastPoint = end;
 
 	mouseMoved++;
 
@@ -151,6 +157,38 @@
 		mouseMoved = 0;
 	}
 
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	
+	NSLog(@"Touches Ended");
+
+	UIGraphicsBeginImageContext(self.view.frame.size);
+	[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+	CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+
+	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  5.0 );
+	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
+									 self.isErasing ? [ UIColor whiteColor].CGColor : color );
+
+
+	CGPoint currentPoint = [[touches anyObject] locationInView:self.view];
+
+	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
+	
+	if( wasMoved ){
+		CGContextAddQuadCurveToPoint( UIGraphicsGetCurrentContext(), 
+								 points[0].x,
+								 points[0].y,
+								 currentPoint.x,
+								 currentPoint.y );
+	} else {
+		CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
+	}
+	CGContextStrokePath(UIGraphicsGetCurrentContext());
+	CGContextFlush(UIGraphicsGetCurrentContext());
+	drawImage.image = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
 }
 
 -(BOOL)hidden {
@@ -165,30 +203,6 @@
 	drawImage.image = nil;
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	
-	NSLog(@"Touches Ended");
-
-	if ( ! wasMoved ){
-		return;
-	}
-//	alarmLabel.hidden = NO;
-	
-	UIGraphicsBeginImageContext(self.view.frame.size);
-	[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-	CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-
-	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  5.0 );
-	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
-									 self.isErasing ? [ UIColor whiteColor].CGColor : color );
-
-	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-	CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-	CGContextStrokePath(UIGraphicsGetCurrentContext());
-	CGContextFlush(UIGraphicsGetCurrentContext());
-	drawImage.image = UIGraphicsGetImageFromCurrentImageContext();
-	UIGraphicsEndImageContext();
-}
 
 
 - (void)didReceiveMemoryWarning {
