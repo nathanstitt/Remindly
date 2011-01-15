@@ -98,7 +98,7 @@
 	wasMoved = YES;
 
 	CGPoint currentPoint = [touch locationInView:self.view];
-        
+
     if ( [ self distanceBetweenPoint:points[0] andPoint: currentPoint ] < 10 ){
 		return;
 	}
