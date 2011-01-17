@@ -81,6 +81,8 @@
 	[ quickTimes reset ];
 	[ absTimes reset ];
 	self.isShowing = YES;
+	NSDate *d = note.fireDate;
+	NSInteger diff = [ d timeIntervalSinceNow ];
 	if ( NSOrderedDescending == [ note.fireDate compare:[NSDate date] ] ){
 		if ( [ quickTimes hasDateType: note.alarmName ] ){
 			[ quickTimes setFromNote: note ];
@@ -109,7 +111,10 @@
 		quickTimes.view.hidden = NO;
 		absTimes.view.hidden   = YES;
 	} else if ( 1 == typeCtrl.selectedSegmentIndex ){
-		absTimes.date = quickTimes.date;
+		if ( [quickTimes date ] ){
+			absTimes.date = quickTimes.date;
+			[ quickTimes reset ];
+		}
 		quickTimes.view.hidden = YES;
 		absTimes.view.hidden   = NO;
 	}

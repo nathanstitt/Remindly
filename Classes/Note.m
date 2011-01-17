@@ -51,7 +51,11 @@
 
 
 -(NSDate*)fireDate{
-	return [ plist valueForKey:@"fireDate" ];
+	if ( [ self hasNotification ] ){
+		return [ notification fireDate ];
+	} else {
+		return nil;
+	}
 }
 
 

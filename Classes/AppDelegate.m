@@ -21,7 +21,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     [ NotesManager start ];
-	
+
 	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
 	if ( ! [ defs integerForKey:@"numberNotesAllowed" ] ){
 		[ defs setInteger:2 forKey:@"numberNotesAllowed" ];

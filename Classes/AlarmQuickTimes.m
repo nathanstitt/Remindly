@@ -48,7 +48,8 @@
 }
 
 -(BOOL)hasDateType:(NSString*)name{
-	return ( -1 != [ quickChoices indexOfObject: name ] );
+	NSInteger indx = [ quickChoices indexOfObject: name ];
+	return (  NSNotFound != indx );
 }
 
 -(NSDate*)date{

@@ -27,8 +27,8 @@
 		[[ NotesManager instance ] upgradeAllowedNoteCount: YES ];
 	} else {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unknown Appstore Response"
-									message:@"Received an unknown response from Apple, please report to IoGee Support"  
-									delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				message:[ NSString stringWithFormat: @"Received an unknown response: %@, please report to IoGee Support", productIdentifier ]
+				delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
 		[alert release];
 	}
