@@ -81,8 +81,6 @@
 	[ quickTimes reset ];
 	[ absTimes reset ];
 	self.isShowing = YES;
-	NSDate *d = note.fireDate;
-	NSInteger diff = [ d timeIntervalSinceNow ];
 	if ( NSOrderedDescending == [ note.fireDate compare:[NSDate date] ] ){
 		if ( [ quickTimes hasDateType: note.alarmName ] ){
 			[ quickTimes setFromNote: note ];
