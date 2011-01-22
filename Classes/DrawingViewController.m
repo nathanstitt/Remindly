@@ -78,18 +78,18 @@
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	
 	UITouch *touch = [touches anyObject];
-
 	[ self clearPoints ];
 	points[0] = lastPoint = [touch locationInView:self.view];
 }
+
 
 - (CGFloat)distanceBetweenPoint:(CGPoint)a andPoint:(CGPoint)b {
     CGFloat a2 = powf(a.x-b.x, 2.f);
     CGFloat b2 = powf(a.y-b.y, 2.f);
     return sqrtf(a2 + b2);
 }
+
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 

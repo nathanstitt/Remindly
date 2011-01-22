@@ -1,5 +1,6 @@
 #import "NotesScrollView.h"
- 
+#import "NotesManager.h"
+
 #define SHADOW_HEIGHT 20.0
 #define SHADOW_INVERSE_HEIGHT 10.0
 #define SHADOW_RATIO (SHADOW_INVERSE_HEIGHT / SHADOW_HEIGHT)
@@ -21,7 +22,7 @@
  
 -(void)loadPage:(int)page {
 	// Sanity checks
-    if ( page < 0 || page > [ delegate itemCount ]-1 ){
+    if ( page < 0 || page > [ NotesManager count ]-1 ){
 		return;
 	}
 
@@ -62,6 +63,7 @@
  
 		[ self addSubview:scrollView ];
 
+                        
 		[ self reload ];
 		// Load the first two pages
 
@@ -71,13 +73,16 @@
 
 
 - (void)reload {
-	self.scrollView.contentSize = CGSizeMake([delegate itemCount] * self.scrollView.frame.size.width, scrollView.frame.size.height);
+	self.scrollView.contentSize = CGSizeMake([NotesManager count] * self.scrollView.frame.size.width, 
+											 scrollView.frame.size.height);
 
 	for (UIView *view in [self.scrollView subviews]) {
 		[view removeFromSuperview];
 	}
 	[ self loadPage:0 ];
 	[ self loadPage:1 ];
+	
+	[ self selectNoteIndex: 0 ];
 }
 
 
@@ -97,15 +102,15 @@
 -(int)currentPage {
 	// Calculate which page is visible 
 	CGFloat pageWidth = scrollView.frame.size.width;
-	int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-	if ( page >=0 && page < [ delegate itemCount] && page != lastPage ){
+	int page = floor( ( scrollView.contentOffset.x - pageWidth / 2 ) / pageWidth ) + 1;
+	if ( page >=0 && page < [ NotesManager count] && page != lastPage ){
 		lastPage = page;
 		[ delegate pageChanged: page ];
 	}
 	return page;
 }
  
-- (void)selectPage:(NSInteger)index{
+- (void)selectNoteIndex:(NSInteger)index{
 	[ scrollView setContentOffset:CGPointMake(scrollView.frame.size.width*index,0 ) ];
 }
 

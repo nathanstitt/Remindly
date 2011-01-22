@@ -10,13 +10,24 @@
 #import "NSDate+HumanInterval.h"
 
 @interface Note()
-//@property (nonatomic,retain) NSString *dir;
+-(id)initWithDirectoryName:(NSString*)file;
 @end
 
 
 @implementation Note
 
 @synthesize directory,image, notification;
+
+static NSMutableDictionary *_cache;
+
++(Note*)noteWithDirectory:(NSString*)d {
+	Note *note = [ _cache objectForKey:d];
+	if ( ! note ){
+		note = [[ Note alloc ] initWithDirectoryName:d ];
+		[ _cache setObject:note forKey: d ];
+	}
+	return note;
+}
 
 -(id)initWithDirectoryName:(NSString*)d{
     self = [super init ];
@@ -63,9 +74,17 @@
 	[ plist setValue: date forKey:@"fireDate" ];
 }
 
+-(void)unScedule {
+	if ( notification ){
+		[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
+	}
+}
+
 -(void)deleteFromDisk {
 	NSFileManager *fm = [NSFileManager defaultManager];
+	[ self unScedule ];
 	[ fm removeItemAtPath: directory error:NULL ];
+	[ _cache removeObjectForKey: directory ];
 }
 
 -(NSString *) alarmName {
@@ -97,11 +116,10 @@
 
 -(void)scedule {
 	UIApplication *app = [UIApplication sharedApplication];
+	[ self unScedule ];
 	if ( ! notification ){
 		notification = [[UILocalNotification alloc] init];
-	} else {
-		[ app cancelLocalNotification: notification ];
-	}	
+	}
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
 	if ( [ fd timeIntervalSinceNow ] > 0 ){
 		

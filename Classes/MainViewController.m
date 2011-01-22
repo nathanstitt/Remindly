@@ -42,9 +42,10 @@
 	mainToolbar.frame = CGRectMake( 0, 420, 320, 50 );
 	[ mainToolbar sizeToFit ];
 
-	countBtn = [[ CountingButton alloc ] initWithCount: [[[ NotesManager instance ] notes ] count] ];
-	[ countBtn.button addTarget:self action: @selector(selectNotes:) forControlEvents:UIControlEventTouchUpInside ];
-	
+	countBtn = [[ CountingButton alloc ] initWithCount: [ NotesManager count] ];
+
+	[ countBtn.button addTarget:self action: @selector(showScroller:) forControlEvents:UIControlEventTouchUpInside ];
+
 	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
 	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
@@ -60,7 +61,7 @@
 
 	[ del   release  ];
 	[ add   release  ];
-	[ alarm release ];
+	[ alarm release  ];
 	[ space release  ];
 
 	[self.view addSubview:mainToolbar ];
@@ -69,16 +70,18 @@
 	alarmView.delegate = self;
 	[ self.view addSubview: alarmView ];
 
-	[ scroll addNotes:[ NotesManager instance ].notes ];
+	//[ scroll selectNote: [ NotesManager noteAtIndex:0 ] ];
 
 	self.view.backgroundColor = [UIColor grayColor ];
 
 }
 
 -(void)deleteNote:(id)sel {
-	[ scroll deleteNote: draw.note ];
-	draw.note = [[ NotesManager instance ] deleteNote:draw.note ];
-	[ scroll selectNote: draw.note ];
+//	[ scroll deleteNote: draw.note ];
+
+	draw.note = [[ NotesManager instance ] deleteNote: draw.note ];
+	
+	[ scroll selectNoteIndex: 0 ];
 	[ self updateCount ];
 }
 
@@ -92,7 +95,7 @@
 	if ( [ manager isAllowedMoreNotes ] ){
 		Note *n = [ manager addNote ];
 		draw.note = n;
-		[ scroll addNote:n ];
+//		[ scroll addNote:n ];
 		[ self updateCount ];
 	} else {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more reminders"
@@ -113,13 +116,13 @@
 }
 
 -(void) updateCount {
-	[ countBtn setCount:[[[ NotesManager instance ] notes ] count] ];
+	[ countBtn setCount:[ NotesManager count ] ];
 }
 
 
 -(void) selectNote:(Note*)note{
 	draw.note = note;
-	[ scroll selectNote:note ];
+	[ scroll selectNoteIndex:[ NotesManager indexOfNote:note ] ];
 	if ( draw.view.hidden ){
 		draw.view.hidden   = NO;
 		scroll.view.hidden = YES;
@@ -152,7 +155,7 @@
 }
 
 
--(void)selectNotes:(id)btn {
+-(void)showScroller:(id)btn {
 	for ( UIBarButtonItem *btn in toggledButtons ){
 		[ btn setEnabled: draw.view.hidden ];
 	}

@@ -16,7 +16,8 @@
 	UILocalNotification *notification;
 }
 
--(id)initWithDirectoryName:(NSString*)file;
++(Note*)noteWithDirectory:(NSString*)dir;
+
 -(void)save;
 -(BOOL)hasNotification;
 -(NSString*)alarmDescription;

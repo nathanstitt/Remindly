@@ -21,15 +21,17 @@
 	NotesScrollView *scroller;
 	UILabel *noteHeader;
 	UIPageControl *dots;
-	NSMutableArray *images;
 	MainViewController *mainView;
+	NSMutableDictionary *previews;
 }
 
 -(void) reload:(Note*)note;
--(void) selectNote:(Note*)note;
--(void) addNotes:(NSArray*)notes;
--(void) deleteNote:(Note*)note;
--(void) addNote:(Note*)note;
+-(void) selectNoteIndex:(NSInteger)index;
+
+//-(void) addNotes:(NSArray*)notes;
+//-(void) deleteNote:(Note*)note;
+//-(void) addNote:(Note*)note;
+
 -(void) pageChanged:(NSInteger)index;
 -(void) noteWasSelected:(Note*)note;
 -(id)   initWithMainView:(MainViewController*)mv;

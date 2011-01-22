@@ -13,6 +13,8 @@
 #import "NotePreviewView.h"
 #import "ScrollController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation NotePreviewView
 
 @synthesize note;
@@ -36,7 +38,7 @@
 	imageView.layer.shadowRadius = 10.0f;
 	[self addSubview:imageView];
 //	self.image = note.image;
-	
+
 	
 	self.contentMode = UIViewContentModeScaleToFill;
 

@@ -7,7 +7,6 @@
 @protocol NotesScrollViewDelegate
 @required
 -(UIView*)viewForItemAtIndex:(NotesScrollView*)scrollView index:(int)index;
--(int)itemCount;
 -(void)pageChanged:(NSInteger)note;
 -(void)startScrolling;
 -(void)endScrolling;
@@ -30,7 +29,7 @@
 
 
 - (id)initWithFrameAndPageSize:(CGRect)frame pageSize:(CGSize)size;
-- (void)selectPage:(NSInteger)index;
+- (void)selectNoteIndex:(NSInteger)index;
 - (void)reload;
 
 @end

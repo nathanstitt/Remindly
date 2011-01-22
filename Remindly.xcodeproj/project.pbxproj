@@ -136,14 +136,14 @@
 			isa = PBXGroup;
 			children = (
 				4563DFB112B06C05004588A6 /* Misc */,
+				45853368128B69BC00793A24 /* DrawingViewController.h */,
+				45853369128B69BC00793A24 /* DrawingViewController.m */,
 				458235ED128903F200EC555C /* NotePreviewView.h */,
 				458235EE128903F200EC555C /* NotePreviewView.m */,
 				458234E01288FE1400EC555C /* NotesScrollView.h */,
 				458234E11288FE1400EC555C /* NotesScrollView.m */,
 				458235E11289034700EC555C /* ScrollController.h */,
 				458235E21289034700EC555C /* ScrollController.m */,
-				45853368128B69BC00793A24 /* DrawingViewController.h */,
-				45853369128B69BC00793A24 /* DrawingViewController.m */,
 				450ED515128B71E600E7E0C6 /* MainViewController.h */,
 				450ED516128B71E600E7E0C6 /* MainViewController.m */,
 				4501719F128B84B1003E71FE /* Note.h */,

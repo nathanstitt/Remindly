@@ -34,7 +34,7 @@
     if ( notification ) {
         NSLog(@"Recieved Notification %@",notification);
 		Note *note = [[ NotesManager instance ] noteWithDirectory:
-					   [ notification.userInfo objectForKey:@"directory"]  ];
+					   [ notification.userInfo objectForKey:@"directory" ] ];
 		if ( note ){
 			[ mvc selectNote: note ];
 		}

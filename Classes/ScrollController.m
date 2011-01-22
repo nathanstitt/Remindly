@@ -12,6 +12,8 @@
 
 #import "ScrollController.h"
 #import "MainViewController.h"
+#import "NotesManager.h"
+#import "NotePreviewView.h"
 
 @implementation ScrollController
 
@@ -25,6 +27,8 @@
     [super viewDidLoad];
 	self.view.backgroundColor = [ UIColor grayColor ];
 
+	previews = [[ NSMutableDictionary alloc ] init ];
+	
 	// You can add the control programatically like so:
 	// Position the scrollview. It will be centered in the portrait view. The viewSize defines the size 
 	// of each item you want to display in your scroll view. The size of the "preview" on each side equals the
@@ -46,7 +50,7 @@
 	
 	scroller.delegate = self;
 	[self.view addSubview:scroller];
-	[ scroller selectPage:0 ];
+	[ scroller selectNoteIndex:0 ];
 	
 	dots = [[ UIPageControl alloc ] init ];
 	dots.backgroundColor = [ UIColor grayColor ];
@@ -55,85 +59,77 @@
 	
 	[ self.view addSubview:dots ];
 	
-	images = [[ NSMutableArray alloc ] init ];
 }
 
 -(void)reload:(Note*)note{
 	NSInteger i = 0;
-	for ( NotePreviewView *image in images ){
-		if ( note == image.note ){
-			[ image reload ];
-			break;
-		}
-		i++;
-	}	
+//	for ( NotePreviewView *image in images ){
+//		if ( note == image.note ){
+//			[ image reload ];
+//			break;
+//		}
+//		i++;
+//	}
 	noteHeader.text = [ note alarmDescription ];
 	dots.currentPage = i;
 }
 
+
+-(void) selectNoteIndex:(NSInteger)index{
+//-(void) selectNote:(Note*)note{
+	[ scroller selectNoteIndex: index ];
+	dots.currentPage = 0;
+}
+
 -(void)dotsMoved:(id)ctrl{
-	[ scroller selectPage:	dots.currentPage ];
+	[ scroller selectNoteIndex:	dots.currentPage ];
 	
 }
 
 -(void) addNotes:(NSArray*)nts{
-	for( Note *note in nts ){
-		[ images addObject: [[NotePreviewView alloc ] 
-						   initWithNote: note 
-						   frame:CGRectMake(0, 0, scroller.pageSize.width, scroller.pageSize.height)
-						   scroller:self ] 
-				 ];
-	}
-	dots.numberOfPages = [ images count ];
+//	for( Note *note in nts ){
+//		[ images addObject: [[NotePreviewView alloc ] 
+//						   initWithNote: note 
+//						   frame:CGRectMake(0, 0, scroller.pageSize.width, scroller.pageSize.height)
+//						   scroller:self ] 
+//				 ];
+//	}
+	dots.numberOfPages = [ NotesManager count ];
 	[ scroller reload ];
 }
 
 -(void)refresh {
-	dots.numberOfPages = [ images count ];
+	dots.numberOfPages = [ NotesManager count ];
 	dots.currentPage = 0;
-	[ scroller selectPage: 0];
+	[ scroller selectNoteIndex: 0];
 	[ scroller reload ];
 }
 
 
--(void)deleteNote:(Note*)note{
-	NSInteger i = 0;
-	NotePreviewView *ti;
-	for ( ti in images ){
-		if ( ti.note == note ){
-			[ images removeObjectAtIndex:i ];
-			break;
-		}
-		i++;
-	}
-	[ self refresh ];
-}
+//-(void)deleteNote:(Note*)note{
+//	NSInteger i = 0;
+//	NotePreviewView *ti;
+//	for ( ti in images ){
+//		if ( ti.note == note ){
+//			[ images removeObjectAtIndex:i ];
+//			break;
+//		}
+//		i++;
+//	}
+//	[ self refresh ];
+//}
 
 
--(void) addNote:(Note*) note {
-	[ images insertObject: [[NotePreviewView alloc ] 
-						initWithNote: note 
-						frame:CGRectMake(0, 0, scroller.pageSize.width, scroller.pageSize.height)
-						scroller:self ] 
-			  atIndex: 0 ];
+//-(void) addNote:(Note*) note {
+//	[ images insertObject: [[NotePreviewView alloc ] 
+//						initWithNote: note 
+//						frame:CGRectMake(0, 0, scroller.pageSize.width, scroller.pageSize.height)
+//						scroller:self ] 
+//			  atIndex: 0 ];
+//
+//	[ self refresh ];
+//}
 
-	[ self refresh ];
-}
-
-
--(void) selectNote:(Note*)note{
-	NSInteger index = 0;
-	for (NotePreviewView *img in images ){
-		if ( note ==  img.note ){
-			[scroller selectPage:index ];
-			return;
-		}
-		index++;
-	}
-	[ self addNote:note     ];
-	[ scroller selectPage:0 ];
-	dots.currentPage = 0;
-}
 
 
 -(void) noteWasSelected:(Note*)note{
@@ -142,8 +138,8 @@
 
 
 -(void)pageChanged:(NSInteger)noteIndex{
-	NotePreviewView *ti = [ images objectAtIndex:noteIndex ];
-	noteHeader.text = [ ti.note alarmDescription ];
+	Note *note = [NotesManager noteAtIndex:noteIndex];
+	noteHeader.text = [ note alarmDescription ];
 	dots.currentPage = noteIndex;
 }
 
@@ -160,13 +156,17 @@
 
 #pragma mark -
 #pragma mark PreviewScrollViewDelegate methods
--(UIView*)viewForItemAtIndex:(NotesScrollView*)scrollView index:(int)index {
-	return [ images objectAtIndex:index ];
-}
 
--(int)itemCount {
-	// Return the number of pages we intend to display
-	return [ images count ];
+-(UIView*)viewForItemAtIndex:(NotesScrollView*)scrollView index:(int)index {
+	
+	NotePreviewView *v = [ previews objectForKey:[ NSNumber numberWithInt:index ] ];
+	if ( ! v ){
+		v = [ [ NotePreviewView alloc ] initWithNote: [ NotesManager noteAtIndex: index ] 
+				frame:CGRectMake(0, 0, scroller.pageSize.width, scroller.pageSize.height)
+				scroller:self ];
+		[ previews setObject: v forKey: [ NSNumber numberWithInt:index ] ];
+	}
+	return v;
 }
 
 -(void)startScrolling{
@@ -179,6 +179,7 @@
 
 #pragma mark -
 #pragma mark Memory management
+
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
     [ super didReceiveMemoryWarning ];
@@ -195,8 +196,7 @@
 
 - (void)dealloc {
 	[ scroller release];
-	[ images release ];
-    [ super dealloc];
+	[ super dealloc];
 }
 
 @end

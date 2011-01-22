@@ -11,13 +11,17 @@
 #include <stdlib.h>
 
 static NotesManager *_instance;
+
 @interface NotesManager()
 @property (nonatomic,retain) NSString *path;
+@property (nonatomic,retain) NSMutableDictionary *alerts;
+@property (nonatomic,retain) NSMutableArray *dirs;
+
 @end
 
 @implementation NotesManager
 
-@synthesize notes,path;
+@synthesize path, dirs, alerts;
 
 +(void)start{
 	[ _instance release ];
@@ -29,12 +33,26 @@ static NotesManager *_instance;
 	return _instance;
 }
 
++(NSInteger)indexOfNote:(Note*)note{
+	return [ _instance.dirs indexOfObject: note.directory ];
+}
+
++(NSInteger)count {
+	return [ _instance.dirs count ];
+}
+
++(Note*)noteAtIndex:(NSInteger)index {
+	return [ Note noteWithDirectory:[ [ _instance.dirs sortedArrayUsingSelector: @selector(compare:) ]  objectAtIndex:index] ];
+}
+
 -(id)init{
     self = [super init ];
 	
-	notes = [[ NSMutableArray alloc ] init ];
-	NSError *error;
+	alerts = [[ NSMutableDictionary alloc ] init ];
+	dirs   = [[ NSMutableArray      alloc ] init ];
 	
+	NSError *error;
+
 	NSFileManager *fm = [ NSFileManager defaultManager ];
 
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -51,48 +69,49 @@ static NotesManager *_instance;
 		[ dirEnum skipDescendents ];
 		NSString *dir = [ path stringByAppendingPathComponent:note_file ];
 		if ( [ [ [ fm attributesOfItemAtPath:dir error:NULL ] valueForKey:@"NSFileType"] isEqualToString:@"NSFileTypeDirectory" ] ){
-			Note *note = [[ Note alloc ] initWithDirectoryName:dir ];
-			[ notes addObject:note ];
-			[ note release ];
+			[ dirs addObject: dir ];
 		}
 	}
+
 	for ( UILocalNotification *notification in [UIApplication sharedApplication].scheduledLocalNotifications ){
-		Note* note = [self noteWithDirectory: [ notification.userInfo objectForKey:@"directory"] ];
-		if ( note ){
-				note.notification = notification;
+		if ( [ alerts objectForKey: [ notification.userInfo objectForKey:@"directory"] ] ){
+			 [ alerts setObject: notification forKey:[ notification.userInfo objectForKey:@"directory"] ];
 		}
 	}
-	NSSortDescriptor *dateSorter = [[NSSortDescriptor alloc] initWithKey:@"dateCreated" ascending:NO ];
-	[ notes sortUsingDescriptors:[NSArray arrayWithObject:dateSorter]];
-	[ dateSorter release ];
-    return self;
+	return self;
+}
+
+NSComparisonResult
+compare(NSString *dir1, NSString *dir2, void *context) {
+	NSFileManager *fm = [ NSFileManager defaultManager ];
+
+	return  [ [ [   fm attributesOfItemAtPath:dir1 error:NULL ] valueForKey:@"NSFileCreationDate"]  compare:
+				[ [ fm attributesOfItemAtPath:dir2 error:NULL ] valueForKey:@"NSFileCreationDate"] 
+			 ];
 }
 
 
 -(Note*)noteWithDirectory:(NSString*)dir {
-	for ( Note *note in notes ){
-		if ( [note.directory isEqual: dir ] ){
-			return note;
+	id notification;
+	if ( (  notification = [ alerts objectForKey: dir ] ) ){
+		Note *n = [ Note noteWithDirectory:dir ];
+		if ( [ notification isKindOfClass:[UILocalNotification class]] ){
+			n.notification = notification;
 		}
+	} else {
+		return nil;
 	}
 	return NULL;
 }
 
-
 -(Note*)deleteNote:(Note*)note{
-	NSInteger i = [ notes indexOfObject: note ];
-	if ( NSNotFound == i ){
-		return note;
-	}
 	[ note deleteFromDisk ];
-	[ notes removeObjectAtIndex: i ];
-	if ( ! [ notes count ] ){
+	[ dirs removeObject: note.directory ];
+	[ alerts removeObjectForKey: note.directory ];
+	if ( ! [ dirs count ] ){
 		return [ self addNote ];
 	} else {
-		if ( i == [ notes count ] ){
-			i = [ notes count ]-1;
-		}
-		return [ notes objectAtIndex: i ];
+		return [ NotesManager noteAtIndex:0 ];
 	}
 }
 
@@ -121,10 +140,10 @@ static NotesManager *_instance;
 
 
 -(Note*)addNote {
-	Note *note = [[ Note alloc ] initWithDirectoryName: [ self createNoteDirectory ] ];
+	Note *note = [ Note noteWithDirectory: [ self createNoteDirectory ] ];
 	[ note save ];
-	[ notes insertObject:note atIndex:0];
-	return [ note autorelease ];
+	[ dirs addObject: note.directory ];
+	return note;
 }
 
 -(NSInteger)maxNumberOfNotes{
@@ -150,17 +169,18 @@ static NotesManager *_instance;
 }
 
 -(BOOL)isAllowedMoreNotes {
-	return ( [ notes count ] < self.maxNumberOfNotes );
+	return YES; // ( [ dirs count ] < self.maxNumberOfNotes );
 }
 
--(Note*)defaultEditingNote{
-	return [ notes count ] ? [ notes objectAtIndex: 0 ] : [ self addNote ];
+-(Note*)defaultEditingNote {
+	return [ [ _instance dirs ] count ] ? [ NotesManager noteAtIndex: 0 ] : [ self addNote ];
 }
 
 - (void)dealloc {
-	[ path  release ];
-	[ notes release ];
-    [ super dealloc ];
+	[ path   release ];
+	[ dirs   release ];
+	[ alerts release ];
+    [ super  dealloc ];
 }
 
 @end

@@ -10,21 +10,29 @@
 #import "Note.h"
 
 @interface NotesManager : NSObject {
-	NSMutableArray *notes;
+	NSMutableArray *dirs;
+	NSMutableDictionary *alerts;
 	NSString *path;
 }
 
 +(void)start;
 +(NotesManager*)instance;
++(NSInteger)count;
++(Note*)noteAtIndex:(NSInteger)index;
++(NSInteger)indexOfNote:(Note*)note;
+
 -(Note*)defaultEditingNote;
 -(Note*)addNote;
--(Note*)noteWithDirectory:(NSString*)dir;
--(Note*)deleteNote:(Note*)note;
 -(BOOL)isAllowedMoreNotes;
 -(BOOL)hasBeenUpgraded;
 -(void)upgradeAllowedNoteCount:(BOOL)unlimited;
 
 
-//@property ( nonatomic, readonly ) BOOL isUnlimited;
-@property (readonly,nonatomic) NSArray *notes;
+-(Note*)deleteNote:(Note*)note;
+
+-(Note*)noteWithDirectory:(NSString*)dir;
+
+// @property ( nonatomic, readonly ) BOOL isUnlimited;
+// @property (readonly,nonatomic) NSArray *notes;
+
 @end
