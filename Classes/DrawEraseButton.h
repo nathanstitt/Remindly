@@ -1,10 +1,12 @@
 //
 //  EraseButton.h
-//  Mr Naggles
-//
 //  Created by Nathan Stitt on 12/4/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+//  Copyright 2011.
+//  Distributed under the terms of the GNU General Public License version 3.
+
+// a simple UIButton that toggles between a Pencil icon and an eraser
+
+// FIXME, why not generalize this out to just two generic UImage's?
 
 #import <Foundation/Foundation.h>
 

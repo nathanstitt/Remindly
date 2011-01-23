@@ -1,21 +1,27 @@
-//
-//  DrawingView.m
-//  IoGee
-//
-//  Created by Nathan Stitt on 11/10/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import <QuartzCore/QuartzCore.h>
-
 #import "MainViewController.h"
-#import "AlarmTitleLabel.h"
+#import "AlarmTitleButton.h"
 #import "NotesManager.h"
 #import "DrawingViewController.h"
 
 @implementation DrawingViewController
 
-@synthesize note,color,isErasing;
+@synthesize note,color,isErasing,alarmTitle;
 
 - (id)initWithMainView:(MainViewController*)mv {
     self = [super init ];
@@ -28,9 +34,8 @@
 	[ self.view addSubview:drawImage];
 	color = [ UIColor darkGrayColor ].CGColor;
 
-	alarmLabel = [[AlarmTitleLabel alloc ] initWithFrame:CGRectMake( 0, 0, 320, 27 ) ];
-	
-	[ self.view addSubview:alarmLabel ];
+	alarmTitle = [[AlarmTitleButton alloc ] initWithFrame:CGRectMake( 0, 0, 320, 27 ) ];
+	[ self.view addSubview:alarmTitle ];
 
 	[ NSTimer scheduledTimerWithTimeInterval:1
 									target:self 
@@ -51,7 +56,7 @@
 
 
 -(void)updateTitle:(id)sel {
-	alarmLabel.text = [note alarmDescription];
+	alarmTitle.text = [ note alarmTitle ];
 }
 
 -(void)setNote:(Note *)n{

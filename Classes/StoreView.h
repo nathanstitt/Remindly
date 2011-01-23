@@ -1,10 +1,10 @@
 //
 //  StoreView.h
-//  Remindly
-//
 //  Created by Nathan Stitt on 12/24/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+//  Copyright 2011.
+//  Distributed under the terms of the GNU General Public License version 3.
+
+// StoreView initiates an InApp purchase
 
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
@@ -18,7 +18,7 @@
 {
 	UITableView *tableView;
 	UILabel *message;
-									
+
 	UITableViewCell *firstOption;
 	UILabel *firstDesc;
 

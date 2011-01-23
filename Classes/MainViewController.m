@@ -1,17 +1,32 @@
-//
-//  MainViewController.m
-//  IoGee
-//
-//  Created by Nathan Stitt on 11/10/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import "MainViewController.h"
-#import "AlarmView.h"
+#import "AlarmViewController.h"
 #import "ColorButton.h"
 #import "DrawingViewController.h"
 #import "NotesManager.h"
 #import "StoreView.h"
+#import "NoteSelectorController.h"
+
+@interface MainViewController()
+-(void) updateCount;
+-(void) showAlarm;
+@end
+
+
 
 @implementation MainViewController
 
@@ -22,17 +37,19 @@
 
 - (void)viewDidLoad {
 
-	scroll = [[ ScrollController alloc ] initWithMainView:self ];
+	scroll = [[ NoteSelectorController alloc ] initWithMainView:self ];
 	scroll.view.frame = CGRectMake(0, 0, 320, 420 );
 	scroll.view.hidden = YES;
 	[ self.view addSubview: scroll.view ];
 
 	draw = [[ DrawingViewController alloc ] initWithMainView:self ];
 	draw.view.frame = CGRectMake(0, 0, 320, 420 );
-	draw.note = [[ NotesManager instance ] defaultEditingNote ]; 
+	draw.note = [ NotesManager noteAtIndex: 0 ]; 
+	[ draw.alarmTitle   addTarget:self action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
+	
 	[ self.view addSubview: draw.view ];
 
-	dcm = [[ DrawingColorManager alloc] initWithLastColor ];
+	dcm = [[ DrawingColorController alloc] initWithLastColor ];
 	dcm.delegate = self;
 	draw.color = dcm.selectedColor.CGColor;
 	[ self.view addSubview: dcm.toolBar ];
@@ -66,7 +83,7 @@
 
 	[self.view addSubview:mainToolbar ];
 	
-	alarmView = [[ AlarmView alloc ] init ];
+	alarmView = [[ AlarmViewController alloc ] init ];
 	alarmView.delegate = self;
 	[ self.view addSubview: alarmView ];
 
@@ -77,11 +94,10 @@
 }
 
 -(void)deleteNote:(id)sel {
-//	[ scroll deleteNote: draw.note ];
+	Note *note = draw.note;
+	draw.note = [[ NotesManager instance ] deleteNote: note ];
+	[ scroll deleteNote: note newIndex:draw.note.index ];
 
-	draw.note = [[ NotesManager instance ] deleteNote: draw.note ];
-	
-	[ scroll selectNoteIndex: 0 ];
 	[ self updateCount ];
 }
 
@@ -95,9 +111,10 @@
 	if ( [ manager isAllowedMoreNotes ] ){
 		Note *n = [ manager addNote ];
 		draw.note = n;
-//		[ scroll addNote:n ];
+		[ scroll addNote:n ];
 		[ self updateCount ];
 	} else {
+		
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more reminders"
 									message:@"You've reached the maximum number of reminders.\n\nWould you like to view options for purchasing additional reminders?"  
 									delegate:self cancelButtonTitle:@"No" otherButtonTitles: @"Yes", nil];
@@ -111,8 +128,14 @@
 }
 
 -(void)showAlarm{
-	[ draw.note save ];
-	[ alarmView showWithNote: draw.note ];
+	if ( alarmView.isShowing ){
+		alarmView.isShowing=NO;
+	} else {
+		[ draw.note save ];
+		[ alarmView showWithNote: draw.note ];
+	}
+		
+		
 }
 
 -(void) updateCount {
@@ -122,22 +145,26 @@
 
 -(void) selectNote:(Note*)note{
 	draw.note = note;
-	[ scroll selectNoteIndex:[ NotesManager indexOfNote:note ] ];
+	[ scroll selectNoteIndex:note.index ];
 	if ( draw.view.hidden ){
 		draw.view.hidden   = NO;
 		scroll.view.hidden = YES;
 	}
-}
-
-
--(void) noteWasSelected:(Note*)note{
 	for ( UIBarButtonItem *btn in toggledButtons ){
 		[ btn setEnabled: YES ];
 	}
-	draw.note = note;
-	draw.view.hidden   = NO;
-	scroll.view.hidden = YES;
+	
 }
+//
+//
+//-(void) noteWasSelected:(Note*)note{
+//	for ( UIBarButtonItem *btn in toggledButtons ){
+//		[ btn setEnabled: YES ];
+//	}
+//	draw.note = note;
+//	draw.view.hidden   = NO;
+//	scroll.view.hidden = YES;
+//}
 
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -168,11 +195,11 @@
 
 #pragma mark AlarmView delegate methods
 
--(void)alarmShowingChanged:(AlarmView*)av{
+-(void)alarmShowingChanged:(AlarmViewController*)av{
 //	draw.alarmLabel.hidden = av.isShowing;
 }
 
--(void)alarmSet:(AlarmView*)av{
+-(void)alarmSet:(AlarmViewController*)av{
 	[ alarmView saveToNote: draw.note ];
 	[ draw.note scedule ];
 	[ draw noteUpdated ];
@@ -188,7 +215,7 @@
 
 #pragma mark DrawingColorManagerDelegate delegate methods 
 
--(void)drawingColorManagerColorUpdated:(DrawingColorManager*)manager color:(CGColorRef)color{
+-(void)drawingColorManagerColorUpdated:(DrawingColorController*)manager color:(CGColorRef)color{
 	draw.color = color;
 }
 

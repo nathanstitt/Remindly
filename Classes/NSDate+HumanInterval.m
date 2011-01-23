@@ -1,10 +1,24 @@
 //
 //  NSDate+HumanInterval.m
-//  Buzzalot
-//
-//  Created by David E. Wheeler on 2/18/10.
-//  Copyright 2010 Kineticode, Inc.. All rights reserved.
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+// The HumanInterval category adds a single method to 
+// NSDate: humanIntervalFromNow
+// this method returns an english string listing the date interval
+// in an easy to read manner.
 
 #import "NSDate+HumanInterval.h"
 
@@ -66,7 +80,9 @@
 	
 		if ( delta < 10 * MINUTE ){
 			remain -= ( remain / MINUTE ) * MINUTE;
-			[ segments  addObject: [ NSString stringWithFormat:@"%u seconds", remain ] ];
+			if ( remain ){
+				[ segments  addObject: [ NSString stringWithFormat:@"%u seconds", remain ] ];
+			}
 		}
 	}
 	

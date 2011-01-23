@@ -1,10 +1,11 @@
 //
 //  AlarmAbsoluteTimes.h
-//  Mr Naggles
-//
-//  Created by Nathan Stitt on 12/1/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+//  Created by Nathan Stitt on 11/14/10.
+//  Copyright 2011.
+//  Distributed under the terms of the GNU General Public License version 3.
+
+// The AlarmAbsoluteTimes is a UIDatePicker which
+// allows setting the alarm to an arbitrary date/time
 
 #import <UIKit/UIKit.h>
 

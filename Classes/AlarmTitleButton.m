@@ -1,15 +1,24 @@
 //
 //  AlarmTitleLabel.m
-//  Mr Naggles
-//
-//  Created by Nathan Stitt on 11/29/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
 
-#import "AlarmTitleLabel.h"
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#import "AlarmTitleButton.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation AlarmTitleLabel
+@implementation AlarmTitleButton
 
 @synthesize borderWidth, borderRadius, borderColor, fillColor;
 
@@ -17,10 +26,9 @@
    self = [super initWithFrame:frame];
 
 	self.backgroundColor = [UIColor clearColor];
-	self.lineBreakMode = UILineBreakModeTailTruncation;
-	self.textAlignment = UITextAlignmentCenter;
-	self.numberOfLines = 0;
-	
+	self.contentHorizontalAlignment=UIControlContentHorizontalAlignmentCenter;
+	[ self setTitleColor:[UIColor blackColor ] forState: UIControlStateNormal];
+
 	self.borderColor = [UIColor colorWithWhite:0.65 alpha:1.0];
 	self.fillColor = [ UIColor colorWithRed: 241.0/255.0
 									  green:241.0/255.0 
@@ -35,12 +43,23 @@
 #define borderRadius 10.0
 #define PADDING       8.0
 
+-(void)setText:(NSString*)text{
+	if ( self.text.length != text.length ){
+		[ self setNeedsDisplay ];
+	}
+	[ self setTitle:text forState:UIControlStateNormal ];
+}
+
+-(NSString*)text{
+	return [ self titleForState:UIControlStateNormal ];
+}
+
 - (void)drawRect:(CGRect)rect {
 
-	CGSize size = [[self text] sizeWithFont:[self font]];
-	
+	CGSize size = [[self text] sizeWithFont: self.titleLabel.font ];
+
 	CGRect localRect = CGRectInset(rect, borderWidth / 2, borderWidth / 2);
-	
+
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGContextSaveGState(context);
 	

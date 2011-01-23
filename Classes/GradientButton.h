@@ -1,6 +1,11 @@
 //
-//  ButtonGradientView.h
-//  Custom Alert View
+//
+// GradientButton is from
+// http://code.google.com/p/iphonegradientbuttons
+//
+//  I've added a few new colors
+//  it seems to find it's way into most
+//  of my projects somehow.
 //
 //  Created by jeff on 5/17/10.
 //

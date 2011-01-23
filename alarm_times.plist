@@ -14,8 +14,10 @@
 	<integer>15</integer>
 	<key>Half Hour</key>
 	<integer>30</integer>
+	<key>45 Minutes</key>
+	<integer>45</integer>
 	<key>Top of the Hour</key>
-	<integer>31</integer>
+	<integer>51</integer>
 	<key>One Hour</key>
 	<integer>60</integer>
 	<key>Hour and a half</key>

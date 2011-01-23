@@ -1,10 +1,19 @@
 //
-//  IoGeeAppDelegate.m
-//  IoGee
-//
-//  Created by Nathan Stitt on 11/6/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+//  AppDelegate.m
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
@@ -12,8 +21,6 @@
 #import "PurchaseManager.h"
 
 @implementation AppDelegate
-
-@synthesize window;
 
 
 #pragma mark -
@@ -40,17 +47,18 @@
 		}
     }
 	
-	purchaseManager = [[PurchaseManager alloc] init ];
+	
+	[ PurchaseManager startListening ];
 
     CGRect windowRect = CGRectMake(0, 0, 320, 480 );
-    self.window = [[[UIWindow alloc] initWithFrame:windowRect] autorelease];    
+    window = [[UIWindow alloc] initWithFrame:windowRect];    
 	
 	mvc = [[MainViewController alloc ] init ];
 	mvc.view.frame = CGRectMake(0, 20, 320, 460 );
 	[ mvc viewWillAppear:NO ];
 	[ window addSubview:mvc.view ];
 
-    [self.window makeKeyAndVisible];
+    [ window makeKeyAndVisible];
     return YES;
 }
 

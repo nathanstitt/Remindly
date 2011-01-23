@@ -1,10 +1,14 @@
-//
-//  IoGeeAppDelegate.h
-//  IoGee
-//
+
+//  AppDelegate.h
+
 //  Created by Nathan Stitt on 11/6/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+//  Copyright 2011.
+//  Distributed under the terms of the GNU General Public License version 3.
+
+// Since I dislike Interface builder's Xib's the 
+// app is composed entirely from code.  Accordingly the ApplicationDelegate is 
+// a bit more complex than normal, as it handles creating the window and views
+
 
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
@@ -15,10 +19,7 @@
     UIWindow *window;
 	MainViewController *mvc;
 	Note *pendingNote;
-	PurchaseManager *purchaseManager;
 }
-
-@property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @end
 

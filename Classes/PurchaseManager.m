@@ -1,17 +1,32 @@
 //
 //  InAppPurchaseManager.m
-//  Remindly
-//
-//  Created by Nathan Stitt on 12/19/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import "PurchaseManager.h"
 #import "NotesManager.h"
 
 @implementation PurchaseManager
 
-#pragma mark SKPaymentTransactionObserver delegate methods
+
+PurchaseManager *_instance;
+
+
++(void)startListening{
+	_instance = [[PurchaseManager alloc] init ];
+}
 
 -(id)init {
 	self = [ super init ];
@@ -47,8 +62,8 @@
     } else {
         // send out a notification for the failed transaction
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchase Error"
-									message:@"Received an unknown error from Apple, please report to IoGee Support"  
-									delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+						message:@"Received an unknown error from Apple, please contact IoGee Support at help@iogee.com"  
+						delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
 		[alert release];
     }
@@ -59,6 +74,7 @@
 	[ self unlockReminders:transaction.payment.productIdentifier];
 	[ self finishTransaction:transaction wasSuccessful:YES];
 }
+
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
     [self unlockReminders:transaction.originalTransaction.payment.productIdentifier];

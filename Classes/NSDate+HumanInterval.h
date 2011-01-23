@@ -1,10 +1,9 @@
 //
 //  NSDate+HumanInterval.h
-//  Buzzalot
-//
-//  Created by David E. Wheeler on 2/18/10.
-//  Copyright 2010 Kineticode, Inc.. All rights reserved.
-//
+//  Copyright 2011 Nathan Stitt,
+//  Distributed under the terms of the GNU General Public License version 3.
+//  
+//  A category adding a humanIntervalFromNow method to NSDate
 
 #import <UIKit/UIKit.h>
 

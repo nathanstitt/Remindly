@@ -1,17 +1,27 @@
 //
 //  AlarmView.m
-//  IoGee
-//
-//  Created by Nathan Stitt on 11/14/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
 
-#import "AlarmView.h"
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+#import "AlarmViewController.h"
 #import "AlarmQuickTimes.h"
 #import "GradientButton.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation AlarmView
+@implementation AlarmViewController
 
 @synthesize wasSet,delegate;
 
@@ -82,7 +92,7 @@
 	[ absTimes reset ];
 	self.isShowing = YES;
 	if ( NSOrderedDescending == [ note.fireDate compare:[NSDate date] ] ){
-		if ( [ quickTimes hasDateType: note.alarmName ] ){
+		if ( [ quickTimes hasDateType: note.alarmType ] ){
 			[ quickTimes setFromNote: note ];
 			[ self selectIndex: 0 ];
 		} else {

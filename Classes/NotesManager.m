@@ -1,10 +1,19 @@
 //
 //  NotesManager.m
-//  IoGee
-//
-//  Created by Nathan Stitt on 11/10/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import "NotesManager.h"
 #import "Note.h"
@@ -13,9 +22,23 @@
 static NotesManager *_instance;
 
 @interface NotesManager()
-@property (nonatomic,retain) NSString *path;
 @property (nonatomic,retain) NSMutableDictionary *alerts;
 @property (nonatomic,retain) NSMutableArray *dirs;
+-(void)sortDirs;
+@end
+
+// this is pure evil.  Really wish objective-c allowed 'friend' class declarations like C++
+@interface Note(set)
+@property (nonatomic) NSUInteger index;
+@end
+
+@implementation Note(set)
+-(void)setIndex:(NSUInteger)i{
+	index = i;
+}
+-(NSUInteger)index{
+	return index;
+}
 
 @end
 
@@ -25,6 +48,7 @@ static NotesManager *_instance;
 
 +(void)start{
 	[ _instance release ];
+	[ Note 	primeCache ];
 	_instance = [[ NotesManager alloc ] init ];
 }
 
@@ -33,16 +57,20 @@ static NotesManager *_instance;
 	return _instance;
 }
 
-+(NSInteger)indexOfNote:(Note*)note{
-	return [ _instance.dirs indexOfObject: note.directory ];
-}
-
 +(NSInteger)count {
 	return [ _instance.dirs count ];
 }
 
-+(Note*)noteAtIndex:(NSInteger)index {
-	return [ Note noteWithDirectory:[ [ _instance.dirs sortedArrayUsingSelector: @selector(compare:) ]  objectAtIndex:index] ];
++(Note*)noteAtIndex:(NSUInteger)index {
+	Note *note = [ Note noteWithDirectory:[ _instance.dirs objectAtIndex:index] ];
+	note.index = index;
+	if ( ! [note hasNotification] ){
+		UILocalNotification *notif = [ _instance.alerts valueForKey: note.directory ];
+		if ( notif ){
+			note.notification = notif;
+		}
+	}
+	return note;
 }
 
 -(id)init{
@@ -57,7 +85,8 @@ static NotesManager *_instance;
 
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 
-	self.path = [ [paths objectAtIndex:0] stringByAppendingPathComponent: @"notes" ];
+	path = [ [paths objectAtIndex:0] stringByAppendingPathComponent: @"notes" ];
+	[ path retain ];
 
 	if ( ! [ fm fileExistsAtPath:path ] ){
 		[ fm createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error ];
@@ -69,17 +98,21 @@ static NotesManager *_instance;
 		[ dirEnum skipDescendents ];
 		NSString *dir = [ path stringByAppendingPathComponent:note_file ];
 		if ( [ [ [ fm attributesOfItemAtPath:dir error:NULL ] valueForKey:@"NSFileType"] isEqualToString:@"NSFileTypeDirectory" ] ){
-			[ dirs addObject: dir ];
+			[ dirs addObject: note_file ];
 		}
 	}
 
 	for ( UILocalNotification *notification in [UIApplication sharedApplication].scheduledLocalNotifications ){
-		if ( [ alerts objectForKey: [ notification.userInfo objectForKey:@"directory"] ] ){
-			 [ alerts setObject: notification forKey:[ notification.userInfo objectForKey:@"directory"] ];
+		NSString *dir = [ notification.userInfo objectForKey:@"directory"]; 
+		if ( dir ){
+			 [ alerts setObject: notification forKey: dir ];
 		}
 	}
+	[ self sortDirs ];
 	return self;
 }
+
+
 
 NSComparisonResult
 compare(NSString *dir1, NSString *dir2, void *context) {
@@ -90,6 +123,9 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 			 ];
 }
 
+-(void)sortDirs {
+	[ dirs setArray:  [ dirs sortedArrayUsingSelector: @selector(compare:) ] ];
+}
 
 -(Note*)noteWithDirectory:(NSString*)dir {
 	id notification;
@@ -105,13 +141,15 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 }
 
 -(Note*)deleteNote:(Note*)note{
-	[ note deleteFromDisk ];
+	[ note removeSelf ];
 	[ dirs removeObject: note.directory ];
 	[ alerts removeObjectForKey: note.directory ];
 	if ( ! [ dirs count ] ){
 		return [ self addNote ];
+	} else if ( note.index < [ NotesManager count ] ){
+		return [ NotesManager noteAtIndex: note.index ];
 	} else {
-		return [ NotesManager noteAtIndex:0 ];
+		return [ NotesManager noteAtIndex: 0 ];	
 	}
 }
 
@@ -142,7 +180,7 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 -(Note*)addNote {
 	Note *note = [ Note noteWithDirectory: [ self createNoteDirectory ] ];
 	[ note save ];
-	[ dirs addObject: note.directory ];
+	[ dirs insertObject: note.directory atIndex:0 ];
 	return note;
 }
 

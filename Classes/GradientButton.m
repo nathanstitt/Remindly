@@ -3,7 +3,7 @@
 //  Custom Alert View
 //
 //  Created by jeff on 5/17/10.
-// these very lightly adapted from http://code.google.com/p/iphonegradientbuttons
+//  these very lightly adapted from http://code.google.com/p/iphonegradientbuttons
 //
 
 #import "GradientButton.h"

@@ -1,10 +1,19 @@
 //
 //  AlarmAbsoluteTimes.m
-//  Mr Naggles
-//
-//  Created by Nathan Stitt on 12/1/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import "AlarmAbsoluteTimes.h"
 #import "Note.h"
@@ -44,7 +53,7 @@
         [ formmatter setDateFormat:@"hh:mm a EEE, MMM dd, YYYY" ];
 	}
 	[ note setFireDate: self.date ];
-	[ note setAlarmName:[ formmatter stringFromDate: self.date ]  ];
+	[ note setAlarmType:[ formmatter stringFromDate: self.date ]  ];
 }
 
 @end

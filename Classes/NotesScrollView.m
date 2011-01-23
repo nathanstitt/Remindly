@@ -1,33 +1,83 @@
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
 #import "NotesScrollView.h"
 #import "NotesManager.h"
+#import "NotePreviewView.h"
+#import "NoteSelectorController.h"
 
-#define SHADOW_HEIGHT 20.0
-#define SHADOW_INVERSE_HEIGHT 10.0
-#define SHADOW_RATIO (SHADOW_INVERSE_HEIGHT / SHADOW_HEIGHT)
- 
+
 @implementation	NotesScrollView
 
-@synthesize scrollView, pageSize, dropShadow, delegate;
+#define PAGE_WIDTH 213 
+#define PAGE_HEIGHT 280
 
+@synthesize currentPage;
  
-- (id)initWithFrameAndPageSize:(CGRect)frame pageSize:(CGSize)size {    
-	if (self = [self initWithFrame:frame]) {
-		self.pageSize = size;
+- (id)initWithController:(NoteSelectorController*)cntr 
+					frame:(CGRect)frame {
+	
+	if ( self != [self initWithFrame:frame]) {
+		return nil;
     }
+	controller = cntr;
+	previews = [[ NSMutableDictionary alloc ] init ];
 	firstLayout = YES;
-	dropShadow = YES;
-	lastPage = 0;
+	currentPage = 0;
+
+	// Position and size the scrollview. It will be centered in the view.
+	CGRect scrollViewRect = CGRectMake(0, 0, PAGE_WIDTH, PAGE_HEIGHT );
+	scrollViewRect.origin.x = ((self.frame.size.width - PAGE_WIDTH ) / 2);
+	scrollViewRect.origin.y = ((self.frame.size.height - PAGE_HEIGHT ) / 2);
+ 
+	scrollView = [[UIScrollView alloc] initWithFrame:scrollViewRect];
+	scrollView.clipsToBounds = NO;
+	scrollView.contentInset = UIEdgeInsetsMake(0, 20, 0, 20 );
+	scrollView.contentOffset = CGPointMake(20, 0);
+	scrollView.pagingEnabled = YES;
+	scrollView.showsHorizontalScrollIndicator = NO;
+	scrollView.showsVerticalScrollIndicator = NO;
+	scrollView.delegate = self;
+ 
+	[ self addSubview:scrollView ];
+
+             	
     return self;
 }
- 
--(void)loadPage:(int)page {
+
+-(NotePreviewView*)viewAtIndex:(NSUInteger)index {
+
+	NotePreviewView *v = [ previews objectForKey:[ NSNumber numberWithInt:index ] ];
+	if ( ! v ){
+		v = [ [ NotePreviewView alloc ] initWithNote: [ NotesManager noteAtIndex: index ] 
+				frame:CGRectMake(0, 0, PAGE_WIDTH, PAGE_HEIGHT )
+				scroller:self ];
+		[ previews setObject: v forKey: [ NSNumber numberWithInt:index ] ];
+	}
+	return v;
+}
+
+-(void)loadPage:(NSUInteger)page {
 	// Sanity checks
-    if ( page < 0 || page > [ NotesManager count ]-1 ){
+    if ( page > [ NotesManager count ]-1 ){
 		return;
 	}
 
 	// Check if the page is already loaded
-	UIView *view = [ delegate viewForItemAtIndex:self index:page ];
+	NotePreviewView *view = [ self viewAtIndex:page ];
 
 	// add the controller's view to the scroll view	if it's not already added
 	if (view.superview == nil) {
@@ -38,47 +88,40 @@
  
 		view.frame = viewFrame;
  
-		[self.scrollView addSubview:view];
+		[ scrollView addSubview:view];
 	}
+
 }
- 
+
 
 - (void)layoutSubviews {
 	// We need to do some setup once the view is visible. This will only be done once.
 	if(firstLayout)	{
- 
-		// Position and size the scrollview. It will be centered in the view.
-		CGRect scrollViewRect = CGRectMake(0, 0, pageSize.width, pageSize.height);
-		scrollViewRect.origin.x = ((self.frame.size.width - pageSize.width) / 2);
-		scrollViewRect.origin.y = ((self.frame.size.height - pageSize.height) / 2);
- 
-		scrollView = [[UIScrollView alloc] initWithFrame:scrollViewRect];
-		scrollView.clipsToBounds = NO; // Important, this creates the "preview"
-		scrollView.contentInset = UIEdgeInsetsMake(0, 20, 0, 20 );
-		scrollView.contentOffset = CGPointMake(20, 0);
-		scrollView.pagingEnabled = YES;
-		scrollView.showsHorizontalScrollIndicator = NO;
-		scrollView.showsVerticalScrollIndicator = NO;
-		scrollView.delegate = self;
- 
-		[ self addSubview:scrollView ];
-
-                        
 		[ self reload ];
-		// Load the first two pages
-
 		firstLayout = NO;
 	}
 }
 
-
-- (void)reload {
-	self.scrollView.contentSize = CGSizeMake([NotesManager count] * self.scrollView.frame.size.width, 
-											 scrollView.frame.size.height);
-
-	for (UIView *view in [self.scrollView subviews]) {
+-(void)clear {
+	for (UIView *view in [ scrollView subviews]) {
 		[view removeFromSuperview];
 	}
+	[ previews removeAllObjects ];
+	
+}
+
+-(void)redrawNote:(Note*)note{
+	NotePreviewView *v = [ previews objectForKey:[ NSNumber numberWithInt: note.index ] ];
+	if ( v ){
+		v.note = note;
+	}
+}
+
+- (void)reload {
+	scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, 
+											 scrollView.frame.size.height);
+
+	[ self clear ];
 	[ self loadPage:0 ];
 	[ self loadPage:1 ];
 	
@@ -91,7 +134,7 @@
 	// If the point is not inside the scrollview, ie, in the preview areas we need to return
 	// the scrollview here for interaction to work
 	if (!CGRectContainsPoint(scrollView.frame, point)) {
-		return self.scrollView;
+		return scrollView;
 	}
  
 	// If the point is inside the scrollview there's no reason to mess with the event.
@@ -99,45 +142,61 @@
 	return [super hitTest:point	withEvent:event];
 }
  
--(int)currentPage {
-	// Calculate which page is visible 
+
+
+-(NSUInteger)calcPage {
+	
 	CGFloat pageWidth = scrollView.frame.size.width;
-	int page = floor( ( scrollView.contentOffset.x - pageWidth / 2 ) / pageWidth ) + 1;
-	if ( page >=0 && page < [ NotesManager count] && page != lastPage ){
-		lastPage = page;
-		[ delegate pageChanged: page ];
-	}
-	return page;
+    return MIN( [ NotesManager count ]-1,
+			   MAX( 0, floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1 ) );
 }
- 
+
 - (void)selectNoteIndex:(NSInteger)index{
 	[ scrollView setContentOffset:CGPointMake(scrollView.frame.size.width*index,0 ) ];
 }
+
+-(void) noteWasSelected:(Note*)note{
+	[ controller noteWasSelected:note ];
+}
+
 
 #pragma mark -
 #pragma mark UIScrollViewDelegate methods
  
 -(void)scrollViewDidScroll:(UIScrollView *)sv {
-	int page = [self currentPage];
- 
+	int page = [self calcPage];
+	if ( page == currentPage )
+		return;
+
+	[ controller pageChanged: page ];
+
 	// Load the visible and neighbouring pages 
-	[self loadPage:page-1];
+	if ( page > 1 ){
+		[self loadPage:page-1];
+	}
 	[self loadPage:page];
-	[self loadPage:page+1];
+	if ( page < [ NotesManager count ] ){
+		[self loadPage:page+1];
+	}
+
+	currentPage = page;
 }
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-	[ delegate startScrolling ];
+	[ controller startScrolling ];
 }
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	[ delegate endScrolling ];	
+	[ controller endScrolling ];	
 }
 #pragma mark -
 #pragma mark Memory management
  
  
 - (void)dealloc {
+	[ previews   release ];
 	[ scrollView release ];
-	[ super dealloc      ];
+	[ super      dealloc ];
 }
  
  

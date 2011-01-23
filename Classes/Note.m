@@ -1,52 +1,69 @@
 //
 //  Note.m
-//  IoGee
-//
-//  Created by Nathan Stitt on 11/10/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import "Note.h"
 #import "NSDate+HumanInterval.h"
+#import "NotesManager.h"
 
 @interface Note()
 -(id)initWithDirectoryName:(NSString*)file;
 @end
 
-
 @implementation Note
 
-@synthesize directory,image, notification;
+@synthesize directory,image, notification,index;
 
 static NSMutableDictionary *_cache;
++(void)	primeCache{
+	_cache = [[ NSMutableDictionary alloc ] init ];
+}
 
 +(Note*)noteWithDirectory:(NSString*)d {
 	Note *note = [ _cache objectForKey:d];
 	if ( ! note ){
 		note = [[ Note alloc ] initWithDirectoryName:d ];
 		[ _cache setObject:note forKey: d ];
+		[ note release ];
 	}
 	return note;
 }
 
 -(id)initWithDirectoryName:(NSString*)d{
     self = [super init ];
-	self.directory = d;
-	NSLog(@"path=%@",[ directory stringByAppendingPathComponent:@"info.plist" ] );
-	
-	plist = [ [ NSMutableDictionary alloc] initWithContentsOfFile: [ directory stringByAppendingPathComponent:@"info.plist" ] ];
-	if ( ! [ plist valueForKey:@"dateCreated" ] ){
-		[ plist setObject:[NSDate date] forKey:@"dateCreated" ];
+	if ( ! self ){
+		return nil;
 	}
-	image = [ UIImage imageWithContentsOfFile: [ directory stringByAppendingPathComponent:@"image.png" ] ];
+	directory = d;
+	[ directory retain ];
+	
+	plist = [ [ NSMutableDictionary alloc] initWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"info.plist" ] ];
+
+	image = [ UIImage imageWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] ];
 	
 	[ image retain ];
 	
 	return self;
 }
 
+-(NSString*)fullDirectoryPath{
+	return [ [ NotesManager instance ].path stringByAppendingPathComponent: self.directory ];
+}
 
--(NSString*)alarmDescription{
+-(NSString*)alarmTitle{
 	NSDate *fire = [ notification fireDate ];
 	if ( fire ){
 		return [ fire humanIntervalFromNow ];
@@ -56,10 +73,18 @@ static NSMutableDictionary *_cache;
 }
 
 
--(void)setAlarmName:(NSString *)name {
-	[plist setObject:name forKey:@"alarmName"];
+-(void)setAlarmType:(NSString *)name {
+	[plist setObject:name forKey:@"alarmType"];
 }
 
+
+-(NSString *) alarmType {
+	return [ plist valueForKey:@"alarmType" ];
+}
+
+-(NSString *) alarmText {
+	return [ plist valueForKey:@"alarmType" ];
+}
 
 -(NSDate*)fireDate{
 	if ( [ self hasNotification ] ){
@@ -80,15 +105,11 @@ static NSMutableDictionary *_cache;
 	}
 }
 
--(void)deleteFromDisk {
+-(void)removeSelf {
 	NSFileManager *fm = [NSFileManager defaultManager];
 	[ self unScedule ];
-	[ fm removeItemAtPath: directory error:NULL ];
+	[ fm removeItemAtPath: [ self fullDirectoryPath ] error:nil ];
 	[ _cache removeObjectForKey: directory ];
-}
-
--(NSString *) alarmName {
-	return [ plist valueForKey:@"alarmName" ];
 }
 
 - (NSNumber *) alarmMinutes {
@@ -103,14 +124,11 @@ static NSMutableDictionary *_cache;
 	return [ plist valueForKey: @"lastSave" ];
 }
 
--(NSDate*)dateCreated {
-	return [ plist valueForKey: @"dateCreated" ];
-}
 
 -(void)save {
 	[ plist setObject:[NSDate date] forKey:@"lastSave" ];
-	[ plist writeToFile:[ directory stringByAppendingPathComponent:@"info.plist" ] atomically: YES ];
-	[ UIImagePNGRepresentation(image) writeToFile:[ directory stringByAppendingPathComponent:@"image.png" ] atomically:YES];
+	[ plist writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"info.plist" ] atomically: YES ];
+	[ UIImagePNGRepresentation(image) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] atomically:YES];
 }
 
 
@@ -126,18 +144,16 @@ static NSMutableDictionary *_cache;
 	}
 	notification.fireDate = fd;
 	notification.timeZone = [NSTimeZone defaultTimeZone];
-	notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmName ];
-	notification.alertLaunchImage = [ directory stringByAppendingPathComponent:@"image.png" ];
+	notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmText ];
+	notification.alertLaunchImage = [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ];
 	notification.alertAction = @"View Note";
 	notification.soundName = UILocalNotificationDefaultSoundName;
 	notification.applicationIconBadgeNumber = 1;
 
-	NSDictionary *infoDict = [NSDictionary dictionaryWithObject: directory forKey:@"directory"];
+	NSDictionary *infoDict = [NSDictionary dictionaryWithObject: self.directory forKey:@"directory"];
 	notification.userInfo = infoDict;
 	[ app scheduleLocalNotification:notification ];
-	
-	
-	
+
 }
 
 
@@ -146,7 +162,7 @@ static NSMutableDictionary *_cache;
 		[ image release ];
 		[ img retain ];
 		image = img;
-		[UIImagePNGRepresentation(image) writeToFile:[ directory stringByAppendingPathComponent:@"image.png" ] atomically:YES];
+		[UIImagePNGRepresentation(image) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] atomically:YES];
 	}
 }
 

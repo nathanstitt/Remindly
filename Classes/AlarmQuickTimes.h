@@ -1,24 +1,26 @@
 //
-//  AlarmQuickTImes.h
-//  IoGee
-//
+//  AlarmQuickTimes.h
 //  Created by Nathan Stitt on 11/18/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+//  Copyright 2011.
+//  Distributed under the terms of the GNU General Public License version 3.
+
+// The AlarmQuickTimes view holds a UIPicker which contains
+// shortcut times such as 3 minutes, 10 minutes, half hour, etc.
+// it's populated from the alarm_times.plist file
 
 #import <Foundation/Foundation.h>
 
-@class AlarmView,Note;
+@class AlarmViewController,Note;
 
 @interface AlarmQuickTimes : NSObject <UIPickerViewDelegate,UIPickerViewDataSource> {
 	UIPickerView *picker;
 	BOOL wasSet;
-	AlarmView *alarmView;
+	AlarmViewController *alarmView;
 	NSDictionary *choicesTimes;
 	NSArray *quickChoices;
 }
 
--(id)initWithAlarmView:(AlarmView*)view;
+-(id)initWithAlarmView:(AlarmViewController*)view;
 -(void)setFromNote:(Note*)note;
 -(void)saveToNote:(Note*)note;
 -(NSDate*)date;

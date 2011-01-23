@@ -1,17 +1,20 @@
-//
-//  TapImage.m
-//
-//  Created by Björn Sållarp on 7/14/10.
-//  NO Copyright 2010 MightyLittle Industries. NO rights reserved.
-// 
-//  Use this code any way you like. If you do like it, please
-//  link to my blog and/or write a friendly comment. Thank you!
-//
-//  Read my blog @ http://blog.sallarp.com
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import "NotePreviewView.h"
-#import "ScrollController.h"
+#import "NoteSelectorController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -19,11 +22,10 @@
 
 @synthesize note;
 
--(id)initWithNote:(Note*)n frame:(CGRect)frame scroller:(ScrollController*)sc {
+-(id)initWithNote:(Note*)n frame:(CGRect)frame scroller:(NotesScrollView*)sc {
 	scroller = sc;
 	self = [ super initWithFrame:frame ];
-	
-//	self.backgroundColor = [ UIColor blueColor ];
+
 	note = n;
 	imageView = [[UIImageView alloc ] initWithFrame:CGRectMake(10, 10, frame.size.width-20, self.frame.size.height-20) ];
 	imageView.backgroundColor = [ UIColor whiteColor ];
@@ -37,15 +39,20 @@
 	imageView.layer.shadowOpacity = 1.0f;
 	imageView.layer.shadowRadius = 10.0f;
 	[self addSubview:imageView];
-//	self.image = note.image;
 
-	
 	self.contentMode = UIViewContentModeScaleToFill;
 
 	return self;
 }
 
--(void) reload {	
+
+
+-(void) setNote:(Note*)n {
+	if ( n != note ){
+		[ note release ];
+		[ n retain ];
+		note=n;
+	}
 	imageView.image = note.image;
 }
 
@@ -54,5 +61,13 @@
 	[ scroller noteWasSelected: note ];
 }
 
+#pragma mark -
+#pragma mark Memory management
+
+- (void)dealloc {
+	[ imageView release  ];
+	[ super dealloc      ];
+}
+ 
 @end
 

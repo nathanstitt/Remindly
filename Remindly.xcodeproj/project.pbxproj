@@ -19,19 +19,20 @@
 		450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED516128B71E600E7E0C6 /* MainViewController.m */; };
 		4548DEAC12C55D0200815580 /* StoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4548DEAB12C55D0200815580 /* StoreView.m */; };
 		4563DFB012B06C01004588A6 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4563DFAE12B06C01004588A6 /* GradientButton.m */; };
-		456FD35C1290EEC500076641 /* AlarmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 456FD35B1290EEC500076641 /* AlarmView.m */; };
+		4569B24912EB7A37003BD00C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4569B24812EB7A37003BD00C /* LICENSE.txt */; };
+		456FD35C1290EEC500076641 /* AlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 456FD35B1290EEC500076641 /* AlarmViewController.m */; };
 		45792CC01294B4A2001C834B /* NSDate+HumanInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */; };
 		458234E21288FE1400EC555C /* NotesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458234E11288FE1400EC555C /* NotesScrollView.m */; };
 		458234E61288FE8F00EC555C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458234E51288FE8F00EC555C /* QuartzCore.framework */; };
-		458235E31289034700EC555C /* ScrollController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235E21289034700EC555C /* ScrollController.m */; };
+		458235E31289034700EC555C /* NoteSelectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235E21289034700EC555C /* NoteSelectorController.m */; };
 		458235EF128903F200EC555C /* NotePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235EE128903F200EC555C /* NotePreviewView.m */; };
 		4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45853369128B69BC00793A24 /* DrawingViewController.m */; };
 		459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 459402981296241000F11F95 /* AlarmQuickTimes.m */; };
 		45A6C30812A360280027AF86 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A6C30612A360280027AF86 /* Icon@2x.png */; };
 		45A6C30912A360280027AF86 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A6C30712A360280027AF86 /* Icon.png */; };
-		45A6C54812A492010027AF86 /* AlarmTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C54712A492010027AF86 /* AlarmTitleLabel.m */; };
+		45A6C54812A492010027AF86 /* AlarmTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C54712A492010027AF86 /* AlarmTitleButton.m */; };
 		45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C6E812A5F7E70027AF86 /* ColorButton.m */; };
-		45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C7F712A721430027AF86 /* DrawingColorManager.m */; };
+		45A6C7F812A721430027AF86 /* DrawingColorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C7F712A721430027AF86 /* DrawingColorController.m */; };
 		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
 		45C58A4412D18B82009C3867 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 45C58A4312D18B82009C3867 /* Default.png */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
@@ -46,7 +47,6 @@
 		45EE582612AB5F2D00732503 /* photos_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE582512AB5F2D00732503 /* photos_icon.png */; };
 		45EE584B12ADB86900732503 /* draw-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE584A12ADB86900732503 /* draw-icon.png */; };
 		45EE587512ADBC0900732503 /* alarm-clock-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE587412ADBC0900732503 /* alarm-clock-icon.png */; };
-		45EE58AF12ADC16600732503 /* UIColor+FromToRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE58AE12ADC16600732503 /* UIColor+FromToRGB.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,15 +70,16 @@
 		4548DEAB12C55D0200815580 /* StoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreView.m; sourceTree = "<group>"; };
 		4563DFAE12B06C01004588A6 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
 		4563DFAF12B06C01004588A6 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
-		456FD35A1290EEC500076641 /* AlarmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmView.h; sourceTree = "<group>"; };
-		456FD35B1290EEC500076641 /* AlarmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmView.m; sourceTree = "<group>"; };
+		4569B24812EB7A37003BD00C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		456FD35A1290EEC500076641 /* AlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmViewController.h; sourceTree = "<group>"; };
+		456FD35B1290EEC500076641 /* AlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmViewController.m; sourceTree = "<group>"; };
 		45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HumanInterval.h"; sourceTree = "<group>"; };
 		45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+HumanInterval.m"; sourceTree = "<group>"; };
 		458234E01288FE1400EC555C /* NotesScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesScrollView.h; sourceTree = "<group>"; };
 		458234E11288FE1400EC555C /* NotesScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesScrollView.m; sourceTree = "<group>"; };
 		458234E51288FE8F00EC555C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		458235E11289034700EC555C /* ScrollController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollController.h; sourceTree = "<group>"; };
-		458235E21289034700EC555C /* ScrollController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollController.m; sourceTree = "<group>"; };
+		458235E11289034700EC555C /* NoteSelectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteSelectorController.h; sourceTree = "<group>"; };
+		458235E21289034700EC555C /* NoteSelectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteSelectorController.m; sourceTree = "<group>"; };
 		458235ED128903F200EC555C /* NotePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePreviewView.h; sourceTree = "<group>"; };
 		458235EE128903F200EC555C /* NotePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePreviewView.m; sourceTree = "<group>"; };
 		45853368128B69BC00793A24 /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
@@ -87,12 +88,12 @@
 		459402981296241000F11F95 /* AlarmQuickTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmQuickTimes.m; sourceTree = "<group>"; };
 		45A6C30612A360280027AF86 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
 		45A6C30712A360280027AF86 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
-		45A6C54612A492010027AF86 /* AlarmTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmTitleLabel.h; sourceTree = "<group>"; };
-		45A6C54712A492010027AF86 /* AlarmTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmTitleLabel.m; sourceTree = "<group>"; };
+		45A6C54612A492010027AF86 /* AlarmTitleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmTitleButton.h; sourceTree = "<group>"; };
+		45A6C54712A492010027AF86 /* AlarmTitleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmTitleButton.m; sourceTree = "<group>"; };
 		45A6C6E712A5F7E70027AF86 /* ColorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorButton.h; sourceTree = "<group>"; };
 		45A6C6E812A5F7E70027AF86 /* ColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorButton.m; sourceTree = "<group>"; };
-		45A6C7F612A721430027AF86 /* DrawingColorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingColorManager.h; sourceTree = "<group>"; };
-		45A6C7F712A721430027AF86 /* DrawingColorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingColorManager.m; sourceTree = "<group>"; };
+		45A6C7F612A721430027AF86 /* DrawingColorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingColorController.h; sourceTree = "<group>"; };
+		45A6C7F712A721430027AF86 /* DrawingColorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingColorController.m; sourceTree = "<group>"; };
 		45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAbsoluteTimes.h; sourceTree = "<group>"; };
 		45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAbsoluteTimes.m; sourceTree = "<group>"; };
 		45C58A4312D18B82009C3867 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
@@ -111,8 +112,6 @@
 		45EE582512AB5F2D00732503 /* photos_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = photos_icon.png; path = Images/photos_icon.png; sourceTree = "<group>"; };
 		45EE584A12ADB86900732503 /* draw-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "draw-icon.png"; path = "Images/draw-icon.png"; sourceTree = "<group>"; };
 		45EE587412ADBC0900732503 /* alarm-clock-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarm-clock-icon.png"; path = "Images/alarm-clock-icon.png"; sourceTree = "<group>"; };
-		45EE58AD12ADC16600732503 /* UIColor+FromToRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FromToRGB.h"; sourceTree = "<group>"; };
-		45EE58AE12ADC16600732503 /* UIColor+FromToRGB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FromToRGB.m"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Remindly-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Remindly-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,36 +134,17 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4563DFB112B06C05004588A6 /* Misc */,
-				45853368128B69BC00793A24 /* DrawingViewController.h */,
-				45853369128B69BC00793A24 /* DrawingViewController.m */,
-				458235ED128903F200EC555C /* NotePreviewView.h */,
-				458235EE128903F200EC555C /* NotePreviewView.m */,
-				458234E01288FE1400EC555C /* NotesScrollView.h */,
-				458234E11288FE1400EC555C /* NotesScrollView.m */,
-				458235E11289034700EC555C /* ScrollController.h */,
-				458235E21289034700EC555C /* ScrollController.m */,
-				450ED515128B71E600E7E0C6 /* MainViewController.h */,
-				450ED516128B71E600E7E0C6 /* MainViewController.m */,
+				4569B2EA12EB967F003BD00C /* UI */,
 				4501719F128B84B1003E71FE /* Note.h */,
 				450171A0128B84B1003E71FE /* Note.m */,
+				45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */,
+				45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */,
+				45EBDA3612BEFC72001999A4 /* PurchaseManager.h */,
+				45EBDA3712BEFC72001999A4 /* PurchaseManager.m */,
 				4501719C128B849A003E71FE /* NotesManager.h */,
 				4501719D128B849A003E71FE /* NotesManager.m */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
-				459402951296239800F11F95 /* AlarmsPanel */,
-				45A6C54612A492010027AF86 /* AlarmTitleLabel.h */,
-				45A6C54712A492010027AF86 /* AlarmTitleLabel.m */,
-				45A6C6E712A5F7E70027AF86 /* ColorButton.h */,
-				45A6C6E812A5F7E70027AF86 /* ColorButton.m */,
-				45A6C7F612A721430027AF86 /* DrawingColorManager.h */,
-				45A6C7F712A721430027AF86 /* DrawingColorManager.m */,
-				45EE569112A9F04D00732503 /* CountingButton.h */,
-				45EE569212A9F04D00732503 /* CountingButton.m */,
-				45EE571B12AB359200732503 /* DrawEraseButton.h */,
-				45EE571C12AB359200732503 /* DrawEraseButton.m */,
-				4548DEAA12C55D0200815580 /* StoreView.h */,
-				4548DEAB12C55D0200815580 /* StoreView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -185,6 +165,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				4569B24812EB7A37003BD00C /* LICENSE.txt */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -221,19 +202,52 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4563DFB112B06C05004588A6 /* Misc */ = {
+		4569AE0512EB37AD003BD00C /* NoteSelection */ = {
 			isa = PBXGroup;
 			children = (
-				4563DFAE12B06C01004588A6 /* GradientButton.m */,
-				4563DFAF12B06C01004588A6 /* GradientButton.h */,
-				45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */,
-				45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */,
-				45EE58AD12ADC16600732503 /* UIColor+FromToRGB.h */,
-				45EE58AE12ADC16600732503 /* UIColor+FromToRGB.m */,
-				45EBDA3612BEFC72001999A4 /* PurchaseManager.h */,
-				45EBDA3712BEFC72001999A4 /* PurchaseManager.m */,
+				458235E11289034700EC555C /* NoteSelectorController.h */,
+				458235E21289034700EC555C /* NoteSelectorController.m */,
+				458234E01288FE1400EC555C /* NotesScrollView.h */,
+				458234E11288FE1400EC555C /* NotesScrollView.m */,
+				458235ED128903F200EC555C /* NotePreviewView.h */,
+				458235EE128903F200EC555C /* NotePreviewView.m */,
 			);
-			name = Misc;
+			name = NoteSelection;
+			sourceTree = "<group>";
+		};
+		4569B2EA12EB967F003BD00C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4569AE0512EB37AD003BD00C /* NoteSelection */,
+				459402951296239800F11F95 /* AlarmsPanel */,
+				4569B3CE12EBA351003BD00C /* ColorSelector */,
+				450ED515128B71E600E7E0C6 /* MainViewController.h */,
+				450ED516128B71E600E7E0C6 /* MainViewController.m */,
+				45853368128B69BC00793A24 /* DrawingViewController.h */,
+				45853369128B69BC00793A24 /* DrawingViewController.m */,
+				45EE569112A9F04D00732503 /* CountingButton.h */,
+				45EE569212A9F04D00732503 /* CountingButton.m */,
+				45EE571B12AB359200732503 /* DrawEraseButton.h */,
+				45EE571C12AB359200732503 /* DrawEraseButton.m */,
+				4548DEAA12C55D0200815580 /* StoreView.h */,
+				4548DEAB12C55D0200815580 /* StoreView.m */,
+				45A6C54612A492010027AF86 /* AlarmTitleButton.h */,
+				45A6C54712A492010027AF86 /* AlarmTitleButton.m */,
+				4563DFAF12B06C01004588A6 /* GradientButton.h */,
+				4563DFAE12B06C01004588A6 /* GradientButton.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		4569B3CE12EBA351003BD00C /* ColorSelector */ = {
+			isa = PBXGroup;
+			children = (
+				45A6C7F612A721430027AF86 /* DrawingColorController.h */,
+				45A6C7F712A721430027AF86 /* DrawingColorController.m */,
+				45A6C6E712A5F7E70027AF86 /* ColorButton.h */,
+				45A6C6E812A5F7E70027AF86 /* ColorButton.m */,
+			);
+			name = ColorSelector;
 			sourceTree = "<group>";
 		};
 		45823602128904C600EC555C /* Images */ = {
@@ -257,8 +271,8 @@
 		459402951296239800F11F95 /* AlarmsPanel */ = {
 			isa = PBXGroup;
 			children = (
-				456FD35A1290EEC500076641 /* AlarmView.h */,
-				456FD35B1290EEC500076641 /* AlarmView.m */,
+				456FD35A1290EEC500076641 /* AlarmViewController.h */,
+				456FD35B1290EEC500076641 /* AlarmViewController.m */,
 				459402971296241000F11F95 /* AlarmQuickTimes.h */,
 				459402981296241000F11F95 /* AlarmQuickTimes.m */,
 				45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */,
@@ -329,6 +343,7 @@
 				45D19A0812CFDD33009E2E49 /* alarm@2X.png in Resources */,
 				45D19A0912CFDD33009E2E49 /* erase-icon@2x.png in Resources */,
 				45C58A4412D18B82009C3867 /* Default.png in Resources */,
+				4569B24912EB7A37003BD00C /* LICENSE.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,22 +357,21 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				458234E21288FE1400EC555C /* NotesScrollView.m in Sources */,
-				458235E31289034700EC555C /* ScrollController.m in Sources */,
+				458235E31289034700EC555C /* NoteSelectorController.m in Sources */,
 				458235EF128903F200EC555C /* NotePreviewView.m in Sources */,
 				4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */,
 				450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */,
 				4501719E128B849A003E71FE /* NotesManager.m in Sources */,
 				450171A1128B84B1003E71FE /* Note.m in Sources */,
-				456FD35C1290EEC500076641 /* AlarmView.m in Sources */,
+				456FD35C1290EEC500076641 /* AlarmViewController.m in Sources */,
 				45792CC01294B4A2001C834B /* NSDate+HumanInterval.m in Sources */,
 				459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */,
-				45A6C54812A492010027AF86 /* AlarmTitleLabel.m in Sources */,
+				45A6C54812A492010027AF86 /* AlarmTitleButton.m in Sources */,
 				45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */,
-				45A6C7F812A721430027AF86 /* DrawingColorManager.m in Sources */,
+				45A6C7F812A721430027AF86 /* DrawingColorController.m in Sources */,
 				45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */,
 				45EE569312A9F04D00732503 /* CountingButton.m in Sources */,
 				45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */,
-				45EE58AF12ADC16600732503 /* UIColor+FromToRGB.m in Sources */,
 				4563DFB012B06C01004588A6 /* GradientButton.m in Sources */,
 				45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */,
 				4548DEAC12C55D0200815580 /* StoreView.m in Sources */,

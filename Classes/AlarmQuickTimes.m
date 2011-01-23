@@ -1,20 +1,30 @@
 //
 //  AlarmQuickTImes.m
-//  IoGee
-//
-//  Created by Nathan Stitt on 11/18/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*  This file is part of Remindly.
+
+    Remindly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, version 3.
+
+    Remindly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 
 #import "AlarmQuickTImes.h"
-#import "AlarmView.h"
+#import "AlarmViewController.h"
 #import "Note.h"
 
 @implementation AlarmQuickTimes
 
 @synthesize view=picker,wasSet;
 
--(id)initWithAlarmView:(AlarmView*)view {
+-(id)initWithAlarmView:(AlarmViewController*)view {
 	self = [ super init ];
 	alarmView = view;
 	picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 30, 320, 220)];
@@ -36,14 +46,14 @@
 }
 
 -(void)saveToNote:(Note*)note{
-	note.alarmName = [ quickChoices objectAtIndex:[ picker selectedRowInComponent:0 ] ];
+	note.alarmType = [ quickChoices objectAtIndex:[ picker selectedRowInComponent:0 ] ];
 	note.fireDate  = [ self date ];
 }
 
 
 -(void)setFromNote:(Note*)note{
-	if ( note.alarmName ){
-		[ picker selectRow:[ quickChoices indexOfObject: note.alarmName	] inComponent:0 animated:NO ];
+	if ( note.alarmType ){
+		[ picker selectRow:[ quickChoices indexOfObject: note.alarmType	] inComponent:0 animated:NO ];
 	}
 }
 
@@ -54,7 +64,7 @@
 
 -(NSDate*)date{
 	NSNumber *minutes = [ choicesTimes valueForKey: [ quickChoices objectAtIndex: [ picker selectedRowInComponent:0 ] ] ];
-	if ( 31 == [ minutes intValue] ){
+	if ( 51 == [ minutes intValue] ){
 		NSDate *now = [ NSDate date ];
 		NSDateComponents *components = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:now];
 		return [ now dateByAddingTimeInterval: (( 60 -  [components minute] )*60) ];

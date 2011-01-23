@@ -1,35 +1,46 @@
+//
+//  NotesScrollView.h
+//  Created by Nathan Stitt
+//  Copyright 2011.
+//  Distributed under the terms of the GNU General Public License version 3.
+
+// NotesScrollView handles hit detection and feeding the UIScrollView
+// data in the form of NotePreviewViews
+
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
  
- 
-@class NotesScrollView;
- 
-@protocol NotesScrollViewDelegate
-@required
--(UIView*)viewForItemAtIndex:(NotesScrollView*)scrollView index:(int)index;
--(void)pageChanged:(NSInteger)note;
--(void)startScrolling;
--(void)endScrolling;
-@end
- 
+
+@class Note, NoteSelectorController;
+
  
 @interface NotesScrollView : UIView<UIScrollViewDelegate> {
 	UIScrollView *scrollView;
-	id<NotesScrollViewDelegate> delegate;
-	NSInteger lastPage;
+	NSUInteger currentPage;
 	BOOL firstLayout;
-	CGSize pageSize;
-	BOOL dropShadow;
+	NoteSelectorController *controller;
+	NSMutableDictionary *previews;	
 }
 
-@property (nonatomic, retain) UIScrollView *scrollView;
-@property (nonatomic, assign) id<NotesScrollViewDelegate> delegate;
-@property (nonatomic, assign) CGSize pageSize;
-@property (nonatomic, assign) BOOL dropShadow;
+@property (nonatomic) NSUInteger currentPage;
 
+- (id)initWithController:(NoteSelectorController*)cntr frame:(CGRect)frame;
 
-- (id)initWithFrameAndPageSize:(CGRect)frame pageSize:(CGSize)size;
+// called by a preview when it's tapped,
+// the notification is then passed on to the selection controller
+- (void)noteWasSelected:(Note*)note;
+
+// move to the specified index
 - (void)selectNoteIndex:(NSInteger)index;
+
+// redraw the note
+- (void)redrawNote:(Note*)note;
+
+// clears all notes, moves to the first index
+// and then loads the first and second note previews
 - (void)reload;
+
+// clears all notes
+- (void)clear;
 
 @end

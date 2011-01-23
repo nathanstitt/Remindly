@@ -1,17 +1,16 @@
 //
 //  ColorButton.h
-//  Mr Naggles
-//
 //  Created by Nathan Stitt on 11/30/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+//  Copyright 2011.
+//  Distributed under the terms of the GNU General Public License version 3.
+// 
+//  A UIButton with a rounded center set to a given color
 
 #import <UIKit/UIKit.h>
 
 
 @interface ColorButton : UIButton {
 	CGColorRef color;
-	UIView *view;
 }
 
 - (id)iniWithColor:(CGColorRef)c;
