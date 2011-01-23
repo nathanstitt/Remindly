@@ -155,16 +155,7 @@
 	}
 	
 }
-//
-//
-//-(void) noteWasSelected:(Note*)note{
-//	for ( UIBarButtonItem *btn in toggledButtons ){
-//		[ btn setEnabled: YES ];
-//	}
-//	draw.note = note;
-//	draw.view.hidden   = NO;
-//	scroll.view.hidden = YES;
-//}
+
 
 
 -(void)viewWillAppear:(BOOL)animated{
