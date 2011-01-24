@@ -8,33 +8,37 @@
 
 #import "AlarmAnnotationView.h"
 #import "ToggleButton.h"
+#import "AlarmMapView.h"
 
 @implementation AlarmAnnotationView
 
 
-@synthesize delegate, dragState, mapView;
+@synthesize delegate, dragState, map;
 
-
--(id) initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
-	self=[super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
+-initWithMap:(AlarmMapView*)m{
+	map = m;
+	self=[super initWithAnnotation: map.annotation reuseIdentifier:@"alarmIdentifier" ];
 	if ( ! self ){
 		return nil;
 	}
 
 	ToggleButton *button = [ [ ToggleButton alloc ] initWithImages: [ NSArray arrayWithObjects: 
-																   [ UIImage imageNamed:@"flag.png" ],
-																   [UIImage imageNamed:@"SFIcon.png"], nil  ] 
-			Frame: CGRectMake(0, 0, 20, 20 ) ];
+																   [ UIImage imageNamed:@"ArrivingIcon.png" ],
+																   [ UIImage imageNamed:@"DepartingIcon.png"], nil  ] 
+			Frame: CGRectMake(0, 0, 30, 30 ) ];
 
 	self.leftCalloutAccessoryView = button;
 	
+	self.draggable = YES;
+	self.canShowCallout = YES;
+
 	return self;
 }	
 
 
 - (void)setDragState:(MKAnnotationViewDragState)newDragState animated:(BOOL)animated
 {
-    [delegate mapView:mapView annotationView:self didChangeDragState:newDragState fromOldState:dragState];
+	[ map didChangeDragState:newDragState fromOldState:dragState];
 	
     if (newDragState == MKAnnotationViewDragStateStarting) {
         // lift the pin and set the state to dragging
@@ -45,12 +49,12 @@
          { dragState = MKAnnotationViewDragStateDragging; }];
     } else if (newDragState == MKAnnotationViewDragStateEnding) {
         // drop the pin, and set state to none
-		
+
         CGPoint endPoint = CGPointMake(self.center.x,self.center.y+20);
         [UIView animateWithDuration:0.2
                          animations:^{ self.center = endPoint; }
                          completion:^(BOOL finished)
-         { dragState = MKAnnotationViewDragStateNone; }];
+         { dragState = MKAnnotationViewDragStateNone; [ map popUpCallOut ]; }];
     } else if (newDragState == MKAnnotationViewDragStateCanceling) {
         // drop the pin and set the state to none
 		
@@ -58,7 +62,7 @@
         [UIView animateWithDuration:0.2
                          animations:^{ self.center = endPoint; }
                          completion:^(BOOL finished)
-         { dragState = MKAnnotationViewDragStateNone; }];
+         { dragState = MKAnnotationViewDragStateNone; [ map popUpCallOut ]; }];
     }
 }
 

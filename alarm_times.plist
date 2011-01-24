@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Not Set</key>
-	<integer>0</integer>
 	<key>3 Minutes</key>
 	<integer>3</integer>
 	<key>5 Minutes</key>

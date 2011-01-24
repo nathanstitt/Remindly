@@ -20,6 +20,8 @@
 		4548DEAC12C55D0200815580 /* StoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4548DEAB12C55D0200815580 /* StoreView.m */; };
 		4563DFB012B06C01004588A6 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4563DFAE12B06C01004588A6 /* GradientButton.m */; };
 		4569B24912EB7A37003BD00C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4569B24812EB7A37003BD00C /* LICENSE.txt */; };
+		4569B4AD12ED1158003BD00C /* ArrivingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4569B4AC12ED1158003BD00C /* ArrivingIcon.png */; };
+		4569B4AF12ED1164003BD00C /* DepartingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4569B4AE12ED1164003BD00C /* DepartingIcon.png */; };
 		456FD35C1290EEC500076641 /* AlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 456FD35B1290EEC500076641 /* AlarmViewController.m */; };
 		45792CC01294B4A2001C834B /* NSDate+HumanInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */; };
 		458234E21288FE1400EC555C /* NotesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458234E11288FE1400EC555C /* NotesScrollView.m */; };
@@ -47,8 +49,6 @@
 		45EC0C6A12ECADE900DBD0B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */; };
 		45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */; };
 		45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */; };
-		45EC0E4112ECD4A400DBD0B4 /* SFIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EC0E4012ECD4A400DBD0B4 /* SFIcon.png */; };
-		45EC0E4312ECD4AD00DBD0B4 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EC0E4212ECD4AD00DBD0B4 /* flag.png */; };
 		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
 		45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE571C12AB359200732503 /* DrawEraseButton.m */; };
 		45EE572F12AB383700732503 /* erase-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE572E12AB383700732503 /* erase-icon.png */; };
@@ -79,6 +79,8 @@
 		4563DFAE12B06C01004588A6 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
 		4563DFAF12B06C01004588A6 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
 		4569B24812EB7A37003BD00C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		4569B4AC12ED1158003BD00C /* ArrivingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ArrivingIcon.png; path = Images/ArrivingIcon.png; sourceTree = "<group>"; };
+		4569B4AE12ED1164003BD00C /* DepartingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DepartingIcon.png; path = Images/DepartingIcon.png; sourceTree = "<group>"; };
 		456FD35A1290EEC500076641 /* AlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmViewController.h; sourceTree = "<group>"; };
 		456FD35B1290EEC500076641 /* AlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmViewController.m; sourceTree = "<group>"; };
 		45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HumanInterval.h"; sourceTree = "<group>"; };
@@ -122,8 +124,6 @@
 		45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotationView.m; sourceTree = "<group>"; };
 		45EC0D7912ECC54900DBD0B4 /* AlarmAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotation.h; sourceTree = "<group>"; };
 		45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotation.m; sourceTree = "<group>"; };
-		45EC0E4012ECD4A400DBD0B4 /* SFIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SFIcon.png; sourceTree = "<group>"; };
-		45EC0E4212ECD4AD00DBD0B4 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		45EE569112A9F04D00732503 /* CountingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountingButton.h; sourceTree = "<group>"; };
 		45EE569212A9F04D00732503 /* CountingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountingButton.m; sourceTree = "<group>"; };
 		45EE571B12AB359200732503 /* DrawEraseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawEraseButton.h; sourceTree = "<group>"; };
@@ -279,8 +279,8 @@
 		45823602128904C600EC555C /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				45EC0E4012ECD4A400DBD0B4 /* SFIcon.png */,
-				45EC0E4212ECD4AD00DBD0B4 /* flag.png */,
+				4569B4AE12ED1164003BD00C /* DepartingIcon.png */,
+				4569B4AC12ED1158003BD00C /* ArrivingIcon.png */,
 				45C58A4312D18B82009C3867 /* Default.png */,
 				45D19A0412CFDD33009E2E49 /* alarm.png */,
 				45D19A0512CFDD33009E2E49 /* alarm@2X.png */,
@@ -378,8 +378,8 @@
 				45D19A0912CFDD33009E2E49 /* erase-icon@2x.png in Resources */,
 				45C58A4412D18B82009C3867 /* Default.png in Resources */,
 				4569B24912EB7A37003BD00C /* LICENSE.txt in Resources */,
-				45EC0E4112ECD4A400DBD0B4 /* SFIcon.png in Resources */,
-				45EC0E4312ECD4AD00DBD0B4 /* flag.png in Resources */,
+				4569B4AD12ED1158003BD00C /* ArrivingIcon.png in Resources */,
+				4569B4AF12ED1164003BD00C /* DepartingIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

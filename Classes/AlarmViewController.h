@@ -31,8 +31,7 @@
 	BOOL wasSet;
 	id<AlarmViewDelegate> delegate;
 	NSArray *panels;
-	NSArray *quickChoices;
-	NSDictionary *choicesTimes;
+	
 	UISegmentedControl *typeCtrl;
 	UITabBar *tabBar;
 }

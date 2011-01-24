@@ -16,11 +16,14 @@
 	AlarmViewController *alarmView;
 	MKMapView *map;
 	AlarmAnnotation *annotation;
+	MKCircle* circle;
 	AlarmAnnotationView *annotationView;
 }
 
 -(id)initWithAlarmView:(AlarmViewController*)view;
+-(void)popUpCallOut;
 
+@property (readonly,nonatomic) UIView *view;
 @property (readonly,nonatomic) MKMapView *map;
-
+@property (readonly,nonatomic) AlarmAnnotation *annotation;
 @end

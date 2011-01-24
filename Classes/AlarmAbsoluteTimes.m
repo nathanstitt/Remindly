@@ -36,7 +36,6 @@
 	picker.date = [ NSDate date ];
 }
 
-
 -(NSDate*)date{
 	return picker.date;
 }

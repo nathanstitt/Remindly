@@ -17,9 +17,12 @@
     MKAnnotationViewDragState dragState;
 }
 
+-initWithMap:(AlarmMapView*)map;
+
 @property (nonatomic, assign) id <MKMapViewDelegate> delegate;
 @property (nonatomic, assign) MKAnnotationViewDragState dragState;
-@property (nonatomic, assign) MKMapView *mapView;
+
+@property (nonatomic, assign) AlarmMapView *map;
 
 @end
 

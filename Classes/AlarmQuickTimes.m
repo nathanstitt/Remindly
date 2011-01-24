@@ -29,6 +29,7 @@
 	if ( ! self ){
 		return nil;
 	}
+	
 	alarmView = view;
 	picker = [[UIPickerView alloc] initWithFrame: view.childFrame ];
     picker.delegate = self;
@@ -45,7 +46,7 @@
 }
 
 -(void)reset {
-	[ picker selectRow:0 inComponent:0 animated:YES ];
+	[ picker selectRow:4 inComponent:0 animated:YES ];
 }
 
 -(void)saveToNote:(Note*)note{

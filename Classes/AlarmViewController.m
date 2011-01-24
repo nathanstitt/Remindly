@@ -35,8 +35,25 @@
 
 	self.layer.cornerRadius = 5;
 
-	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:
-                          [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", @"Map", nil] ];
+	quickTimes = [[ AlarmQuickTimes alloc ] initWithAlarmView:self ];
+	[ self addSubview: quickTimes.view ];
+
+	absTimes = [[AlarmAbsoluteTimes alloc ] initWithAlarmView:self ];
+	[ self addSubview: absTimes.view ];
+
+	NSArray *titles;
+	if ( [ CLLocationManager locationServicesEnabled ] ) {
+		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
+		[ self addSubview: mapView.view ];
+		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", @"Map", nil]; 
+	} else {
+		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", nil];
+	}
+
+	panels = [NSArray arrayWithObjects:quickTimes,absTimes,mapView,nil];
+	[ panels retain ];
+
+	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:titles];
 	typeCtrl.selectedSegmentIndex = 0;
 	typeCtrl.frame = CGRectMake( 0, 0, 320, 30 );
 	typeCtrl.segmentedControlStyle = UISegmentedControlStyleBezeled;
@@ -44,18 +61,7 @@
 	[ typeCtrl addTarget:self action:@selector(typeCtrlChanged:) forControlEvents:UIControlEventValueChanged ];
 	[ self addSubview: typeCtrl ];
 	[ typeCtrl release ];
-
-	absTimes = [[AlarmAbsoluteTimes alloc ] init ];
-	[ self addSubview: absTimes.view ];
-
-	quickTimes = [[ AlarmQuickTimes alloc ] initWithAlarmView:self ];
-	[ self addSubview: quickTimes.view ];
-
-	if ( [ CLLocationManager locationServicesEnabled ] ){
-		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
-		[ self addSubview: mapView.map ];
-	}
-
+	
 	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(35, 250, 80, 30 ) ];
 	[ b addTarget:self action:@selector(cancelTouched:) forControlEvents:UIControlEventTouchUpInside ];
 	[ b setTitle:@"Cancel" forState:UIControlStateNormal ];
@@ -90,14 +96,35 @@
 	return CGRectMake(0, 30, 320, 220);
 }
 
--(void)selectIndex:(NSInteger)i {
-	typeCtrl.selectedSegmentIndex=i;
+-(void)selectIndex:(NSInteger)indx {
+	typeCtrl.selectedSegmentIndex=indx;
+	switch (indx) {
+		case 0:
+			quickTimes.view.hidden=NO;
+			break;
+		case 1:
+			absTimes.view.hidden=NO;
+			break;
+		case 2:
+			mapView.view.hidden=NO;
+			break;
+		default:
+			break;
+	} 
+}
+
+
+-(void)hideAll{
+	quickTimes.view.hidden = YES;
+	absTimes.view.hidden = YES;
+	mapView.view.hidden = YES;
 }
 
 	
 -(void)showWithNote:(Note*)note {
 	[ quickTimes reset ];
 	[ absTimes reset ];
+	[ self hideAll ];
 	self.isShowing = YES;
 	if ( NSOrderedDescending == [ note.fireDate compare:[NSDate date] ] ){
 		if ( [ quickTimes hasDateType: note.alarmType ] ){
@@ -109,6 +136,7 @@
 		}
 	} else {
 		[ self selectIndex: 0 ];
+
 	}
 }
 
@@ -123,17 +151,19 @@
 
 
 -(void)typeCtrlChanged:(id)tc {
+	[ self hideAll ];
 	if ( 0 == typeCtrl.selectedSegmentIndex ){
 		quickTimes.view.hidden = NO;
-		absTimes.view.hidden   = YES;
 	} else if ( 1 == typeCtrl.selectedSegmentIndex ){
 		if ( [quickTimes date ] ){
 			absTimes.date = quickTimes.date;
 			[ quickTimes reset ];
 		}
-		quickTimes.view.hidden = YES;
 		absTimes.view.hidden   = NO;
+	} else if ( 2 == typeCtrl.selectedSegmentIndex ){
+		mapView.view.hidden = NO;
 	}
+
 }
 
 
@@ -171,9 +201,8 @@
 
 
 - (void)dealloc {
+	[ panels       release ];
 	[ quickTimes   release ];
-	[ choicesTimes release ];
-	[ quickChoices release ];
     [super dealloc];
 }
 

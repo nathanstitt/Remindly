@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
+@class AlarmMapView;
+
 @interface AlarmAnnotation : NSObject <MKAnnotation> {
 	CLLocationCoordinate2D coordinate;
 	BOOL entering;
 }
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
-
 @property (nonatomic) BOOL entering;
 
 @end

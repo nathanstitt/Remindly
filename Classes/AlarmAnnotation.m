@@ -13,7 +13,7 @@
 
 @synthesize coordinate,entering;
 
--(id) init {
+-init {
 	self = [super init];
 	if ( ! self ){
 		return nil;
@@ -39,4 +39,6 @@
 {
     return @"Quick Tap to Change";
 }
+
 @end
+
