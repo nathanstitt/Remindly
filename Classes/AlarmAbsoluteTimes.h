@@ -9,12 +9,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class Note;
+@class Note,AlarmViewController;
 
 @interface AlarmAbsoluteTimes : NSObject {
 	UIDatePicker *picker;
 }
 
+-(id)initWithAlarmView:(AlarmViewController*)view;
 -(void)reset;
 -(void)saveToNote:(Note*)note;
 

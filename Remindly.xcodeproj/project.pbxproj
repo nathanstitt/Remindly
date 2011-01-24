@@ -28,12 +28,15 @@
 		458235EF128903F200EC555C /* NotePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235EE128903F200EC555C /* NotePreviewView.m */; };
 		4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45853369128B69BC00793A24 /* DrawingViewController.m */; };
 		459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 459402981296241000F11F95 /* AlarmQuickTimes.m */; };
+		459A438D12ECF7D3007119A1 /* ToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A438C12ECF7D3007119A1 /* ToggleButton.m */; };
 		45A6C30812A360280027AF86 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A6C30612A360280027AF86 /* Icon@2x.png */; };
 		45A6C30912A360280027AF86 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A6C30712A360280027AF86 /* Icon.png */; };
 		45A6C54812A492010027AF86 /* AlarmTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C54712A492010027AF86 /* AlarmTitleButton.m */; };
 		45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C6E812A5F7E70027AF86 /* ColorButton.m */; };
 		45A6C7F812A721430027AF86 /* DrawingColorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C7F712A721430027AF86 /* DrawingColorController.m */; };
 		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
+		45C3BEB512EC908A004CB303 /* AlarmMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C3BEB412EC908A004CB303 /* AlarmMapView.m */; };
+		45C3BEC312EC918C004CB303 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C3BEC212EC918C004CB303 /* MapKit.framework */; };
 		45C58A4412D18B82009C3867 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 45C58A4312D18B82009C3867 /* Default.png */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
 		45D19A0712CFDD33009E2E49 /* alarm.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D19A0412CFDD33009E2E49 /* alarm.png */; };
@@ -41,6 +44,11 @@
 		45D19A0912CFDD33009E2E49 /* erase-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45D19A0612CFDD33009E2E49 /* erase-icon@2x.png */; };
 		45EBDA3312BEFB4F001999A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EBDA3212BEFB4F001999A4 /* StoreKit.framework */; };
 		45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EBDA3712BEFC72001999A4 /* PurchaseManager.m */; };
+		45EC0C6A12ECADE900DBD0B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */; };
+		45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */; };
+		45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */; };
+		45EC0E4112ECD4A400DBD0B4 /* SFIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EC0E4012ECD4A400DBD0B4 /* SFIcon.png */; };
+		45EC0E4312ECD4AD00DBD0B4 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EC0E4212ECD4AD00DBD0B4 /* flag.png */; };
 		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
 		45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE571C12AB359200732503 /* DrawEraseButton.m */; };
 		45EE572F12AB383700732503 /* erase-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE572E12AB383700732503 /* erase-icon.png */; };
@@ -86,6 +94,8 @@
 		45853369128B69BC00793A24 /* DrawingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingViewController.m; sourceTree = "<group>"; };
 		459402971296241000F11F95 /* AlarmQuickTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmQuickTimes.h; sourceTree = "<group>"; };
 		459402981296241000F11F95 /* AlarmQuickTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmQuickTimes.m; sourceTree = "<group>"; };
+		459A438B12ECF7D3007119A1 /* ToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleButton.h; sourceTree = "<group>"; };
+		459A438C12ECF7D3007119A1 /* ToggleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToggleButton.m; sourceTree = "<group>"; };
 		45A6C30612A360280027AF86 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
 		45A6C30712A360280027AF86 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
 		45A6C54612A492010027AF86 /* AlarmTitleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmTitleButton.h; sourceTree = "<group>"; };
@@ -96,6 +106,9 @@
 		45A6C7F712A721430027AF86 /* DrawingColorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingColorController.m; sourceTree = "<group>"; };
 		45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAbsoluteTimes.h; sourceTree = "<group>"; };
 		45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAbsoluteTimes.m; sourceTree = "<group>"; };
+		45C3BEB312EC908A004CB303 /* AlarmMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmMapView.h; sourceTree = "<group>"; };
+		45C3BEB412EC908A004CB303 /* AlarmMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmMapView.m; sourceTree = "<group>"; };
+		45C3BEC212EC918C004CB303 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		45C58A4312D18B82009C3867 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
 		45D19A0412CFDD33009E2E49 /* alarm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alarm.png; path = Images/alarm.png; sourceTree = "<group>"; };
@@ -104,6 +117,13 @@
 		45EBDA3212BEFB4F001999A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		45EBDA3612BEFC72001999A4 /* PurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseManager.h; sourceTree = "<group>"; };
 		45EBDA3712BEFC72001999A4 /* PurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseManager.m; sourceTree = "<group>"; };
+		45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		45EC0D7612ECC4C100DBD0B4 /* AlarmAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotationView.h; sourceTree = "<group>"; };
+		45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotationView.m; sourceTree = "<group>"; };
+		45EC0D7912ECC54900DBD0B4 /* AlarmAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotation.h; sourceTree = "<group>"; };
+		45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotation.m; sourceTree = "<group>"; };
+		45EC0E4012ECD4A400DBD0B4 /* SFIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SFIcon.png; sourceTree = "<group>"; };
+		45EC0E4212ECD4AD00DBD0B4 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		45EE569112A9F04D00732503 /* CountingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountingButton.h; sourceTree = "<group>"; };
 		45EE569212A9F04D00732503 /* CountingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountingButton.m; sourceTree = "<group>"; };
 		45EE571B12AB359200732503 /* DrawEraseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawEraseButton.h; sourceTree = "<group>"; };
@@ -125,6 +145,8 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				458234E61288FE8F00EC555C /* QuartzCore.framework in Frameworks */,
 				45EBDA3312BEFB4F001999A4 /* StoreKit.framework in Frameworks */,
+				45C3BEC312EC918C004CB303 /* MapKit.framework in Frameworks */,
+				45EC0C6A12ECADE900DBD0B4 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +188,8 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				4569B24812EB7A37003BD00C /* LICENSE.txt */,
+				45C3BEC212EC918C004CB303 /* MapKit.framework */,
+				45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -218,6 +242,8 @@
 		4569B2EA12EB967F003BD00C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				459A438B12ECF7D3007119A1 /* ToggleButton.h */,
+				459A438C12ECF7D3007119A1 /* ToggleButton.m */,
 				4569AE0512EB37AD003BD00C /* NoteSelection */,
 				459402951296239800F11F95 /* AlarmsPanel */,
 				4569B3CE12EBA351003BD00C /* ColorSelector */,
@@ -253,6 +279,8 @@
 		45823602128904C600EC555C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				45EC0E4012ECD4A400DBD0B4 /* SFIcon.png */,
+				45EC0E4212ECD4AD00DBD0B4 /* flag.png */,
 				45C58A4312D18B82009C3867 /* Default.png */,
 				45D19A0412CFDD33009E2E49 /* alarm.png */,
 				45D19A0512CFDD33009E2E49 /* alarm@2X.png */,
@@ -277,6 +305,12 @@
 				459402981296241000F11F95 /* AlarmQuickTimes.m */,
 				45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */,
 				45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */,
+				45C3BEB312EC908A004CB303 /* AlarmMapView.h */,
+				45C3BEB412EC908A004CB303 /* AlarmMapView.m */,
+				45EC0D7612ECC4C100DBD0B4 /* AlarmAnnotationView.h */,
+				45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */,
+				45EC0D7912ECC54900DBD0B4 /* AlarmAnnotation.h */,
+				45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */,
 			);
 			name = AlarmsPanel;
 			sourceTree = "<group>";
@@ -344,6 +378,8 @@
 				45D19A0912CFDD33009E2E49 /* erase-icon@2x.png in Resources */,
 				45C58A4412D18B82009C3867 /* Default.png in Resources */,
 				4569B24912EB7A37003BD00C /* LICENSE.txt in Resources */,
+				45EC0E4112ECD4A400DBD0B4 /* SFIcon.png in Resources */,
+				45EC0E4312ECD4AD00DBD0B4 /* flag.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +411,10 @@
 				4563DFB012B06C01004588A6 /* GradientButton.m in Sources */,
 				45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */,
 				4548DEAC12C55D0200815580 /* StoreView.m in Sources */,
+				45C3BEB512EC908A004CB303 /* AlarmMapView.m in Sources */,
+				45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationView.m in Sources */,
+				45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotation.m in Sources */,
+				459A438D12ECF7D3007119A1 /* ToggleButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

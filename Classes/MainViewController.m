@@ -87,7 +87,7 @@
 	alarmView.delegate = self;
 	[ self.view addSubview: alarmView ];
 
-	//[ scroll selectNote: [ NotesManager noteAtIndex:0 ] ];
+
 
 	self.view.backgroundColor = [UIColor grayColor ];
 

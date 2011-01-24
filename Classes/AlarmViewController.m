@@ -36,7 +36,7 @@
 	self.layer.cornerRadius = 5;
 
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:
-                          [ NSArray arrayWithObjects: @"Quick Selctions", @"Alarm Time", nil] ];
+                          [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", @"Map", nil] ];
 	typeCtrl.selectedSegmentIndex = 0;
 	typeCtrl.frame = CGRectMake( 0, 0, 320, 30 );
 	typeCtrl.segmentedControlStyle = UISegmentedControlStyleBezeled;
@@ -50,6 +50,11 @@
 
 	quickTimes = [[ AlarmQuickTimes alloc ] initWithAlarmView:self ];
 	[ self addSubview: quickTimes.view ];
+
+	if ( [ CLLocationManager locationServicesEnabled ] ){
+		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
+		[ self addSubview: mapView.map ];
+	}
 
 	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(35, 250, 80, 30 ) ];
 	[ b addTarget:self action:@selector(cancelTouched:) forControlEvents:UIControlEventTouchUpInside ];
@@ -81,6 +86,9 @@
 	}
 }
 
+-(CGRect)childFrame{
+	return CGRectMake(0, 30, 320, 220);
+}
 
 -(void)selectIndex:(NSInteger)i {
 	typeCtrl.selectedSegmentIndex=i;

@@ -16,15 +16,19 @@
 */
 
 #import "AlarmAbsoluteTimes.h"
+#import "AlarmViewController.h"
 #import "Note.h"
 
 @implementation AlarmAbsoluteTimes
 
 @synthesize view=picker;
 
-- (id)init {
+-(id)initWithAlarmView:(AlarmViewController*)view {
 	self = [ super init ];
-	picker = [[ UIDatePicker alloc ] initWithFrame:CGRectMake(0, 30, 320, 220) ];
+	if ( ! self ){
+		return nil;
+	}
+	picker = [[ UIDatePicker alloc ] initWithFrame:view.childFrame ];
 	return self;
 }
 

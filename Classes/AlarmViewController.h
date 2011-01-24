@@ -13,6 +13,7 @@
 #import "Note.h"
 #import "AlarmQuickTimes.h"
 #import "AlarmAbsoluteTimes.h"
+#import "AlarmMapView.h"
 
 @class AlarmViewController;
 
@@ -24,13 +25,14 @@
 
 
 @interface AlarmViewController : UIView {
+	AlarmQuickTimes *quickTimes;
+	AlarmAbsoluteTimes *absTimes;
+	AlarmMapView *mapView;
 	BOOL wasSet;
 	id<AlarmViewDelegate> delegate;
 	NSArray *panels;
 	NSArray *quickChoices;
 	NSDictionary *choicesTimes;
-	AlarmQuickTimes *quickTimes;
-	AlarmAbsoluteTimes *absTimes;
 	UISegmentedControl *typeCtrl;
 	UITabBar *tabBar;
 }
@@ -41,6 +43,7 @@
 
 -(void)quickSelectionMade;
 
+@property (nonatomic,readonly) CGRect childFrame;
 @property (nonatomic, assign) id<AlarmViewDelegate> delegate;
 @property (nonatomic,readonly ) BOOL wasSet;
 @property (nonatomic) BOOL isShowing;

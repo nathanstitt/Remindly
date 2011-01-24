@@ -26,8 +26,11 @@
 
 -(id)initWithAlarmView:(AlarmViewController*)view {
 	self = [ super init ];
+	if ( ! self ){
+		return nil;
+	}
 	alarmView = view;
-	picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 30, 320, 220)];
+	picker = [[UIPickerView alloc] initWithFrame: view.childFrame ];
     picker.delegate = self;
     picker.showsSelectionIndicator = YES;
 	picker.dataSource = self;
