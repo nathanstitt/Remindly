@@ -46,10 +46,11 @@ static NotesManager *_instance;
 
 @synthesize path, dirs, alerts;
 
-+(void)start{
-	[ _instance release ];
-	[ Note 	primeCache ];
-	_instance = [[ NotesManager alloc ] init ];
++(void)startup {
+   if ( ! _instance ){
+	   [ Note 	primeCache ];
+	   _instance = [[ NotesManager alloc ] init ];
+	}
 }
 
 
@@ -127,18 +128,25 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 	[ dirs setArray:  [ dirs sortedArrayUsingSelector: @selector(compare:) ] ];
 }
 
+-(BOOL)hasNoteWithDirectory:(NSString*)dir {
+	return ( NSNotFound != [ dirs indexOfObject: dir ] );
+}
+
 -(Note*)noteWithDirectory:(NSString*)dir {
-	id notification;
-	if ( (  notification = [ alerts objectForKey: dir ] ) ){
-		Note *n = [ Note noteWithDirectory:dir ];
-		if ( [ notification isKindOfClass:[UILocalNotification class]] ){
-			n.notification = notification;
+	NSUInteger indx = [ dirs indexOfObject: dir ];
+	if (  NSNotFound != indx ){
+		Note *note = [ Note noteWithDirectory:dir ];
+		note.index = indx;
+		UILocalNotification *notification = [ alerts objectForKey: dir ];
+		if ( notification ){
+			note.notification = notification;
 		}
+		return note;
 	} else {
 		return nil;
 	}
-	return NULL;
 }
+
 
 -(Note*)deleteNote:(Note*)note{
 	[ note removeSelf ];

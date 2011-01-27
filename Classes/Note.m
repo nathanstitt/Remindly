@@ -18,6 +18,7 @@
 #import "Note.h"
 #import "NSDate+HumanInterval.h"
 #import "NotesManager.h"
+#import "LocationAlarmManager.h"
 
 @interface Note()
 -(id)initWithDirectoryName:(NSString*)file;
@@ -94,7 +95,6 @@ static NSMutableDictionary *_cache;
 	}
 }
 
-
 -(void)setFireDate:(NSDate*)date{
 	[ plist setValue: date forKey:@"fireDate" ];
 }
@@ -103,6 +103,7 @@ static NSMutableDictionary *_cache;
 	if ( notification ){
 		[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
 	}
+	[ LocationAlarmManager unregisterNote: self ];
 }
 
 -(void)removeSelf {
@@ -124,37 +125,65 @@ static NSMutableDictionary *_cache;
 	return [ plist valueForKey: @"lastSave" ];
 }
 
+-(NSInteger)alarmTag {
+	return [[ plist valueForKey:@"alarmTag" ] intValue ];
+}
+
+-(void)setAlarmTag:(NSInteger)tag {
+	[ plist setObject:[ NSNumber numberWithInt: tag ] forKey:@"alarmTag" ];
+}
 
 -(void)save {
 	[ plist setObject:[NSDate date] forKey:@"lastSave" ];
 	[ plist writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"info.plist" ] atomically: YES ];
 	[ UIImagePNGRepresentation(image) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] atomically:YES];
-}
-
-
--(void)scedule {
 	UIApplication *app = [UIApplication sharedApplication];
 	[ self unScedule ];
 	if ( ! notification ){
 		notification = [[UILocalNotification alloc] init];
 	}
-	NSDate *fd = [ plist valueForKey: @"fireDate" ];
-	if ( [ fd timeIntervalSinceNow ] > 0 ){
 		
-	}
-	notification.fireDate = fd;
-	notification.timeZone = [NSTimeZone defaultTimeZone];
-	notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmText ];
-	notification.alertLaunchImage = [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ];
-	notification.alertAction = @"View Note";
-	notification.soundName = UILocalNotificationDefaultSoundName;
-	notification.applicationIconBadgeNumber = 1;
 
-	NSDictionary *infoDict = [NSDictionary dictionaryWithObject: self.directory forKey:@"directory"];
-	notification.userInfo = infoDict;
-	[ app scheduleLocalNotification:notification ];
+	NSDate *fd = [ plist valueForKey: @"fireDate" ];
+	if ( 2 == [ self alarmTag ] ){
+		[ LocationAlarmManager registerNote: self ];
+		
+	} else if ( [ fd timeIntervalSinceNow ] > 0 ){
+
+		notification.fireDate = fd;
+		notification.timeZone = [NSTimeZone defaultTimeZone];
+		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmText ];
+		notification.alertLaunchImage = [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ];
+		notification.alertAction = @"View Note";
+		notification.soundName = UILocalNotificationDefaultSoundName;
+		notification.applicationIconBadgeNumber = 1;
+		
+		NSDictionary *infoDict = [NSDictionary dictionaryWithObject: self.directory forKey:@"directory"];
+		notification.userInfo = infoDict;
+		[ app scheduleLocalNotification:notification ];
+	}
 
 }
+
+
+// set coordinate and entering/leaving geo based alarm
+-(void)setCoordinate:(CLLocationCoordinate2D)coordinate onEnterRegion:(BOOL)enter{
+	[ plist setValue:[ NSNumber numberWithDouble: coordinate.latitude  ] forKey:@"latitude"  ];
+	[ plist setValue:[ NSNumber numberWithDouble: coordinate.longitude ] forKey:@"longitude" ];
+	[ plist setValue:[ NSNumber numberWithBool:enter ] forKey: @"onEnterRegion" ];
+}
+
+-(BOOL)onEnterRegion{
+	return [ [ plist valueForKey:@"onEnterRegion" ] boolValue ];
+}
+
+-(CLLocationCoordinate2D)coordinate{
+	CLLocationCoordinate2D coord;
+	coord.longitude = [[plist valueForKey:@"longitude"] doubleValue ];
+	coord.latitude  = [[plist valueForKey:@"latitude"]  doubleValue ];
+	return coord;
+}
+
 
 
 -(void)setImage:(UIImage*)img{

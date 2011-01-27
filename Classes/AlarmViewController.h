@@ -30,9 +30,8 @@
 	AlarmMapView *mapView;
 	BOOL wasSet;
 	id<AlarmViewDelegate> delegate;
-	NSArray *panels;
-	
 	UISegmentedControl *typeCtrl;
+	NSInteger lastTab;
 	UITabBar *tabBar;
 }
 

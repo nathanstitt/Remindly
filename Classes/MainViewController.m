@@ -36,7 +36,6 @@
 }
 
 - (void)viewDidLoad {
-
 	scroll = [[ NoteSelectorController alloc ] initWithMainView:self ];
 	scroll.view.frame = CGRectMake(0, 0, 320, 420 );
 	scroll.view.hidden = YES;
@@ -64,6 +63,7 @@
 	[ countBtn.button addTarget:self action: @selector(showScroller:) forControlEvents:UIControlEventTouchUpInside ];
 
 	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
+	UIBarButtonItem *text  =  [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"text-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(addTextPressed:) ];
 	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
@@ -72,13 +72,14 @@
 
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, space, add, space, del, space, eraseBtn, space, alarm, space, countBtn, NULL ];
+	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, space, add, space, del, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
 
-	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, del, eraseBtn, alarm,  NULL ];
+	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, del, eraseBtn, text, alarm,  NULL ];
 
 	[ del   release  ];
 	[ add   release  ];
 	[ alarm release  ];
+	[ text  release  ];
 	[ space release  ];
 
 	[self.view addSubview:mainToolbar ];
@@ -87,11 +88,17 @@
 	alarmView.delegate = self;
 	[ self.view addSubview: alarmView ];
 
-
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDisplayNote:) name:@"DisplayNote" object:nil];
 
 	self.view.backgroundColor = [UIColor grayColor ];
 
 }
+
+-(void)onDisplayNote:(NSNotification*)notif{
+	[ self selectNote:(Note*)notif.object ];
+}
+
+
 
 -(void)deleteNote:(id)sel {
 	Note *note = draw.note;
@@ -114,13 +121,16 @@
 		[ scroll addNote:n ];
 		[ self updateCount ];
 	} else {
-		
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more reminders"
 									message:@"You've reached the maximum number of reminders.\n\nWould you like to view options for purchasing additional reminders?"  
 									delegate:self cancelButtonTitle:@"No" otherButtonTitles: @"Yes", nil];
 		[alert show];
 		[alert release];
 	}
+}
+
+-(void)addTextPressed:(id)sel{
+	[ draw addText ];
 }
 
 -(void)setAlarmPressed:(id)sel {
@@ -131,7 +141,6 @@
 	if ( alarmView.isShowing ){
 		alarmView.isShowing=NO;
 	} else {
-		[ draw.note save ];
 		[ alarmView showWithNote: draw.note ];
 	}
 		
@@ -192,7 +201,6 @@
 
 -(void)alarmSet:(AlarmViewController*)av{
 	[ alarmView saveToNote: draw.note ];
-	[ draw.note scedule ];
 	[ draw noteUpdated ];
 }
 

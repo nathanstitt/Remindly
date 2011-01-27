@@ -20,11 +20,10 @@
 	NSString *path;
 }
 
-+(void)start;
++(void)startup;
 +(NotesManager*)instance;
 +(NSInteger)count;
 +(Note*)noteAtIndex:(NSUInteger)index;
-
 
 -(Note*)addNote;
 -(BOOL)isAllowedMoreNotes;
@@ -33,6 +32,7 @@
 
 -(Note*)deleteNote:(Note*)note;
 -(Note*)noteWithDirectory:(NSString*)dir;
+-(BOOL)hasNoteWithDirectory:(NSString*)dir;
 
 @property (readonly,nonatomic) NSString*path;
 

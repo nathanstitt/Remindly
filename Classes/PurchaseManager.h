@@ -26,6 +26,6 @@
 }
 
 // this is called from the App delegate
-+(void)startListening;
++(void)startup;
 
 @end

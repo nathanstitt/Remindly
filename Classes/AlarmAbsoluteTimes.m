@@ -41,7 +41,9 @@
 }
 
 -(void)setDate:(NSDate*)date{
-	picker.date = date;
+	if ( date ){
+		picker.date = date;
+	}
 }
 
 - (void)dealloc {

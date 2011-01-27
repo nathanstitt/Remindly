@@ -42,7 +42,7 @@
 	[ self addSubview: absTimes.view ];
 
 	NSArray *titles;
-	if ( [ CLLocationManager locationServicesEnabled ] ) {
+	if ( [CLLocationManager regionMonitoringAvailable] && [CLLocationManager regionMonitoringEnabled] ){
 		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
 		[ self addSubview: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", @"Map", nil]; 
@@ -50,8 +50,6 @@
 		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", nil];
 	}
 
-	panels = [NSArray arrayWithObjects:quickTimes,absTimes,mapView,nil];
-	[ panels retain ];
 
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:titles];
 	typeCtrl.selectedSegmentIndex = 0;
@@ -126,27 +124,39 @@
 	[ absTimes reset ];
 	[ self hideAll ];
 	self.isShowing = YES;
-	if ( NSOrderedDescending == [ note.fireDate compare:[NSDate date] ] ){
-		if ( [ quickTimes hasDateType: note.alarmType ] ){
-			[ quickTimes setFromNote: note ];
+	switch ( note.alarmTag ) {
+		case 0:
+			[ quickTimes setFromNote:note ];
 			[ self selectIndex: 0 ];
-		} else {
+			break;
+		case 1:
 			absTimes.date = note.fireDate;
 			[ self selectIndex: 1 ];
-		}
-	} else {
-		[ self selectIndex: 0 ];
-
+		case 2:
+			[ mapView setFromNote:note ];
+			[ self selectIndex: 2 ];
+		default:
+			break;
 	}
 }
 
 
 -(void)saveToNote:(Note*)note {
-	if ( quickTimes.date ){
-		[ quickTimes saveToNote: note ];
-	} else {
-		[ absTimes saveToNote: note ];
+	switch ( typeCtrl.selectedSegmentIndex ) {
+		case 0:
+			[ quickTimes saveToNote: note ];
+			break;
+		case 1:
+			[ absTimes saveToNote: note ];
+			break;
+		case 2:
+			[ mapView saveToNote: note ];
+			break;
+		default:
+			break;
 	}
+	note.alarmTag = typeCtrl.selectedSegmentIndex;	
+	[ note save ];
 }
 
 
@@ -163,7 +173,6 @@
 	} else if ( 2 == typeCtrl.selectedSegmentIndex ){
 		mapView.view.hidden = NO;
 	}
-
 }
 
 
@@ -201,7 +210,6 @@
 
 
 - (void)dealloc {
-	[ panels       release ];
 	[ quickTimes   release ];
     [super dealloc];
 }

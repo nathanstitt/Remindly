@@ -9,6 +9,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GradientButton.h"
+#import "DrawingTextBox.h"
 
 @class MainViewController,AlarmTitleButton,Note;
 
@@ -22,6 +23,7 @@
 	BOOL wasMoved;
 	AlarmTitleButton *alarmTitle;
 	int mouseMoved;
+	DrawingTextBox *editingView;
 	CGColorRef color;
 }
 
@@ -49,4 +51,6 @@
 // expose this so MainView can hang actions on it
 @property (nonatomic,readonly) AlarmTitleButton *alarmTitle;
 
+// add a text bubble
+-(void) addText;
 @end

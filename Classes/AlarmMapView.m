@@ -9,74 +9,127 @@
 #import "AlarmMapView.h"
 #import "AlarmViewController.h"
 
+@interface AlarmMapView()
+@property (nonatomic,retain) MKCircle* circle;
+@end
+
 @implementation AlarmMapView
 
-@synthesize  map, annotation;
+@synthesize  map, annotation, circle;
 
 -(id)initWithAlarmView:(AlarmViewController*)view{
 	self = [ super init ];
 	if ( ! self ){
 		return nil;
-	}	
-	map=[[MKMapView alloc] initWithFrame: view.childFrame ];
+	}
+	
+
+	map = [[MKMapView alloc] initWithFrame: view.childFrame ];
 	map.mapType = MKMapTypeStandard;
 	map.showsUserLocation = YES;
 	
 	map.delegate=self;
+
+
+	annotation = [[ AlarmAnnotation alloc ] init ];
+	[ map addAnnotation: annotation ];
 	
-	CLLocationCoordinate2D coordinate;
-	coordinate.latitude = 37.810000;
-	coordinate.longitude = -122.477989;
+	self.circle = [MKCircle circleWithCenterCoordinate: map.userLocation.coordinate radius:1000];
+	[map addOverlay:circle];
+
+//	[ self.map.userLocation addObserver:self forKeyPath:@"location" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
+//           context:NULL];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationUpdated:) name:@"locationUpdated" object:nil];
+
+    return self;
+
+}
+
+
+
+-(void)moveTo:(CLLocationCoordinate2D)coord {
+	annotation.coordinate = coord;
 	MKCoordinateRegion region;
-	region.center = coordinate;
+	region.center = coord;
 	region.span.longitudeDelta = 0.08;
 	region.span.latitudeDelta  = 0.08;
 	map.region = region;
-	
-	annotation = [[ AlarmAnnotation alloc ] init ];
-//	annotationView = 
-	
-	circle = [MKCircle circleWithCenterCoordinate: coordinate radius:1000];
-	[map addOverlay:circle];
-	
-	[ map addAnnotation: annotation ];
-	[ self popUpCallOut ];
-    return self;
+	if ( ! map.selectedAnnotations.count ){
+		[ map selectAnnotation:annotation animated:YES ];	
+	}
+	[ map removeOverlay:self.circle ];
+	self.circle = [MKCircle circleWithCenterCoordinate: annotation.coordinate radius:1000];
+	[map addOverlay:self.circle];
+}
 
+-(void)locationUpdated:(NSNotification*)notif {
+	if (! dirty ){
+		[ self moveTo: ((CLLocation*)notif.object).coordinate ];
+	}
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath  
+                    ofObject:(id)object  
+					change:(NSDictionary *)change  
+                    context:(void *)context {  
+
+    if ([self.map isUserLocationVisible]) {  
+		annotation.coordinate = self.map.userLocation.coordinate;
+
+		[ map removeOverlay:circle ];
+		self.circle = [MKCircle circleWithCenterCoordinate: annotation.coordinate radius:1000];
+		[map addOverlay:self.circle];
+    }
 }
 
 -(UIView*)view {
 	return map;
 }
 
--(void)popUpCallOut {
-	[ map deselectAnnotation:annotation animated:NO ];
-	[ map selectAnnotation:annotation animated:YES ];	
+-(void)setupOverlay {
+}
+
+
+-(void)setFromNote:(Note*)note{
+	dirty = YES;
+	[ self moveTo: note.coordinate ];
+	annotationView.onEnter = note.onEnterRegion;
+}
+
+-(void)saveToNote:(Note*)note{
+	[ note setCoordinate: annotation.coordinate onEnterRegion: [ annotationView onEnter ] ];
 }
 
 - (void)dealloc {
+	[ circle release ];
 	[ map release ];
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark CLLocationManagerDelegate
+
+-(void)onLocationUpdate:(NSNotification*)n {
+	if (! dirty ){
+		[ self moveTo: ((CLLocation*)n.object).coordinate ];
+	}
 }
 
 #pragma mark -
 #pragma mark MKMapViewDelegate
 
 -(MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay{
-      MKCircleView* circleView = [[[MKCircleView alloc] initWithOverlay:overlay] autorelease];
-
-      circleView.strokeColor = [UIColor darkGrayColor];
-      circleView.lineWidth = 1.0;
-      //Uncomment below to fill in the circle
-      circleView.fillColor = [UIColor lightGrayColor];
+	MKCircleView* circleView = [[MKCircleView alloc] initWithOverlay:overlay];
+	circleView.strokeColor = [UIColor darkGrayColor];
+	circleView.lineWidth = 1.0;
+	circleView.fillColor = [UIColor lightGrayColor];
 	circleView.alpha= 0.6f;
-      return circleView;
- }
+	return [ circleView autorelease ];
+}
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)a 
 {
-	
     // if it's the user location, just return nil.
     if ([ a isKindOfClass:[MKUserLocation class]]){
         return nil;
@@ -97,7 +150,10 @@
 }
 
 -(void) didChangeDragState:(MKAnnotationViewDragState)newDragState fromOldState:(MKAnnotationViewDragState)dragState{
-	
+	dirty = YES;
+	if ( newDragState == MKAnnotationViewDragStateStarting ){
+		[ map removeOverlay:circle ];
+	}
 	// circle.coordinate = annotation.coordinate;
 }
 

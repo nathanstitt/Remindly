@@ -29,13 +29,13 @@
 	if ( ! self ){
 		return nil;
 	}
-	
+
 	alarmView = view;
 	picker = [[UIPickerView alloc] initWithFrame: view.childFrame ];
     picker.delegate = self;
     picker.showsSelectionIndicator = YES;
 	picker.dataSource = self;
-	
+
 	NSString *plist = [ [[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"alarm_times.plist"];
 	choicesTimes = [ [ NSMutableDictionary alloc] initWithContentsOfFile: plist ];
 	[ choicesTimes retain ];

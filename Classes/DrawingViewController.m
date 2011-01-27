@@ -18,6 +18,8 @@
 #import "AlarmTitleButton.h"
 #import "NotesManager.h"
 #import "DrawingViewController.h"
+#import "DrawingTextBox.h"
+
 
 @implementation DrawingViewController
 
@@ -42,10 +44,12 @@
 									selector:@selector(updateTitle:) 
 									userInfo:nil 
 									repeats:YES ];
-	
+
 	mouseMoved = 0;
     return self;
 }
+
+
 
 - (void)clearPoints {
         for ( NSInteger i=0; i<4; i++){
@@ -53,7 +57,12 @@
         }       
 }
 
-
+-(void)addText{
+	DrawingTextBox *pv = [[ DrawingTextBox alloc ] init ];
+	[self.view addSubview: pv ];
+	[ pv release];
+	
+}
 
 -(void)updateTitle:(id)sel {
 	alarmTitle.text = [ note alarmTitle ];
@@ -81,11 +90,22 @@
 	return note;
 }
 
+#define GROW_ANIMATION_DURATION_SECONDS 0.15
+#define SHRINK_ANIMATION_DURATION_SECONDS 0.15
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
+	CGPoint currentPoint = [touch locationInView:self.view];
+	wasMoved = NO;
+
+	// Only move the placard view if the touch was in the placard view
+	if ([[touch view] isKindOfClass:[DrawingTextBox class] ]){ 
+		[ (DrawingTextBox*)[touch view] liftUp ];
+		return;
+	}
+	
 	[ self clearPoints ];
-	points[0] = lastPoint = [touch locationInView:self.view];
+	points[0] = lastPoint = currentPoint;
 }
 
 
@@ -99,10 +119,15 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 
 	UITouch *touch = [touches anyObject];	
-	
 	wasMoved = YES;
-
 	CGPoint currentPoint = [touch locationInView:self.view];
+
+	// Only move the placard view if the touch was in the placard view
+	if ([[touch view] isKindOfClass:[DrawingTextBox class] ]){ 
+		[ (DrawingTextBox*)[touch view] moveTo: currentPoint ];
+		return;
+	} 	
+		
 
     if ( [ self distanceBetweenPoint:points[0] andPoint: currentPoint ] < 10 ){
 		return;
@@ -161,13 +186,30 @@
 	if (mouseMoved == 10) {
 		mouseMoved = 0;
 	}
-
 }
+
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	
 	NSLog(@"Touches Ended");
+	UITouch *touch = [touches anyObject];	
+	CGPoint currentPoint = [touch locationInView:self.view];
 
+	if ([[touch view] isKindOfClass:[DrawingTextBox class] ]){ 
+		if ( wasMoved ){
+			[ (DrawingTextBox*)[touch view] moveToAndDrop:currentPoint ];
+		} else {
+			editingView = (DrawingTextBox*)[touch view] ;
+			[ editingView setIsEditing:YES ];
+		}
+		
+		return;
+	} 	
+	if ( editingView && ! wasMoved ){
+		editingView.isEditing = NO;
+		editingView = nil;
+		return;
+	}
 	UIGraphicsBeginImageContext(self.view.frame.size);
 	[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 	CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
@@ -176,8 +218,6 @@
 	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
 									 self.isErasing ? [ UIColor whiteColor].CGColor : color );
 
-
-	CGPoint currentPoint = [[touches anyObject] locationInView:self.view];
 
 	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
 	

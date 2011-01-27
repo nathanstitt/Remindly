@@ -24,8 +24,10 @@
 PurchaseManager *_instance;
 
 
-+(void)startListening{
-	_instance = [[PurchaseManager alloc] init ];
++(void)startup{
+	if ( ! _instance ){
+		_instance = [[PurchaseManager alloc] init ];
+	}
 }
 
 -(id)init {

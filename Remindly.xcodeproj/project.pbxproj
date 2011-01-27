@@ -22,6 +22,7 @@
 		4569B24912EB7A37003BD00C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4569B24812EB7A37003BD00C /* LICENSE.txt */; };
 		4569B4AD12ED1158003BD00C /* ArrivingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4569B4AC12ED1158003BD00C /* ArrivingIcon.png */; };
 		4569B4AF12ED1164003BD00C /* DepartingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4569B4AE12ED1164003BD00C /* DepartingIcon.png */; };
+		4569B97012EF3AB0003BD00C /* LocationAlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4569B96F12EF3AB0003BD00C /* LocationAlarmManager.m */; };
 		456FD35C1290EEC500076641 /* AlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 456FD35B1290EEC500076641 /* AlarmViewController.m */; };
 		45792CC01294B4A2001C834B /* NSDate+HumanInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */; };
 		458234E21288FE1400EC555C /* NotesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458234E11288FE1400EC555C /* NotesScrollView.m */; };
@@ -49,6 +50,10 @@
 		45EC0C6A12ECADE900DBD0B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */; };
 		45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */; };
 		45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */; };
+		45ED57F512F0CEFC00CF4A1D /* text-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45ED57F412F0CEFC00CF4A1D /* text-icon.png */; };
+		45ED586312F0F97F00CF4A1D /* DrawingTextBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ED586212F0F97F00CF4A1D /* DrawingTextBox.m */; };
+		45ED5AE912F121B800CF4A1D /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ED5AE612F121B800CF4A1D /* HPGrowingTextView.m */; };
+		45ED5AEA12F121B800CF4A1D /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ED5AE812F121B800CF4A1D /* HPTextViewInternal.m */; };
 		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
 		45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE571C12AB359200732503 /* DrawEraseButton.m */; };
 		45EE572F12AB383700732503 /* erase-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE572E12AB383700732503 /* erase-icon.png */; };
@@ -81,6 +86,8 @@
 		4569B24812EB7A37003BD00C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4569B4AC12ED1158003BD00C /* ArrivingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ArrivingIcon.png; path = Images/ArrivingIcon.png; sourceTree = "<group>"; };
 		4569B4AE12ED1164003BD00C /* DepartingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DepartingIcon.png; path = Images/DepartingIcon.png; sourceTree = "<group>"; };
+		4569B96E12EF3AB0003BD00C /* LocationAlarmManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationAlarmManager.h; sourceTree = "<group>"; };
+		4569B96F12EF3AB0003BD00C /* LocationAlarmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationAlarmManager.m; sourceTree = "<group>"; };
 		456FD35A1290EEC500076641 /* AlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmViewController.h; sourceTree = "<group>"; };
 		456FD35B1290EEC500076641 /* AlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmViewController.m; sourceTree = "<group>"; };
 		45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HumanInterval.h"; sourceTree = "<group>"; };
@@ -124,6 +131,13 @@
 		45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotationView.m; sourceTree = "<group>"; };
 		45EC0D7912ECC54900DBD0B4 /* AlarmAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotation.h; sourceTree = "<group>"; };
 		45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotation.m; sourceTree = "<group>"; };
+		45ED57F412F0CEFC00CF4A1D /* text-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text-icon.png"; path = "Images/text-icon.png"; sourceTree = "<group>"; };
+		45ED586112F0F97F00CF4A1D /* DrawingTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingTextBox.h; sourceTree = "<group>"; };
+		45ED586212F0F97F00CF4A1D /* DrawingTextBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingTextBox.m; sourceTree = "<group>"; };
+		45ED5AE512F121B800CF4A1D /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		45ED5AE612F121B800CF4A1D /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		45ED5AE712F121B800CF4A1D /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		45ED5AE812F121B800CF4A1D /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		45EE569112A9F04D00732503 /* CountingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountingButton.h; sourceTree = "<group>"; };
 		45EE569212A9F04D00732503 /* CountingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountingButton.m; sourceTree = "<group>"; };
 		45EE571B12AB359200732503 /* DrawEraseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawEraseButton.h; sourceTree = "<group>"; };
@@ -165,6 +179,8 @@
 				45EBDA3712BEFC72001999A4 /* PurchaseManager.m */,
 				4501719C128B849A003E71FE /* NotesManager.h */,
 				4501719D128B849A003E71FE /* NotesManager.m */,
+				4569B96E12EF3AB0003BD00C /* LocationAlarmManager.h */,
+				4569B96F12EF3AB0003BD00C /* LocationAlarmManager.m */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
 			);
@@ -242,6 +258,7 @@
 		4569B2EA12EB967F003BD00C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				45ED5AE412F1218E00CF4A1D /* TextEditBox */,
 				459A438B12ECF7D3007119A1 /* ToggleButton.h */,
 				459A438C12ECF7D3007119A1 /* ToggleButton.m */,
 				4569AE0512EB37AD003BD00C /* NoteSelection */,
@@ -279,6 +296,7 @@
 		45823602128904C600EC555C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				45ED57F412F0CEFC00CF4A1D /* text-icon.png */,
 				4569B4AE12ED1164003BD00C /* DepartingIcon.png */,
 				4569B4AC12ED1158003BD00C /* ArrivingIcon.png */,
 				45C58A4312D18B82009C3867 /* Default.png */,
@@ -313,6 +331,19 @@
 				45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */,
 			);
 			name = AlarmsPanel;
+			sourceTree = "<group>";
+		};
+		45ED5AE412F1218E00CF4A1D /* TextEditBox */ = {
+			isa = PBXGroup;
+			children = (
+				45ED586112F0F97F00CF4A1D /* DrawingTextBox.h */,
+				45ED586212F0F97F00CF4A1D /* DrawingTextBox.m */,
+				45ED5AE512F121B800CF4A1D /* HPGrowingTextView.h */,
+				45ED5AE612F121B800CF4A1D /* HPGrowingTextView.m */,
+				45ED5AE712F121B800CF4A1D /* HPTextViewInternal.h */,
+				45ED5AE812F121B800CF4A1D /* HPTextViewInternal.m */,
+			);
+			name = TextEditBox;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -380,6 +411,7 @@
 				4569B24912EB7A37003BD00C /* LICENSE.txt in Resources */,
 				4569B4AD12ED1158003BD00C /* ArrivingIcon.png in Resources */,
 				4569B4AF12ED1164003BD00C /* DepartingIcon.png in Resources */,
+				45ED57F512F0CEFC00CF4A1D /* text-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +447,10 @@
 				45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationView.m in Sources */,
 				45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotation.m in Sources */,
 				459A438D12ECF7D3007119A1 /* ToggleButton.m in Sources */,
+				4569B97012EF3AB0003BD00C /* LocationAlarmManager.m in Sources */,
+				45ED586312F0F97F00CF4A1D /* DrawingTextBox.m in Sources */,
+				45ED5AE912F121B800CF4A1D /* HPGrowingTextView.m in Sources */,
+				45ED5AEA12F121B800CF4A1D /* HPTextViewInternal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

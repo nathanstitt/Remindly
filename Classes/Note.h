@@ -8,6 +8,7 @@
 // It consists of a PNG image and a dictionary encoded into a plist 
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface Note : NSObject {
 	NSMutableDictionary *plist;
@@ -25,12 +26,17 @@
 +(Note*)noteWithDirectory:(NSString*)dir;
 
 // save the note's contents to non-volatile storage
+// also scedules the alarm
 -(void)save;
+
 // does this note have a UILocalNotification set yet?
 -(BOOL)hasNotification;
 
-// scedule the alarm, usually concurrent with saving
--(void)scedule;
+// set coordinate and entering/leaving geo based alarm
+-(void)setCoordinate:(CLLocationCoordinate2D)coordinate onEnterRegion:(BOOL)enter;
+
+-(BOOL)onEnterRegion;
+-(CLLocationCoordinate2D)coordinate;
 
 // remove the note from storage and cache
 -(void)removeSelf;
@@ -42,6 +48,8 @@
 // Is set by NotesManager
 @property (readonly, nonatomic ) NSUInteger index;
 
+// how was this alarm set
+@property (nonatomic) NSInteger alarmTag;
 
 // the title is what appears above the drawing & selector controllers
 @property ( readonly, nonatomic ) NSString* alarmTitle;
