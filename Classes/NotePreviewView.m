@@ -29,7 +29,7 @@
 	note = n;
 	imageView = [[UIImageView alloc ] initWithFrame:CGRectMake(10, 10, frame.size.width-20, self.frame.size.height-20) ];
 	imageView.backgroundColor = [ UIColor whiteColor ];
-	imageView.image = note.image;
+	imageView.image = [ note thumbnail ];
 	self.userInteractionEnabled = YES;
 
 	[imageView.layer setBorderColor: [[UIColor blackColor] CGColor]];
@@ -41,7 +41,6 @@
 	[self addSubview:imageView];
 
 	self.contentMode = UIViewContentModeScaleToFill;
-
 	return self;
 }
 
@@ -53,7 +52,7 @@
 		[ n retain ];
 		note=n;
 	}
-	imageView.image = note.image;
+	imageView.image = [note thumbnail];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

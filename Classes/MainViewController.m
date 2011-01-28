@@ -186,10 +186,11 @@
 	for ( UIBarButtonItem *btn in toggledButtons ){
 		[ btn setEnabled: draw.view.hidden ];
 	}
+	Note *note = draw.note;
 	draw.hidden = ! draw.hidden;
 	scroll.hidden = ! scroll.hidden;
 	if ( ! scroll.hidden ) {
-		[ scroll reload:draw.note ];
+		[ scroll reload:note ];
 	}
 }
 

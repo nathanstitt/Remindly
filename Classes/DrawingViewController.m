@@ -58,8 +58,12 @@
 }
 
 -(void)addText{
-	DrawingTextBox *pv = [[ DrawingTextBox alloc ] init ];
+	DrawingTextBox *pv = [[ DrawingTextBox alloc ] initWithTextBlob: [ note addTextBlob ] ];
 	[self.view addSubview: pv ];
+	[ pv liftUp ];
+	wasMoved = NO;
+	currentTextEditBox = pv;
+	pv.isEditing = YES;
 	[ pv release];
 	
 }
@@ -74,6 +78,16 @@
 		[ n retain ];
 		note = n;
 	}
+	for ( UIView *view in self.view.subviews  ){
+		if ([ view isKindOfClass:[DrawingTextBox class] ]){ 
+			[ view removeFromSuperview];
+		}
+	}
+	for ( NoteTextBlob *text in note.textBlobs ){
+		DrawingTextBox *pv = [[ DrawingTextBox alloc ] initWithTextBlob: text ];
+		[self.view addSubview: pv ];
+		[ pv release];
+	}
 	[ self noteUpdated ];
 }
 
@@ -84,9 +98,53 @@
 	drawImage.image = note.image;
 }
 
+- (UIImage*)imageFromView:(UIView *)view 
+{
+    // Create a graphics context with the target size
+    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
+    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
+    CGSize imageSize = [view bounds].size;
+    if (NULL != UIGraphicsBeginImageContextWithOptions)
+        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+    else
+        UIGraphicsBeginImageContext(imageSize);
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    // -renderInContext: renders in the coordinate space of the layer,
+    // so we must first apply the layer's geometry to the graphics context
+    CGContextSaveGState(context);
+    // Center the context around the view's anchor point
+    CGContextTranslateCTM(context, [view center].x, [view center].y);
+    // Apply the view's transform about the anchor point
+    CGContextConcatCTM(context, [view transform]);
+    // Offset by the portion of the bounds left of and above the anchor point
+    CGContextTranslateCTM(context,
+                          -[view bounds].size.width * [[view layer] anchorPoint].x,
+                          -[view bounds].size.height * [[view layer] anchorPoint].y);
+
+    // Render the layer hierarchy to the current context
+    [[view layer] renderInContext:context];
+
+    // Restore the context
+    CGContextRestoreGState(context);
+
+    // Retrieve the screenshot image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+
+    UIGraphicsEndImageContext();
+
+    return image;
+}
 
 -(Note*)note{
 	note.image = drawImage.image;
+	UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [[UIScreen mainScreen] scale]);
+	CGContextRef context = UIGraphicsGetCurrentContext();
+    [ self.view.layer renderInContext:context ];
+	note.thumbnail = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+
 	return note;
 }
 
@@ -126,8 +184,7 @@
 	if ([[touch view] isKindOfClass:[DrawingTextBox class] ]){ 
 		[ (DrawingTextBox*)[touch view] moveTo: currentPoint ];
 		return;
-	} 	
-		
+	}
 
     if ( [ self distanceBetweenPoint:points[0] andPoint: currentPoint ] < 10 ){
 		return;
@@ -199,15 +256,15 @@
 		if ( wasMoved ){
 			[ (DrawingTextBox*)[touch view] moveToAndDrop:currentPoint ];
 		} else {
-			editingView = (DrawingTextBox*)[touch view] ;
-			[ editingView setIsEditing:YES ];
+			currentTextEditBox = (DrawingTextBox*)[touch view] ;
+			[ currentTextEditBox setIsEditing:YES ];
 		}
 		
 		return;
 	} 	
-	if ( editingView && ! wasMoved ){
-		editingView.isEditing = NO;
-		editingView = nil;
+	if ( currentTextEditBox && ! wasMoved ){
+		currentTextEditBox.isEditing = NO;
+		currentTextEditBox = nil;
 		return;
 	}
 	UIGraphicsBeginImageContext(self.view.frame.size);
@@ -220,7 +277,7 @@
 
 
 	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-	
+
 	if( wasMoved ){
 		CGContextAddQuadCurveToPoint( UIGraphicsGetCurrentContext(), 
 								 points[0].x,

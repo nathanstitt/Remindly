@@ -23,7 +23,7 @@
 	BOOL wasMoved;
 	AlarmTitleButton *alarmTitle;
 	int mouseMoved;
-	DrawingTextBox *editingView;
+	DrawingTextBox *currentTextEditBox;
 	CGColorRef color;
 }
 

@@ -4,13 +4,20 @@
 
 @implementation DrawingTextBox
 
-- (id)init {
+- (id)initWithTextBlob:(NoteTextBlob*)n {
 	// Retrieve the image for the view and determine its size
-
-//	CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
-	CGRect frame = CGRectMake( 100, 100, 120, 50 );
+	CGRect frame = CGRectEqualToRect(CGRectZero, n.frame) ? CGRectMake( 100, 100, 120, 50 ) : n.frame;
 	
-	if (self = [self initWithFrame:frame]) {
+	if (self = [self initWithFrame: frame ]) {
+		ntb = n;
+		[ ntb retain ];
+		
+		deleteBtn = [ UIButton buttonWithType: UIButtonTypeCustom ];
+		deleteBtn.frame = CGRectMake( frame.size.width-10, -10, 24, 24 );
+		[ deleteBtn setImage:[ UIImage imageNamed:@"delete-icon.png" ] forState:UIControlStateNormal ] ;
+		[ self addSubview: deleteBtn ];
+		
+		self.internalTextView.text = ntb.text;
 		self.internalTextView.userInteractionEnabled = NO;
 		self.maxNumberOfLines = 20;
 		self.minNumberOfLines = 3;
@@ -23,6 +30,8 @@
 		[[self layer] setBorderWidth:2.75];
 		self.backgroundColor = [ UIColor whiteColor ];
 		self.opaque = NO;
+		
+    
 	}
 	return self;
 }
@@ -77,8 +86,8 @@
 		}
 		[ self.internalTextView  resignFirstResponder ];
 		self.internalTextView.userInteractionEnabled = NO;
-		
-				
+		ntb.text = self.internalTextView.text;
+
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:GROW_ANIMATION_DURATION_SECONDS+GROW_ANIMATION_DURATION_SECONDS ];
 		[UIView setAnimationDelegate:self];
@@ -99,12 +108,7 @@
 	self.center = point;
 }
 
--(void)moveToAndDrop:(CGPoint)point {
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:SHRINK_ANIMATION_DURATION_SECONDS];
-	self.center = point;
-	[UIView commitAnimations];
-
+-(void)drop {
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:GROW_ANIMATION_DURATION_SECONDS+GROW_ANIMATION_DURATION_SECONDS ];
 	[UIView setAnimationDelegate:self];
@@ -113,6 +117,16 @@
 	self.transform = transform;
 	[UIView commitAnimations];
 
+	ntb.frame = self.frame;
+}
+
+-(void)moveToAndDrop:(CGPoint)point {
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:SHRINK_ANIMATION_DURATION_SECONDS];
+	self.center = point;
+	[UIView commitAnimations];
+
+	[ self drop ];
 	
 	[self setAlpha:1];
 	[[self layer] setMasksToBounds:NO];
@@ -120,7 +134,6 @@
 	[[self layer] setShadowOpacity:1.0f];
 	[[self layer] setShadowRadius:0.0f];
 	[[self layer] setShadowOffset:CGSizeMake(0, 0)];	
-	
 }
 
 - (void)growAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
@@ -131,6 +144,7 @@
 }
 
 - (void)dealloc {
+	[ ntb release ];
 	[placardImage release];
 	[currentDisplayString release];
 	[displayStrings release];

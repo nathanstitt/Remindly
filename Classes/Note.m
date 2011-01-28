@@ -20,13 +20,45 @@
 #import "NotesManager.h"
 #import "LocationAlarmManager.h"
 
+
+@implementation NoteTextBlob
+
+@synthesize text,frame;
+
+-(id)init{
+	self = [ super init ];
+	text = [ NSString string ];
+	[text retain ];
+	return self;
+}
+
+-(id)initWithCoder:(NSCoder*)coder{
+	self  = [ super init ];
+	text  = [ coder decodeObjectForKey:@"text" ];
+	[ text retain ];
+	frame = [ coder decodeCGRectForKey:@"frame" ];
+	return self;
+}
+
+-(void)encodeWithCoder:(NSCoder*)coder{
+	[ coder encodeObject:text forKey:@"text"];
+	[ coder encodeCGRect: frame forKey:@"frame"];
+	
+}
+-(void)dealloc {
+	[ text release ];
+	[ super dealloc ];
+}
+@end
+
+
 @interface Note()
 -(id)initWithDirectoryName:(NSString*)file;
 @end
 
 @implementation Note
 
-@synthesize directory,image, notification,index;
+@synthesize directory,image, notification,index,textBlobs=texts;
 
 static NSMutableDictionary *_cache;
 +(void)	primeCache{
@@ -50,8 +82,11 @@ static NSMutableDictionary *_cache;
 	}
 	directory = d;
 	[ directory retain ];
-	
 	plist = [ [ NSMutableDictionary alloc] initWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"info.plist" ] ];
+	texts = [ [ NSMutableArray alloc ] init ];
+	for ( NSData *data in [ plist objectForKey:@"texts" ] ){
+		[texts addObject: [ NSKeyedUnarchiver unarchiveObjectWithData: data ] ];
+	}
 
 	image = [ UIImage imageWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] ];
 	
@@ -63,6 +98,19 @@ static NSMutableDictionary *_cache;
 -(NSString*)fullDirectoryPath{
 	return [ [ NotesManager instance ].path stringByAppendingPathComponent: self.directory ];
 }
+
+-(NoteTextBlob*)addTextBlob{
+	NoteTextBlob* ntb = [[ NoteTextBlob alloc ] init ];
+	[texts addObject:ntb ];
+	[ ntb release ];
+	return ntb;
+}
+
+
+-(void)removeTextBlob:(NoteTextBlob*)ntb{
+	[texts removeObjectIdenticalTo:ntb ]; 
+}
+
 
 -(NSString*)alarmTitle{
 	NSDate *fire = [ notification fireDate ];
@@ -121,9 +169,6 @@ static NSMutableDictionary *_cache;
 	return NULL != notification;
 }
 
--(NSDate*)lastSave {
-	return [ plist valueForKey: @"lastSave" ];
-}
 
 -(NSInteger)alarmTag {
 	return [[ plist valueForKey:@"alarmTag" ] intValue ];
@@ -133,16 +178,24 @@ static NSMutableDictionary *_cache;
 	[ plist setObject:[ NSNumber numberWithInt: tag ] forKey:@"alarmTag" ];
 }
 
+
 -(void)save {
-	[ plist setObject:[NSDate date] forKey:@"lastSave" ];
-	[ plist writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"info.plist" ] atomically: YES ];
-	[ UIImagePNGRepresentation(image) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] atomically:YES];
+
+	NSString *dir = [ self fullDirectoryPath ];
+
+	[ UIImagePNGRepresentation(image) writeToFile:[ dir stringByAppendingPathComponent:@"image.png" ] atomically:YES];
 	UIApplication *app = [UIApplication sharedApplication];
 	[ self unScedule ];
 	if ( ! notification ){
 		notification = [[UILocalNotification alloc] init];
 	}
-		
+	NSMutableArray *data = [[ NSMutableArray alloc ] init ];
+	for ( NoteTextBlob *tb in texts ){
+		[ data addObject: [ NSKeyedArchiver archivedDataWithRootObject:tb] ];
+	}
+	[ plist setObject: data forKey:@"texts" ];
+	[ data release ];
+	[ plist writeToFile:[ dir stringByAppendingPathComponent:@"info.plist" ] atomically: YES ];
 
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
 	if ( 2 == [ self alarmTag ] ){
@@ -153,7 +206,7 @@ static NSMutableDictionary *_cache;
 		notification.fireDate = fd;
 		notification.timeZone = [NSTimeZone defaultTimeZone];
 		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmText ];
-		notification.alertLaunchImage = [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ];
+		notification.alertLaunchImage = [ dir stringByAppendingPathComponent:@"image.png" ];
 		notification.alertAction = @"View Note";
 		notification.soundName = UILocalNotificationDefaultSoundName;
 		notification.applicationIconBadgeNumber = 1;
@@ -165,6 +218,22 @@ static NSMutableDictionary *_cache;
 
 }
 
+-(void)setThumbnail:(UIImage*)tn{
+	if ( thumbnail != tn ){
+		[ thumbnail release ];
+		[ tn retain ];
+		thumbnail = tn;
+	}
+	[ UIImagePNGRepresentation(thumbnail) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"thumbnail.png" ] atomically:YES];
+}
+
+-(UIImage*)thumbnail {
+	if ( ! thumbnail ){
+		thumbnail = [ UIImage imageWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"thumbnail.png" ] ];
+		[ thumbnail retain ];
+	}
+	return thumbnail;
+}
 
 // set coordinate and entering/leaving geo based alarm
 -(void)setCoordinate:(CLLocationCoordinate2D)coordinate onEnterRegion:(BOOL)enter{

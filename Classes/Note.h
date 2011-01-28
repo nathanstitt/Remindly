@@ -9,14 +9,24 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+@interface NoteTextBlob : NSObject <NSCoding>{
+	NSString *text;
+	CGRect frame;
+}
+@property (retain,nonatomic) NSString *text;
+@property (nonatomic) CGRect frame;
+@end
 
 @interface Note : NSObject {
 	NSMutableDictionary *plist;
 	UIImage *image;
+	UIImage *thumbnail;
+	NSMutableArray *texts;
 	NSString *directory;
 	UILocalNotification *notification;
 	NSUInteger index;
 }
+
 // we keep an internal cache so we don't have to reload
 // the PNGS all the time
 +(void)primeCache;
@@ -28,6 +38,11 @@
 // save the note's contents to non-volatile storage
 // also scedules the alarm
 -(void)save;
+
+// a thumbnail representation 
+// of the image
+@property (nonatomic,retain) UIImage* thumbnail;
+
 
 // does this note have a UILocalNotification set yet?
 -(BOOL)hasNotification;
@@ -43,6 +58,10 @@
 
 // the absolute path to the note's directory
 -(NSString*)fullDirectoryPath;
+
+-(NoteTextBlob*)addTextBlob;
+
+@property (readonly,nonatomic) NSArray *textBlobs;
 
 // the order that the note should appear in.  
 // Is set by NotesManager
