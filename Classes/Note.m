@@ -23,12 +23,13 @@
 
 @implementation NoteTextBlob
 
-@synthesize text,frame;
+@synthesize text,frame,note;
 
--(id)init{
+-(id)initWithNote:(Note*)n {
 	self = [ super init ];
 	text = [ NSString string ];
 	[text retain ];
+	note = n;
 	return self;
 }
 
@@ -39,7 +40,9 @@
 	frame = [ coder decodeCGRectForKey:@"frame" ];
 	return self;
 }
-
+-(void)remove {
+	[ note removeTextBlob: self ];
+}
 -(void)encodeWithCoder:(NSCoder*)coder{
 	[ coder encodeObject:text forKey:@"text"];
 	[ coder encodeCGRect: frame forKey:@"frame"];
@@ -85,7 +88,9 @@ static NSMutableDictionary *_cache;
 	plist = [ [ NSMutableDictionary alloc] initWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"info.plist" ] ];
 	texts = [ [ NSMutableArray alloc ] init ];
 	for ( NSData *data in [ plist objectForKey:@"texts" ] ){
-		[texts addObject: [ NSKeyedUnarchiver unarchiveObjectWithData: data ] ];
+		NoteTextBlob *ntb = [ NSKeyedUnarchiver unarchiveObjectWithData: data ] ;
+		ntb.note = self;
+		[texts addObject: ntb ];
 	}
 
 	image = [ UIImage imageWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] ];
@@ -100,7 +105,7 @@ static NSMutableDictionary *_cache;
 }
 
 -(NoteTextBlob*)addTextBlob{
-	NoteTextBlob* ntb = [[ NoteTextBlob alloc ] init ];
+	NoteTextBlob* ntb = [[ NoteTextBlob alloc ] initWithNote:self ];
 	[texts addObject:ntb ];
 	[ ntb release ];
 	return ntb;
@@ -132,7 +137,11 @@ static NSMutableDictionary *_cache;
 }
 
 -(NSString *) alarmText {
-	return [ plist valueForKey:@"alarmType" ];
+	NSString *ret = [ plist valueForKey:@"alarmType" ];
+	for ( NoteTextBlob *ntb in texts ){
+		ret = [ NSString stringWithFormat: @"%@\n%@", ret, ntb.text ];
+	}
+	return ret;
 }
 
 -(NSDate*)fireDate{
@@ -183,8 +192,6 @@ static NSMutableDictionary *_cache;
 
 	NSString *dir = [ self fullDirectoryPath ];
 
-	[ UIImagePNGRepresentation(image) writeToFile:[ dir stringByAppendingPathComponent:@"image.png" ] atomically:YES];
-	UIApplication *app = [UIApplication sharedApplication];
 	[ self unScedule ];
 	if ( ! notification ){
 		notification = [[UILocalNotification alloc] init];
@@ -196,27 +203,29 @@ static NSMutableDictionary *_cache;
 	[ plist setObject: data forKey:@"texts" ];
 	[ data release ];
 	[ plist writeToFile:[ dir stringByAppendingPathComponent:@"info.plist" ] atomically: YES ];
+}
 
+-(void)scedule {
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
 	if ( 2 == [ self alarmTag ] ){
 		[ LocationAlarmManager registerNote: self ];
-		
 	} else if ( [ fd timeIntervalSinceNow ] > 0 ){
 
 		notification.fireDate = fd;
 		notification.timeZone = [NSTimeZone defaultTimeZone];
 		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmText ];
-		notification.alertLaunchImage = [ dir stringByAppendingPathComponent:@"image.png" ];
+		notification.alertLaunchImage = [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ];
 		notification.alertAction = @"View Note";
 		notification.soundName = UILocalNotificationDefaultSoundName;
 		notification.applicationIconBadgeNumber = 1;
 		
 		NSDictionary *infoDict = [NSDictionary dictionaryWithObject: self.directory forKey:@"directory"];
 		notification.userInfo = infoDict;
-		[ app scheduleLocalNotification:notification ];
+		[ [UIApplication sharedApplication] scheduleLocalNotification:notification ];
 	}
 
 }
+
 
 -(void)setThumbnail:(UIImage*)tn{
 	if ( thumbnail != tn ){
@@ -233,6 +242,24 @@ static NSMutableDictionary *_cache;
 		[ thumbnail retain ];
 	}
 	return thumbnail;
+}
+
+
+-(void)setImage:(UIImage*)img{
+	if ( image != img ){
+		[ image release ];
+		[ img retain ];
+		image = img;
+	}
+	[ UIImagePNGRepresentation(image) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] atomically:YES];
+}
+
+-(UIImage*)image {
+	if ( ! image ){
+		image = [ UIImage imageWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] ];
+		[ image retain ];
+	}
+	return image;
 }
 
 // set coordinate and entering/leaving geo based alarm
@@ -255,14 +282,6 @@ static NSMutableDictionary *_cache;
 
 
 
--(void)setImage:(UIImage*)img{
-	if ( image != img ){
-		[ image release ];
-		[ img retain ];
-		image = img;
-		[UIImagePNGRepresentation(image) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] atomically:YES];
-	}
-}
 
 - (void)dealloc {
 	if ( notification ){

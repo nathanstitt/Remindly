@@ -27,6 +27,7 @@
 
 - (NSString *)title
 {
+	return @"Tap to Change";
 	if ( self.entering ){
 		return @"When Entering";
 	} else {
@@ -35,10 +36,6 @@
 }
 
 // optional
-- (NSString *)subtitle
-{
-    return @"Quick Tap to Change";
-}
 
 @end
 

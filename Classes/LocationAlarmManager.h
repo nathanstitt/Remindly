@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h> 
 #import "Note.h"
 
-@interface LocationAlarmManager : NSObject <CLLocationManagerDelegate,UIAlertViewDelegate> {
+@interface LocationAlarmManager : NSObject <CLLocationManagerDelegate> {
 
 	CLLocationManager *manager;
 	Note *pendingNote;
@@ -19,6 +19,6 @@
 + (void)startup;
 + (BOOL)registerNote:(Note*)note;
 + (BOOL)unregisterNote:(Note*)note;
-+ (void)displayNoteAlarm:(Note*)note;
+
 
 @end

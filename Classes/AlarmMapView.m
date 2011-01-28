@@ -98,6 +98,7 @@
 }
 
 -(void)saveToNote:(Note*)note{
+	note.alarmType = @"Geographical Region";
 	[ note setCoordinate: annotation.coordinate onEnterRegion: [ annotationView onEnter ] ];
 }
 
@@ -134,16 +135,6 @@
     if ([ a isKindOfClass:[MKUserLocation class]]){
         return nil;
 	} else {
-		//static NSString* alarmIdentifier = @"alarmIdentifier";
-
-//		MKAnnotationView* pinView = [mapView dequeueReusableAnnotationViewWithIdentifier:alarmIdentifier];
-		if (!annotationView) {
-			annotationView = [ [ AlarmAnnotationView alloc ] initWithMap:self ];
-
-//			pinView = [[AlarmAnnotationView alloc]  initWithAnnotation:a 
-//													reuseIdentifier:@"alarmIdentifier"] ;
-		}
-		//pinView.annotation = a;
 		return annotationView;
 	}
 	
@@ -164,6 +155,8 @@
 -(BOOL)hidden {
 	return map.hidden;
 }
+
+
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;{
 	

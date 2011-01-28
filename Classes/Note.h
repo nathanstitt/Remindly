@@ -9,10 +9,16 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+
+@class Note;
+
 @interface NoteTextBlob : NSObject <NSCoding>{
 	NSString *text;
 	CGRect frame;
+	Note *note;
 }
+-(void)remove;
+@property (nonatomic,assign) Note* note;
 @property (retain,nonatomic) NSString *text;
 @property (nonatomic) CGRect frame;
 @end
@@ -35,14 +41,18 @@
 // is not intended to be called directly, instead by NotesManager
 +(Note*)noteWithDirectory:(NSString*)dir;
 
-// save the note's contents to non-volatile storage
-// also scedules the alarm
+// save our plist to 'disk'
 -(void)save;
+
+// scedules the alarm
+-(void)scedule;
 
 // a thumbnail representation 
 // of the image
 @property (nonatomic,retain) UIImage* thumbnail;
 
+// the actual drawing
+@property (retain,   nonatomic)   UIImage *image;
 
 // does this note have a UILocalNotification set yet?
 -(BOOL)hasNotification;
@@ -60,6 +70,7 @@
 -(NSString*)fullDirectoryPath;
 
 -(NoteTextBlob*)addTextBlob;
+-(void)removeTextBlob:(NoteTextBlob*)blob;
 
 @property (readonly,nonatomic) NSArray *textBlobs;
 
@@ -82,6 +93,6 @@
 
 @property (retain,   nonatomic)   UILocalNotification *notification;
 @property (readonly, nonatomic)   NSString *directory;
-@property (retain,   nonatomic)   UIImage *image;
+
 
 @end

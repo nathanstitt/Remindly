@@ -17,11 +17,6 @@
 
 @class AlarmViewController;
 
-@protocol AlarmViewDelegate
-@required
--(void)alarmSet:(AlarmViewController*)av;
--(void)alarmShowingChanged:(AlarmViewController*)av;
-@end
 
 
 @interface AlarmViewController : UIView {
@@ -29,20 +24,18 @@
 	AlarmAbsoluteTimes *absTimes;
 	AlarmMapView *mapView;
 	BOOL wasSet;
-	id<AlarmViewDelegate> delegate;
 	UISegmentedControl *typeCtrl;
 	NSInteger lastTab;
 	UITabBar *tabBar;
+	Note *currentNote;
 }
 
 -(void)showWithNote:(Note*)note;
 
--(void)saveToNote:(Note*)note;
 
 -(void)quickSelectionMade;
 
 @property (nonatomic,readonly) CGRect childFrame;
-@property (nonatomic, assign) id<AlarmViewDelegate> delegate;
 @property (nonatomic,readonly ) BOOL wasSet;
 @property (nonatomic) BOOL isShowing;
 

@@ -45,7 +45,6 @@
 									userInfo:nil 
 									repeats:YES ];
 
-	mouseMoved = 0;
     return self;
 }
 
@@ -74,6 +73,8 @@
 
 -(void)setNote:(Note *)n{
 	if ( note != n ){
+		note.image = drawImage.image;
+		[ note save ];
 		[ note release ];
 		[ n retain ];
 		note = n;
@@ -88,63 +89,24 @@
 		[self.view addSubview: pv ];
 		[ pv release];
 	}
-	[ self noteUpdated ];
-}
-
-
-- (void)noteUpdated {
-	[ self updateTitle:NULL ];
-	mouseMoved = 0;
 	drawImage.image = note.image;
+	[ self updateTitle:NULL ];
+
+
 }
 
-- (UIImage*)imageFromView:(UIView *)view 
-{
-    // Create a graphics context with the target size
-    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
-    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
-    CGSize imageSize = [view bounds].size;
-    if (NULL != UIGraphicsBeginImageContextWithOptions)
-        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
-    else
-        UIGraphicsBeginImageContext(imageSize);
 
-    CGContextRef context = UIGraphicsGetCurrentContext();
 
-    // -renderInContext: renders in the coordinate space of the layer,
-    // so we must first apply the layer's geometry to the graphics context
-    CGContextSaveGState(context);
-    // Center the context around the view's anchor point
-    CGContextTranslateCTM(context, [view center].x, [view center].y);
-    // Apply the view's transform about the anchor point
-    CGContextConcatCTM(context, [view transform]);
-    // Offset by the portion of the bounds left of and above the anchor point
-    CGContextTranslateCTM(context,
-                          -[view bounds].size.width * [[view layer] anchorPoint].x,
-                          -[view bounds].size.height * [[view layer] anchorPoint].y);
-
-    // Render the layer hierarchy to the current context
-    [[view layer] renderInContext:context];
-
-    // Restore the context
-    CGContextRestoreGState(context);
-
-    // Retrieve the screenshot image
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-
-    UIGraphicsEndImageContext();
-
-    return image;
-}
 
 -(Note*)note{
 	note.image = drawImage.image;
+	
 	UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [[UIScreen mainScreen] scale]);
 	CGContextRef context = UIGraphicsGetCurrentContext();
     [ self.view.layer renderInContext:context ];
 	note.thumbnail = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
-
+	
 	return note;
 }
 
@@ -238,11 +200,6 @@
 
 	lastPoint = end;
 
-	mouseMoved++;
-
-	if (mouseMoved == 10) {
-		mouseMoved = 0;
-	}
 }
 
 

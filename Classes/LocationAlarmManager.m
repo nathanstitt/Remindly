@@ -43,7 +43,7 @@ LocationAlarmManager *instance;
 		return nil;
 	}
 	self.manager = [[CLLocationManager alloc] init];
-	manager.purpose = @"Alarms when reaching or leaving an area";
+	manager.purpose = @"In order to use geographical alarms that alert you when leaving or entering an area";
     manager.delegate = self;
 	[ manager startUpdatingLocation ];
 
@@ -56,7 +56,6 @@ LocationAlarmManager *instance;
 			  region.identifier );
 	};
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNoteGeoAlarm:) name:@"NoteGeoAlarm" object:nil];
 
 	return self;
 }
@@ -72,16 +71,21 @@ LocationAlarmManager *instance;
 
 -(void)displayNoteAlarm:(Note*)note {
 	self.pendingNote = note;
-	[ self displayAlert: note.alarmText ];
+	
+	UILocalNotification *notification = [[UILocalNotification alloc] init];
+
+	notification.fireDate =  [ NSDate date ];
+	notification.timeZone =  [ NSTimeZone defaultTimeZone];
+	notification.alertBody = [ NSString stringWithFormat:@"Location %@\n%@", 
+							   note.onEnterRegion ? @"Reached" : @"Left",
+							   note.alarmText ];
+	notification.alertLaunchImage = [ [ note fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ];
+	notification.alertAction = @"View Note";
+	notification.soundName = UILocalNotificationDefaultSoundName;
+	notification.applicationIconBadgeNumber = 1;
+	
 }
 
-+(void)displayNoteAlarm:(Note*)note {
-	[ instance displayNoteAlarm:note ];
-}
-
--(void)onNoteGeoAlarm:(NSNotification*)notif{
-	[ self displayNoteAlarm: (Note*)notif.object ];
-}
 
 
 -(void)dealloc {
@@ -110,15 +114,14 @@ LocationAlarmManager *instance;
         ![CLLocationManager regionMonitoringEnabled] )
       return NO;
 
-	// just use the largest radius possible
-	CLLocationDegrees radius = 10.0f;
+	CLLocationDegrees radius = 500.0f;
 	
  
 	// Create the region and start monitoring it.
 	CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter: note.coordinate
                         radius:radius identifier: note.directory ];
 	
-	[ instance.manager startMonitoringForRegion:region desiredAccuracy:10.0f];
+	[ instance.manager startMonitoringForRegion:region desiredAccuracy:1000.0f];
  	for ( CLRegion *region in [ instance.manager monitoredRegions ] ){
 		NSLog(@"Region alert %d,%d at %@" , 
 			  region.center.longitude, 
@@ -129,15 +132,6 @@ LocationAlarmManager *instance;
 	return YES;
 }
 
-#pragma mark -
-#pragma mark UIAlertViewDelegate methods
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-	if ( buttonIndex ){
-		[[ NSNotificationCenter defaultCenter ] postNotificationName:@"DisplayNote" object: self.pendingNote ];
-	}
-	self.pendingNote = nil;
-}
 
 
 #pragma mark -
@@ -154,22 +148,22 @@ LocationAlarmManager *instance;
 
 - (void)locationManager:(CLLocationManager *)m didEnterRegion:(CLRegion *)region{
 	NSLog(@"Location Manager Entered: %@", region.identifier );
-	[self displayAlert:[NSString stringWithFormat:@"Location Manager Enter: %@", region.identifier ] ];
 
-//	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
-//	if ( note && note.onEnterRegion ){
-//		[ self displayNoteAlarm:note ];
-//	}
+	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
+	if ( note && note.onEnterRegion ){
+		
+		[ self displayNoteAlarm:note ];
+	}
 	[ m stopMonitoringForRegion:region ];
 }
 
 - (void)locationManager:(CLLocationManager *)m didExitRegion:(CLRegion *)region{
 	NSLog(@"Location Manager Exited: %@", region.identifier );
-	[self displayAlert:[NSString stringWithFormat:@"Location Manager Exit: %@", region.identifier ] ];
-//	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
-//	if ( note && ! note.onEnterRegion ){
-//		[ self displayNoteAlarm:note ];
-//	}
+
+	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
+	if ( note && ! note.onEnterRegion ){
+		[ self displayNoteAlarm:note ];
+	}
 	[ m stopMonitoringForRegion:region ];
 }
 

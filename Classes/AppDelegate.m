@@ -28,21 +28,17 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
- 
-
     [ NotesManager startup ];
 	[ LocationAlarmManager startup ];
 	[ PurchaseManager startup ];
-	
+
 	NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
 	if ( ! [ defs integerForKey:@"numberNotesAllowed" ] ){
 		[ defs setInteger:2 forKey:@"numberNotesAllowed" ];
 		[ defs synchronize ];
 	}
-
-	
-	// we don't need to specifically check for UIApplicationLaunchOptionsLocationKey,as we've already 
-	// started LocationAlarmManger and it will get pending region based notificaitons
+ 
+	application.applicationIconBadgeNumber = 0;
  
 	UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if ( notification ) {
@@ -53,9 +49,8 @@
 			[ mvc selectNote: note ];
 		}
     }
-	
-	application.applicationIconBadgeNumber = 0;
-		
+
+
     CGRect windowRect = CGRectMake(0, 0, 320, 480 );
     window = [[UIWindow alloc] initWithFrame:windowRect];    
 	
@@ -68,6 +63,12 @@
     return YES;
 }
 
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+	if ( buttonIndex ){
+		[ mvc selectNote:pendingNote ];
+	}
+}
 
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
@@ -85,7 +86,12 @@
 		Note *note = [[ NotesManager instance ] noteWithDirectory:
 					   [ notification.userInfo objectForKey:@"directory"]  ];
 		if ( note ){
-			[ LocationAlarmManager displayNoteAlarm:note ];
+			pendingNote = note;
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"
+												 message:notification.alertBody
+												 delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"View",NULL];
+			[alert show];
+			[alert release];	
 		}
 	}
 }

@@ -23,7 +23,7 @@
 
 @implementation AlarmViewController
 
-@synthesize wasSet,delegate;
+@synthesize wasSet;
 
 - (id)init {
     
@@ -42,13 +42,13 @@
 	[ self addSubview: absTimes.view ];
 
 	NSArray *titles;
-	if ( [CLLocationManager regionMonitoringAvailable] && [CLLocationManager regionMonitoringEnabled] ){
+//	if ( [CLLocationManager regionMonitoringAvailable] && [CLLocationManager regionMonitoringEnabled] ){
 		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
 		[ self addSubview: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", @"Map", nil]; 
-	} else {
-		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", nil];
-	}
+//	} else {
+//		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", nil];
+//	}
 
 
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:titles];
@@ -84,32 +84,29 @@
 
 
 -(void)saveTouched:(id)btn {
-	self.isShowing = NO;
-	if ( delegate ){
-		[ delegate alarmSet:self ];
+	switch ( typeCtrl.selectedSegmentIndex ) {
+		case 0:
+			[ quickTimes saveToNote: currentNote ];
+			break;
+		case 1:
+			[ absTimes saveToNote: currentNote ];
+			break;
+		case 2:
+			[ mapView saveToNote: currentNote ];
+			break;
+		default:
+			break;
 	}
+	currentNote.alarmTag = typeCtrl.selectedSegmentIndex;	
+	[ currentNote save ];
+	[ currentNote scedule ];
+	self.isShowing = NO;
 }
 
 -(CGRect)childFrame{
 	return CGRectMake(0, 30, 320, 220);
 }
 
--(void)selectIndex:(NSInteger)indx {
-	typeCtrl.selectedSegmentIndex=indx;
-	switch (indx) {
-		case 0:
-			quickTimes.view.hidden=NO;
-			break;
-		case 1:
-			absTimes.view.hidden=NO;
-			break;
-		case 2:
-			mapView.view.hidden=NO;
-			break;
-		default:
-			break;
-	} 
-}
 
 
 -(void)hideAll{
@@ -118,51 +115,11 @@
 	mapView.view.hidden = YES;
 }
 
-	
--(void)showWithNote:(Note*)note {
-	[ quickTimes reset ];
-	[ absTimes reset ];
+
+
+-(void)typeCtrlChanged:(id)tbc {
 	[ self hideAll ];
-	self.isShowing = YES;
-	switch ( note.alarmTag ) {
-		case 0:
-			[ quickTimes setFromNote:note ];
-			[ self selectIndex: 0 ];
-			break;
-		case 1:
-			absTimes.date = note.fireDate;
-			[ self selectIndex: 1 ];
-		case 2:
-			[ mapView setFromNote:note ];
-			[ self selectIndex: 2 ];
-		default:
-			break;
-	}
-}
-
-
--(void)saveToNote:(Note*)note {
-	switch ( typeCtrl.selectedSegmentIndex ) {
-		case 0:
-			[ quickTimes saveToNote: note ];
-			break;
-		case 1:
-			[ absTimes saveToNote: note ];
-			break;
-		case 2:
-			[ mapView saveToNote: note ];
-			break;
-		default:
-			break;
-	}
-	note.alarmTag = typeCtrl.selectedSegmentIndex;	
-	[ note save ];
-}
-
-
--(void)typeCtrlChanged:(id)tc {
-	[ self hideAll ];
-	if ( 0 == typeCtrl.selectedSegmentIndex ){
+	if ( 0 ==  typeCtrl.selectedSegmentIndex ){
 		quickTimes.view.hidden = NO;
 	} else if ( 1 == typeCtrl.selectedSegmentIndex ){
 		if ( [quickTimes date ] ){
@@ -172,6 +129,32 @@
 		absTimes.view.hidden   = NO;
 	} else if ( 2 == typeCtrl.selectedSegmentIndex ){
 		mapView.view.hidden = NO;
+	}
+}
+
+	
+-(void)showWithNote:(Note*)note {
+	currentNote = note;
+	[ quickTimes reset ];
+	[ absTimes reset ];
+	[ self hideAll ];
+	self.isShowing = YES;
+	if ( typeCtrl.selectedSegmentIndex == note.alarmTag ){
+		[ self typeCtrlChanged:nil ];
+	} else {
+		typeCtrl.selectedSegmentIndex = note.alarmTag;
+	}
+	
+	switch ( note.alarmTag ) {
+		case 0:
+			[ quickTimes setFromNote:note ];
+			break;
+		case 1:
+			absTimes.date = note.fireDate;
+			break;
+		case 2:
+			[ mapView setFromNote:note ];
+			break;
 	}
 }
 
@@ -189,7 +172,7 @@
 	CGRect frame = self.frame;
 	NSInteger ht = self.frame.size.height;
 	if ( v ){
-		[ self selectIndex:0 ];
+		typeCtrl.selectedSegmentIndex = 0;
 		frame.origin.y = 480 - ( ht - 20 );
 	} else {
 		frame.origin.y = 480;
@@ -198,9 +181,6 @@
 	[ UIView setAnimationDuration:0.45f ];
 	self.frame = frame;
 	[ UIView commitAnimations ];
-	if ( delegate ){
-		[ delegate alarmShowingChanged: self ];
-	}
 }
 
 

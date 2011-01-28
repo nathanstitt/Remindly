@@ -74,7 +74,7 @@
 
 		if ( remain > 2 * MINUTE ){	
 			[ segments  addObject: [ NSString stringWithFormat:@"%u minutes", remain / MINUTE ] ];
-		} else {
+		} else if ( remain > 1 * MINUTE ) {
 			[ segments  addObject: [ NSString stringWithFormat:@"1 minute"] ];
 		}
 	

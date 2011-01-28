@@ -61,10 +61,12 @@
 	}
 }
 
+
 -(BOOL)hasDateType:(NSString*)name{
 	NSInteger indx = [ quickChoices indexOfObject: name ];
 	return (  NSNotFound != indx );
 }
+
 
 -(NSDate*)date{
 	NSNumber *minutes = [ choicesTimes valueForKey: [ quickChoices objectAtIndex: [ picker selectedRowInComponent:0 ] ] ];

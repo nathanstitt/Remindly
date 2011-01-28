@@ -85,7 +85,6 @@
 	[self.view addSubview:mainToolbar ];
 	
 	alarmView = [[ AlarmViewController alloc ] init ];
-	alarmView.delegate = self;
 	[ self.view addSubview: alarmView ];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDisplayNote:) name:@"DisplayNote" object:nil];
@@ -194,16 +193,6 @@
 	}
 }
 
-#pragma mark AlarmView delegate methods
-
--(void)alarmShowingChanged:(AlarmViewController*)av{
-//	draw.alarmLabel.hidden = av.isShowing;
-}
-
--(void)alarmSet:(AlarmViewController*)av{
-	[ alarmView saveToNote: draw.note ];
-	[ draw noteUpdated ];
-}
 
 #pragma mark UIAlertViewDelegate delegate methods
 - (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {

@@ -21,9 +21,8 @@
 
 @class DrawingViewController, NoteSelectorController;
 
-@interface MainViewController : UIViewController <AlarmViewDelegate,
-													UIAlertViewDelegate,
-													DrawingColorManagerDelegate> {
+@interface MainViewController : UIViewController <UIAlertViewDelegate,
+												  DrawingColorManagerDelegate> {
 	NoteSelectorController *scroll;
 	DrawingColorController *dcm;
 	UIToolbar *mainToolbar;

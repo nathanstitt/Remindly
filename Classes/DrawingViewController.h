@@ -22,7 +22,7 @@
 	BOOL isErasing;
 	BOOL wasMoved;
 	AlarmTitleButton *alarmTitle;
-	int mouseMoved;
+
 	DrawingTextBox *currentTextEditBox;
 	CGColorRef color;
 }
@@ -32,9 +32,6 @@
 
 // erase image
 - (void)clear;
-
-// re-read image from note
-- (void)noteUpdated;
 
 // are we hidden
 @property (nonatomic) BOOL hidden;
