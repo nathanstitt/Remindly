@@ -231,10 +231,7 @@
 	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  5.0 );
 	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
 									 self.isErasing ? [ UIColor whiteColor].CGColor : color );
-
-
 	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
-
 	if( wasMoved ){
 		CGContextAddQuadCurveToPoint( UIGraphicsGetCurrentContext(), 
 								 points[0].x,

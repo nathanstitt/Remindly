@@ -6,7 +6,7 @@
 
 - (id)initWithTextBlob:(NoteTextBlob*)n {
 	// Retrieve the image for the view and determine its size
-	CGRect frame = CGRectEqualToRect(CGRectZero, n.frame) ? CGRectMake( 100, 100, 120, 50 ) : n.frame;
+	CGRect frame = CGRectEqualToRect(CGRectZero, n.frame) ? CGRectMake( 100, 100, 160, 50 ) : n.frame;
 	
 	if (self = [self initWithFrame: frame ]) {
 		ntb = n;
@@ -19,10 +19,8 @@
 		[ deleteBtn addTarget:self action:@selector(deletePressed:) forControlEvents:UIControlEventTouchUpInside ];
 		self.internalTextView.text = ntb.text;
 
-		[self.internalTextView.layer setBorderColor: [UIColor redColor ].CGColor ];
-		self.internalTextView.layer.borderWidth = 1.0;
-
 		self.internalTextView.userInteractionEnabled = NO;
+		self.internalTextView.font = [ UIFont systemFontOfSize: 22 ];
 		self.maxNumberOfLines = 20;
 		self.minNumberOfLines = 3;
 
@@ -83,8 +81,11 @@
 }
 
 -(void)showDelButton {
-	deleteBtn.frame = CGRectMake( self.frame.origin.x+self.frame.size.width-24, self.frame.origin.y-5, 24, 24 );
-	[ self.superview addSubview: deleteBtn ];	
+	CGRect frame = CGRectMake( self.frame.origin.x+self.frame.size.width-14, self.frame.origin.y-10, 24, 24 );
+	[UIView animateWithDuration:GROW_ANIMATION_DURATION_SECONDS
+			                          animations:^{ deleteBtn.frame = frame; }
+			                          completion:^(BOOL finished)
+	 { [ self.superview addSubview: deleteBtn ]; } ];
 }
 
 -(void) setIsEditing:(BOOL)v {
@@ -116,24 +117,16 @@
 		[ self.internalTextView  resignFirstResponder ];
 		self.internalTextView.userInteractionEnabled = NO;
 		ntb.text = self.internalTextView.text;
-
 		[ self drop ];
-	
 		[  deleteBtn removeFromSuperview ];
-		
-
 		[[self layer] setShadowColor:[UIColor clearColor].CGColor];
 		[[self layer] setShadowRadius:0.0f];
 		[[self layer] setShadowOffset:CGSizeMake(0, 0)];	
-	
-		//		textView.userInteractionEnabled = NO;
 	}
 }
 
 -(void)moveTo:(CGPoint)point{
-
 	self.center = point;
-	
 }
 
 
@@ -152,7 +145,6 @@
 	[[self layer] setShadowRadius:0.0f];
 	[[self layer] setShadowOffset:CGSizeMake(0, 0)];	
 }
-
 
 
 

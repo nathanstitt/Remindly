@@ -107,6 +107,10 @@ LocationAlarmManager *instance;
 	return NO;
 }
 
++(CLLocationCoordinate2D)lastCoord{
+	return instance.manager.location.coordinate;
+}
+
 + (BOOL)registerNote:(Note*)note {
 
    // Do not create regions if support is unavailable or disabled.
@@ -114,8 +118,8 @@ LocationAlarmManager *instance;
         ![CLLocationManager regionMonitoringEnabled] )
       return NO;
 
-	CLLocationDegrees radius = 500.0f;
-	
+	CLLocationDegrees radius = ALARM_METER_RADIUS;
+;
  
 	// Create the region and start monitoring it.
 	CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter: note.coordinate
@@ -148,10 +152,8 @@ LocationAlarmManager *instance;
 
 - (void)locationManager:(CLLocationManager *)m didEnterRegion:(CLRegion *)region{
 	NSLog(@"Location Manager Entered: %@", region.identifier );
-
 	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
 	if ( note && note.onEnterRegion ){
-		
 		[ self displayNoteAlarm:note ];
 	}
 	[ m stopMonitoringForRegion:region ];

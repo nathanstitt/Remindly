@@ -121,6 +121,14 @@ static NSMutableDictionary *_cache;
 	NSDate *fire = [ notification fireDate ];
 	if ( fire ){
 		return [ fire humanIntervalFromNow ];
+	} else if ( [plist valueForKey:@"longitude"] ){
+		CLLocationCoordinate2D nt = [ self coordinate ];
+		CLLocationCoordinate2D cur = [ LocationAlarmManager lastCoord ];
+		float distance = sqrt( (nt.latitude-cur.latitude)*(nt.latitude-cur.latitude) + (nt.longitude-cur.longitude)*(nt.longitude-cur.longitude) );
+		return [ NSString stringWithFormat:@"%@ %0.2fm from here", 
+				[ self onEnterRegion ] ? @"Entering" : @"Exiting",
+				[ self onEnterRegion ] ? fabsf( ALARM_METER_RADIUS - distance ) : fabsf( distance-ALARM_METER_RADIUS ) 
+				];
 	} else { 
 		return @"alarm not set";
 	}
@@ -189,7 +197,6 @@ static NSMutableDictionary *_cache;
 
 
 -(void)save {
-
 	NSString *dir = [ self fullDirectoryPath ];
 
 	[ self unScedule ];
@@ -236,6 +243,7 @@ static NSMutableDictionary *_cache;
 	[ UIImagePNGRepresentation(thumbnail) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"thumbnail.png" ] atomically:YES];
 }
 
+
 -(UIImage*)thumbnail {
 	if ( ! thumbnail ){
 		thumbnail = [ UIImage imageWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"thumbnail.png" ] ];
@@ -273,7 +281,7 @@ static NSMutableDictionary *_cache;
 	return [ [ plist valueForKey:@"onEnterRegion" ] boolValue ];
 }
 
--(CLLocationCoordinate2D)coordinate{
+-(CLLocationCoordinate2D)coordinate {
 	CLLocationCoordinate2D coord;
 	coord.longitude = [[plist valueForKey:@"longitude"] doubleValue ];
 	coord.latitude  = [[plist valueForKey:@"latitude"]  doubleValue ];

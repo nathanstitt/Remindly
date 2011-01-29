@@ -87,8 +87,7 @@
 	return map;
 }
 
--(void)setupOverlay {
-}
+
 
 
 -(void)setFromNote:(Note*)note{
@@ -129,23 +128,27 @@
 	return [ circleView autorelease ];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)a 
-{
-    // if it's the user location, just return nil.
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)a  {
     if ([ a isKindOfClass:[MKUserLocation class]]){
         return nil;
 	} else {
-		return annotationView;
+		if (!annotationView) {
+			annotationView = [ [ AlarmAnnotationView alloc ] initWithMap:self ];
+        }
+        return annotationView;
 	}
-	
 }
 
 -(void) didChangeDragState:(MKAnnotationViewDragState)newDragState fromOldState:(MKAnnotationViewDragState)dragState{
 	dirty = YES;
-	if ( newDragState == MKAnnotationViewDragStateStarting ){
+	if ( MKAnnotationViewDragStateStarting == newDragState ){
 		[ map removeOverlay:circle ];
+	} else if (  MKAnnotationViewDragStateEnding == newDragState || MKAnnotationViewDragStateCanceling == newDragState ){
+		
+		self.circle = [MKCircle circleWithCenterCoordinate: annotation.coordinate radius:1000];
+		[ map addOverlay:self.circle ];
+		[ map selectAnnotation:annotation animated:YES ];	
 	}
-	// circle.coordinate = annotation.coordinate;
 }
 
 -(void)setHidden:(BOOL)v{

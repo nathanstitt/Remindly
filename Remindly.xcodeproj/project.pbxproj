@@ -172,19 +172,14 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4569B2EA12EB967F003BD00C /* UI */,
 				4501719F128B84B1003E71FE /* Note.h */,
 				450171A0128B84B1003E71FE /* Note.m */,
 				45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */,
 				45792CBF1294B4A2001C834B /* NSDate+HumanInterval.m */,
-				45EBDA3612BEFC72001999A4 /* PurchaseManager.h */,
-				45EBDA3712BEFC72001999A4 /* PurchaseManager.m */,
-				4501719C128B849A003E71FE /* NotesManager.h */,
-				4501719D128B849A003E71FE /* NotesManager.m */,
-				4569B96E12EF3AB0003BD00C /* LocationAlarmManager.h */,
-				4569B96F12EF3AB0003BD00C /* LocationAlarmManager.m */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
+				452DDBBD12F3BC7F005D3B36 /* Managers */,
+				4569B2EA12EB967F003BD00C /* UI */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -242,6 +237,19 @@
 				45EBDA3212BEFB4F001999A4 /* StoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		452DDBBD12F3BC7F005D3B36 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				45EBDA3612BEFC72001999A4 /* PurchaseManager.h */,
+				45EBDA3712BEFC72001999A4 /* PurchaseManager.m */,
+				4501719C128B849A003E71FE /* NotesManager.h */,
+				4501719D128B849A003E71FE /* NotesManager.m */,
+				4569B96E12EF3AB0003BD00C /* LocationAlarmManager.h */,
+				4569B96F12EF3AB0003BD00C /* LocationAlarmManager.m */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 		4569AE0512EB37AD003BD00C /* NoteSelection */ = {
