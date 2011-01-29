@@ -6,8 +6,8 @@
 
 - (id)initWithTextBlob:(NoteTextBlob*)n {
 	// Retrieve the image for the view and determine its size
-	CGRect frame = CGRectEqualToRect(CGRectZero, n.frame) ? CGRectMake( 100, 100, 160, 50 ) : n.frame;
-	
+	CGRect frame = CGRectEqualToRect(CGRectZero, n.frame) ? CGRectMake( 100, 100, 160, 28 ) : n.frame;
+
 	if (self = [self initWithFrame: frame ]) {
 		ntb = n;
 		[ ntb retain ];
@@ -22,7 +22,7 @@
 		self.internalTextView.userInteractionEnabled = NO;
 		self.internalTextView.font = [ UIFont systemFontOfSize: 22 ];
 		self.maxNumberOfLines = 20;
-		self.minNumberOfLines = 3;
+		self.minNumberOfLines = 1;
 
 		self.internalTextView.backgroundColor = [ UIColor clearColor ];
 		self.layer.borderWidth = 1.0;

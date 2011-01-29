@@ -119,19 +119,13 @@ LocationAlarmManager *instance;
       return NO;
 
 	CLLocationDegrees radius = ALARM_METER_RADIUS;
-;
  
 	// Create the region and start monitoring it.
 	CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter: note.coordinate
                         radius:radius identifier: note.directory ];
 	
 	[ instance.manager startMonitoringForRegion:region desiredAccuracy:1000.0f];
- 	for ( CLRegion *region in [ instance.manager monitoredRegions ] ){
-		NSLog(@"Region alert %d,%d at %@" , 
-			  region.center.longitude, 
-			  region.center.latitude, 
-			  region.identifier );
-	};
+
 	[region release];
 	return YES;
 }
@@ -151,7 +145,7 @@ LocationAlarmManager *instance;
 }
 
 - (void)locationManager:(CLLocationManager *)m didEnterRegion:(CLRegion *)region{
-	NSLog(@"Location Manager Entered: %@", region.identifier );
+	NSLog(@"-----------------------> Location Manager Entered: %@", region.identifier );
 	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
 	if ( note && note.onEnterRegion ){
 		[ self displayNoteAlarm:note ];
@@ -160,7 +154,7 @@ LocationAlarmManager *instance;
 }
 
 - (void)locationManager:(CLLocationManager *)m didExitRegion:(CLRegion *)region{
-	NSLog(@"Location Manager Exited: %@", region.identifier );
+	NSLog(@"-----------------------> Location Manager Exited: %@", region.identifier );
 
 	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
 	if ( note && ! note.onEnterRegion ){
