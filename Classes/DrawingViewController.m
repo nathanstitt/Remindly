@@ -218,10 +218,13 @@
 		}
 		
 		return;
-	} 	
+	}
 	if ( currentTextEditBox && ! wasMoved ){
 		currentTextEditBox.isEditing = NO;
 		currentTextEditBox = nil;
+		return;
+	}
+	if ( [ self distanceBetweenPoint:points[0] andPoint: currentPoint ] < 10 ){
 		return;
 	}
 	UIGraphicsBeginImageContext(self.view.frame.size);

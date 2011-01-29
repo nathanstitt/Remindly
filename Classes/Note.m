@@ -119,9 +119,8 @@ static NSMutableDictionary *_cache;
 
 -(NSString*)alarmTitle{
 	NSDate *fire = [ notification fireDate ];
-	if ( fire ){
-		return [ fire humanIntervalFromNow ];
-	} else if ( [plist valueForKey:@"longitude"] ){
+	NSInteger tag = [ self alarmTag ];
+	if ( [ plist valueForKey:@"longitude" ] && 2 == tag ){
 		CLLocationCoordinate2D nt = [ self coordinate ];
 		CLLocationCoordinate2D cur = [ LocationAlarmManager lastCoord ];
 		float distance = sqrt( (nt.latitude-cur.latitude)*(nt.latitude-cur.latitude) + (nt.longitude-cur.longitude)*(nt.longitude-cur.longitude) );
@@ -129,6 +128,8 @@ static NSMutableDictionary *_cache;
 				[ self onEnterRegion ] ? @"Entering" : @"Exiting",
 				[ self onEnterRegion ] ? fabsf( ALARM_METER_RADIUS - distance ) : fabsf( distance-ALARM_METER_RADIUS ) 
 				];
+	} else if ( fire ) {
+		return [ fire humanIntervalFromNow ];
 	} else { 
 		return @"alarm not set";
 	}
@@ -199,7 +200,6 @@ static NSMutableDictionary *_cache;
 -(void)save {
 	NSString *dir = [ self fullDirectoryPath ];
 
-	[ self unScedule ];
 	if ( ! notification ){
 		notification = [[UILocalNotification alloc] init];
 	}
@@ -213,6 +213,7 @@ static NSMutableDictionary *_cache;
 }
 
 -(void)scedule {
+	[ self unScedule ];
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
 	if ( 2 == [ self alarmTag ] ){
 		[ LocationAlarmManager registerNote: self ];
