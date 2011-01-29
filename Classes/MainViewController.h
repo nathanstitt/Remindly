@@ -14,32 +14,26 @@
 
 #import <UIKit/UIKit.h>
 #import "AlarmViewController.h"
-#import "ColorButton.h"
-#import "DrawingColorController.h"
-#import "CountingButton.h"
-#import "DrawEraseButton.h"
+#import "MainToolBar.h"
 
 @class DrawingViewController, NoteSelectorController;
 
-@interface MainViewController : UIViewController <UIAlertViewDelegate,
-												  DrawingColorManagerDelegate> {
-	NoteSelectorController *scroll;
-	DrawingColorController *dcm;
-	UIToolbar *mainToolbar;
-	UIToolbar *optionsToolbar;
-	DrawingViewController *draw;
-	CountingButton *countBtn;
-	AlarmViewController *alarmView;
-	NSArray *toggledButtons;
-	NSArray *colorBtns;
-	ColorButton *colorBtn;
-	DrawEraseButton *eraseBtn;
+@interface MainViewController : UIViewController <UIAlertViewDelegate> {
+	NoteSelectorController *selector;
+	MainToolBar *toolbar;
+	DrawingViewController *drawing;
+	AlarmViewController *alarm;
 }
 
-// select the given note 
-// called by:
-//      AppDelegate when a notification fires
-//      NoteSelectorController when a note's selected
+-(void) toggleDrawingMode;
 -(void) selectNote:(Note*)note;
+
+@property (nonatomic) BOOL drawingMode;
+
+@property (readonly,nonatomic) DrawingViewController  *drawing;
+@property (readonly,nonatomic) AlarmViewController    *alarm;
+@property (readonly,nonatomic) NoteSelectorController *selector;
+
+
 
 @end

@@ -9,9 +9,9 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
- 
 
-@class Note, NoteSelectorController;
+
+@class Note, NoteSelectorController,NoteThumbnailView;
 
  
 @interface NotesScrollView : UIView<UIScrollViewDelegate> {
@@ -22,7 +22,7 @@
 	NSMutableDictionary *previews;	
 }
 
-@property (nonatomic) NSUInteger currentPage;
+@property (nonatomic,readonly) NSUInteger currentPage;
 
 - (id)initWithController:(NoteSelectorController*)cntr frame:(CGRect)frame;
 
@@ -32,6 +32,9 @@
 
 // move to the specified index
 - (void)selectNoteIndex:(NSInteger)index;
+
+// remove specified thumbnail
+- (void)deleteThumbnail:(NoteThumbnailView*)tn;
 
 // redraw the note
 - (void)redrawNote:(Note*)note;

@@ -11,7 +11,7 @@
 	if (self = [self initWithFrame: frame ]) {
 		ntb = n;
 		[ ntb retain ];
-		editAnimate = YES;
+		
 		deleteBtn = [ UIButton buttonWithType: UIButtonTypeCustom ];
 		[ deleteBtn retain ];
 		deleteBtn.frame = CGRectMake( frame.size.width-20, -4, 24, 24 );

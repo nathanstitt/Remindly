@@ -56,7 +56,7 @@
 	
 	mvc = [[MainViewController alloc ] init ];
 	mvc.view.frame = CGRectMake(0, 20, 320, 460 );
-	[ mvc viewWillAppear:NO ];
+	
 	[ window addSubview:mvc.view ];
 
     [ window makeKeyAndVisible];

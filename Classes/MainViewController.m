@@ -21,76 +21,70 @@
 #import "StoreView.h"
 #import "NoteSelectorController.h"
 
-@interface MainViewController()
--(void) updateCount;
--(void) showAlarm;
-@end
-
-
 
 @implementation MainViewController
 
+@synthesize drawing,selector,alarm;
+
 - (id)init {
     self = [super init ];
-    return self;
-}
 
-- (void)viewDidLoad {
-	scroll = [[ NoteSelectorController alloc ] initWithMainView:self ];
-	scroll.view.frame = CGRectMake(0, 0, 320, 420 );
-	scroll.view.hidden = YES;
-	[ self.view addSubview: scroll.view ];
 
-	draw = [[ DrawingViewController alloc ] initWithMainView:self ];
-	draw.view.frame = CGRectMake(0, 0, 320, 420 );
-	draw.note = [ NotesManager noteAtIndex: 0 ]; 
-	[ draw.alarmTitle   addTarget:self action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
+	selector = [[ NoteSelectorController alloc ] initWithMainView:self ];
+	selector.view.frame = CGRectMake(0, 0, 320, 420 );
+	selector.view.hidden = YES;
+	[ self.view addSubview: selector.view ];
+
+	drawing = [[ DrawingViewController alloc ] initWithMainView:self ];
+	drawing.view.frame = CGRectMake(0, 0, 320, 420 );
+	drawing.note = [ NotesManager noteAtIndex: 0 ]; 
+	[ drawing.alarmTitle   addTarget:self action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
+	[ self.view addSubview: drawing.view ];
+
+	toolbar = [[MainToolBar alloc] initWithController:self];
+	[self.view addSubview: toolbar ];
 	
-	[ self.view addSubview: draw.view ];
-
-	dcm = [[ DrawingColorController alloc] initWithLastColor ];
-	dcm.delegate = self;
-	draw.color = dcm.selectedColor.CGColor;
-	[ self.view addSubview: dcm.toolBar ];
-
-	mainToolbar = [[UIToolbar alloc] init];
-	mainToolbar.barStyle = UIBarStyleBlack;
-	mainToolbar.frame = CGRectMake( 0, 420, 320, 50 );
-	[ mainToolbar sizeToFit ];
-
-	countBtn = [[ CountingButton alloc ] initWithCount: [ NotesManager count] ];
-
-	[ countBtn.button addTarget:self action: @selector(showScroller:) forControlEvents:UIControlEventTouchUpInside ];
-
-	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
-	UIBarButtonItem *text  =  [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"text-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(addTextPressed:) ];
-	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
-	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
-
-	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];
-	[ eraseBtn.button addTarget:self action: @selector(toggleErase:) forControlEvents:UIControlEventTouchUpInside ];
-
-	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
-
-	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, space, add, space, del, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
-
-	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, del, eraseBtn, text, alarm,  NULL ];
-
-	[ del   release  ];
-	[ add   release  ];
-	[ alarm release  ];
-	[ text  release  ];
-	[ space release  ];
-
-	[self.view addSubview:mainToolbar ];
-	
-	alarmView = [[ AlarmViewController alloc ] init ];
-	[ self.view addSubview: alarmView ];
+	alarm = [[ AlarmViewController alloc ] init ];
+	[ self.view addSubview: alarm ];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDisplayNote:) name:@"DisplayNote" object:nil];
 
-	self.view.backgroundColor = [UIColor grayColor ];
+	self.view.backgroundColor = [ UIColor grayColor ];
 
+	
+    return self;
+}
+
+
+-(void) setDrawingMode:(BOOL)v {
+	if ( v ){
+		drawing.note = [ NotesManager noteAtIndex: [ selector currentIndex ] ];
+		drawing.view.hidden  = NO;
+		selector.view.hidden = YES;
+	} else {
+		Note *note = drawing.note;
+		selector.view.hidden = NO;
+		drawing.view.hidden  = YES;
+		[selector selectNoteIndex: note.index ];
+		[selector reload: note ];
+	}
+	[ toolbar setDrawingMode:v ];
+}
+
+
+-(BOOL) drawingMode {
+	return ! drawing.view.hidden;
+}
+
+-(void) toggleDrawingMode {
+	self.drawingMode = ! self.drawingMode;
+}
+
+-(void) selectNote:(Note*)note{
+	drawing.note = note;
+	[ selector selectNoteIndex: note.index ];
+	[ self setDrawingMode:YES ];
+	
 }
 
 -(void)onDisplayNote:(NSNotification*)notif{
@@ -99,123 +93,22 @@
 
 
 
--(void)deleteNote:(id)sel {
-	Note *note = draw.note;
-	draw.note = [[ NotesManager instance ] deleteNote: note ];
-	[ scroll deleteNote: note newIndex:draw.note.index ];
-
-	[ self updateCount ];
-}
-
--(void)toggleErase:(id)sel{
-	draw.isErasing = ! draw.isErasing;
-	eraseBtn.isErasing = draw.isErasing;
-}
-
--(void)addNote:(id)sel{
-	NotesManager *manager = [ NotesManager instance ];
-	if ( [ manager isAllowedMoreNotes ] ){
-		Note *n = [ manager addNote ];
-		draw.note = n;
-		[ scroll addNote:n ];
-		[ self updateCount ];
-	} else {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more reminders"
-									message:@"You've reached the maximum number of reminders.\n\nWould you like to view options for purchasing additional reminders?"  
-									delegate:self cancelButtonTitle:@"No" otherButtonTitles: @"Yes", nil];
-		[alert show];
-		[alert release];
-	}
-}
-
--(void)addTextPressed:(id)sel{
-	[ draw addText ];
-}
-
--(void)setAlarmPressed:(id)sel {
-	[ self showAlarm ];
-}
-
--(void)showAlarm{
-	if ( alarmView.isShowing ){
-		alarmView.isShowing=NO;
-	} else {
-		[ alarmView showWithNote: draw.note ];
-	}
-		
-		
-}
-
--(void) updateCount {
-	[ countBtn setCount:[ NotesManager count ] ];
-}
-
-
--(void) selectNote:(Note*)note{
-	draw.note = note;
-	[ scroll selectNoteIndex:note.index ];
-	if ( draw.view.hidden ){
-		draw.view.hidden   = NO;
-		scroll.view.hidden = YES;
-	}
-	for ( UIBarButtonItem *btn in toggledButtons ){
-		[ btn setEnabled: YES ];
-	}
-	
-}
-
-
-
 -(void)viewWillAppear:(BOOL)animated{
 	[ super viewWillAppear:animated ];
-	[ draw viewWillAppear:animated ];
-	for ( UIBarButtonItem *btn in toggledButtons ){
-		[ btn setEnabled: YES ];
-	}
+	[ drawing viewWillAppear:animated ];
+	[ self setDrawingMode: YES ];
 }
 
 
 -(void)viewWillDisappear:(BOOL)animated{
 	[ super viewWillDisappear:animated ];
-	[ draw.note save ];
-}
-
-
--(void)showScroller:(id)btn {
-	for ( UIBarButtonItem *btn in toggledButtons ){
-		[ btn setEnabled: draw.view.hidden ];
-	}
-	Note *note = draw.note;
-	draw.hidden = ! draw.hidden;
-	scroll.hidden = ! scroll.hidden;
-	if ( ! scroll.hidden ) {
-		[ scroll reload:note ];
-	}
-}
-
-
-#pragma mark UIAlertViewDelegate delegate methods
-- (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-	if ( 1 == buttonIndex ){
-		StoreView *store = [[ StoreView alloc ] initAndShowInto: self.view ];
-		[ store release ];
-	}
-}
-
-#pragma mark DrawingColorManagerDelegate delegate methods 
-
--(void)drawingColorManagerColorUpdated:(DrawingColorController*)manager color:(CGColorRef)color{
-	draw.color = color;
+	[ drawing.note save ];
 }
 
 - (void)dealloc {
-	[ alarmView release ];
-	[ countBtn release ];
-	[ draw release ];
-	[ scroll release ];
-	[ toggledButtons release ];
-	[ mainToolbar release ];
-	[ optionsToolbar release ];
+	[ toolbar release ];
+	[ selector release ];
+	[ drawing release ];
     [super dealloc];
 }
 

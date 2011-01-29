@@ -16,6 +16,7 @@
 		450171A1128B84B1003E71FE /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 450171A0128B84B1003E71FE /* Note.m */; };
 		45017382128CE74F003E71FE /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 45017381128CE74F003E71FE /* blank.png */; };
 		45017392128CE8C7003E71FE /* empty.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45017391128CE8C7003E71FE /* empty.plist */; };
+		4505AE2B12F464E500A057D6 /* MainToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4505AE2A12F464E500A057D6 /* MainToolBar.m */; };
 		450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED516128B71E600E7E0C6 /* MainViewController.m */; };
 		45134A5B12F2314F00128C58 /* delete-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45134A5A12F2314F00128C58 /* delete-icon.png */; };
 		4548DEAC12C55D0200815580 /* StoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4548DEAB12C55D0200815580 /* StoreView.m */; };
@@ -29,7 +30,7 @@
 		458234E21288FE1400EC555C /* NotesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458234E11288FE1400EC555C /* NotesScrollView.m */; };
 		458234E61288FE8F00EC555C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458234E51288FE8F00EC555C /* QuartzCore.framework */; };
 		458235E31289034700EC555C /* NoteSelectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235E21289034700EC555C /* NoteSelectorController.m */; };
-		458235EF128903F200EC555C /* NotePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235EE128903F200EC555C /* NotePreviewView.m */; };
+		458235EF128903F200EC555C /* NoteThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235EE128903F200EC555C /* NoteThumbnailView.m */; };
 		4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45853369128B69BC00793A24 /* DrawingViewController.m */; };
 		459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 459402981296241000F11F95 /* AlarmQuickTimes.m */; };
 		459A438D12ECF7D3007119A1 /* ToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A438C12ECF7D3007119A1 /* ToggleButton.m */; };
@@ -78,6 +79,8 @@
 		450171A0128B84B1003E71FE /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		45017381128CE74F003E71FE /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blank.png; sourceTree = "<group>"; };
 		45017391128CE8C7003E71FE /* empty.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = empty.plist; sourceTree = "<group>"; };
+		4505AE2912F464E500A057D6 /* MainToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainToolBar.h; sourceTree = "<group>"; };
+		4505AE2A12F464E500A057D6 /* MainToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainToolBar.m; sourceTree = "<group>"; };
 		450ED515128B71E600E7E0C6 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		450ED516128B71E600E7E0C6 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		45134A5A12F2314F00128C58 /* delete-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "delete-icon.png"; path = "Images/delete-icon.png"; sourceTree = "<group>"; };
@@ -99,8 +102,8 @@
 		458234E51288FE8F00EC555C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		458235E11289034700EC555C /* NoteSelectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteSelectorController.h; sourceTree = "<group>"; };
 		458235E21289034700EC555C /* NoteSelectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteSelectorController.m; sourceTree = "<group>"; };
-		458235ED128903F200EC555C /* NotePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePreviewView.h; sourceTree = "<group>"; };
-		458235EE128903F200EC555C /* NotePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePreviewView.m; sourceTree = "<group>"; };
+		458235ED128903F200EC555C /* NoteThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteThumbnailView.h; sourceTree = "<group>"; };
+		458235EE128903F200EC555C /* NoteThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteThumbnailView.m; sourceTree = "<group>"; };
 		45853368128B69BC00793A24 /* DrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
 		45853369128B69BC00793A24 /* DrawingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingViewController.m; sourceTree = "<group>"; };
 		459402971296241000F11F95 /* AlarmQuickTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmQuickTimes.h; sourceTree = "<group>"; };
@@ -259,8 +262,8 @@
 				458235E21289034700EC555C /* NoteSelectorController.m */,
 				458234E01288FE1400EC555C /* NotesScrollView.h */,
 				458234E11288FE1400EC555C /* NotesScrollView.m */,
-				458235ED128903F200EC555C /* NotePreviewView.h */,
-				458235EE128903F200EC555C /* NotePreviewView.m */,
+				458235ED128903F200EC555C /* NoteThumbnailView.h */,
+				458235EE128903F200EC555C /* NoteThumbnailView.m */,
 			);
 			name = NoteSelection;
 			sourceTree = "<group>";
@@ -276,6 +279,8 @@
 				4569B3CE12EBA351003BD00C /* ColorSelector */,
 				450ED515128B71E600E7E0C6 /* MainViewController.h */,
 				450ED516128B71E600E7E0C6 /* MainViewController.m */,
+				4505AE2912F464E500A057D6 /* MainToolBar.h */,
+				4505AE2A12F464E500A057D6 /* MainToolBar.m */,
 				45853368128B69BC00793A24 /* DrawingViewController.h */,
 				45853369128B69BC00793A24 /* DrawingViewController.m */,
 				45EE569112A9F04D00732503 /* CountingButton.h */,
@@ -438,7 +443,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				458234E21288FE1400EC555C /* NotesScrollView.m in Sources */,
 				458235E31289034700EC555C /* NoteSelectorController.m in Sources */,
-				458235EF128903F200EC555C /* NotePreviewView.m in Sources */,
+				458235EF128903F200EC555C /* NoteThumbnailView.m in Sources */,
 				4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */,
 				450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */,
 				4501719E128B849A003E71FE /* NotesManager.m in Sources */,
@@ -463,6 +468,7 @@
 				45ED586312F0F97F00CF4A1D /* DrawingTextBox.m in Sources */,
 				45ED5AE912F121B800CF4A1D /* HPGrowingTextView.m in Sources */,
 				45ED5AEA12F121B800CF4A1D /* HPTextViewInternal.m in Sources */,
+				4505AE2B12F464E500A057D6 /* MainToolBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

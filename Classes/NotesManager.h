@@ -14,6 +14,9 @@
 #import <Foundation/Foundation.h>
 #import "Note.h"
 
+#define NOTES_COUNT_CHANGED_NOTICE @"NoteCountChange"
+
+
 @interface NotesManager : NSObject {
 	NSMutableArray *dirs;
 	NSMutableDictionary *alerts;

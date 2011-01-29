@@ -51,6 +51,9 @@ static NotesManager *_instance;
 	   [ Note 	primeCache ];
 	   _instance = [[ NotesManager alloc ] init ];
 	}
+	if ( ! [ NotesManager count ] ){
+		[ _instance addNote ];
+	}
 }
 
 
@@ -152,6 +155,8 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 	[ note removeSelf ];
 	[ dirs removeObject: note.directory ];
 	[ alerts removeObjectForKey: note.directory ];
+	[[ NSNotificationCenter defaultCenter ] postNotificationName:NOTES_COUNT_CHANGED_NOTICE object: self ];
+
 	if ( ! [ dirs count ] ){
 		return [ self addNote ];
 	} else if ( note.index < [ NotesManager count ] ){
@@ -165,20 +170,24 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 -(NSString*)createNoteDirectory {
 	NSFileManager *fm = [ NSFileManager defaultManager ];
 
-	NSString *nm = [ self.path stringByAppendingPathComponent:[NSString stringWithFormat:@"%d",(arc4random() % 10000) ] ];
-	while ( [ fm fileExistsAtPath: nm ] ){
-		nm = [ self.path stringByAppendingPathComponent:[NSString stringWithFormat:@"%d",(arc4random() % 10000) ] ];
+	NSString *nm = [ NSString stringWithFormat:@"%d",(arc4random() % 10000) ];
+	while ( [ fm fileExistsAtPath: [ self.path stringByAppendingPathComponent: nm ] ] ){
+		nm = [ NSString stringWithFormat:@"%d",(arc4random() % 10000) ];
 	}
-
-	[ fm createDirectoryAtPath:nm withIntermediateDirectories:YES attributes:nil error:NULL];
+	NSString *fullPath = [ self.path stringByAppendingPathComponent: nm ];
+	
+	[ fm createDirectoryAtPath:  fullPath withIntermediateDirectories:YES attributes:nil error:NULL];
 	
 	[ UIImagePNGRepresentation( [ UIImage imageNamed:@"blank.png" ] )
-		writeToFile:[ nm stringByAppendingPathComponent:@"image.png"] atomically:YES];
+		writeToFile:[ fullPath stringByAppendingPathComponent:@"image.png"] atomically:YES];
+
+	[ UIImagePNGRepresentation( [ UIImage imageNamed:@"blank.png" ] )
+		writeToFile:[ fullPath stringByAppendingPathComponent:@"thumbnail.png"] atomically:YES];
 
 
 	[ fm copyItemAtPath:[[[NSBundle mainBundle] resourcePath] 
 						 stringByAppendingPathComponent:@"empty.plist"]
-						 toPath:[ nm stringByAppendingPathComponent:@"info.plist"]
+						 toPath:[ fullPath stringByAppendingPathComponent:@"info.plist"]
 						 error:NULL];
 
 	return nm;
@@ -189,6 +198,7 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 	Note *note = [ Note noteWithDirectory: [ self createNoteDirectory ] ];
 	[ note save ];
 	[ dirs insertObject: note.directory atIndex:0 ];
+	[[ NSNotificationCenter defaultCenter ] postNotificationName:NOTES_COUNT_CHANGED_NOTICE object: self ];
 	return note;
 }
 

@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NotesScrollView.h"
-#import "NotePreviewView.h"
+#import "NoteThumbnailView.h"
 #import "Note.h"
 
 @class MainViewController;
@@ -35,15 +35,21 @@
 // use that for callbacks
 -(id)   initWithMainView:(MainViewController*)mv;
 
+
+// where we are
+-(NSUInteger) currentIndex;
+
+
+// the scroller is started moving we hide the header
+-(void) startScrolling;
+
+
 // reloads a note.  We need to update a note's image once it's been
 // modified
 -(void) reload:(Note*)note;
 
 // move scroller & other data (header, dots, etc) to correspond to index
 -(void) selectNoteIndex:(NSInteger)index;
-
-// the scroller is started moving we hide the header
--(void) startScrolling;
 
 // add a note, will also go to first index
 // as that's where the note will be
@@ -60,7 +66,6 @@
 
 // a note was selected
 -(void) noteWasSelected:(Note*)note;
-
 
 @property (nonatomic) BOOL hidden;
 
