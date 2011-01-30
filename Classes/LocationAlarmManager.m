@@ -8,7 +8,7 @@
 
 #import "LocationAlarmManager.h"
 #import "NotesManager.h"
-
+#import <MapKit/MapKit.h>
 
 LocationAlarmManager *instance;
 
@@ -34,7 +34,10 @@ LocationAlarmManager *instance;
 }
 
 -(void)startMonitor {
+	NSLog(@"Started Monitor");
+	manager.delegate = self;
     [ manager startMonitoringSignificantLocationChanges];
+	
 	
 }
 -(id) init {
@@ -83,6 +86,8 @@ LocationAlarmManager *instance;
 	notification.alertAction = @"View Note";
 	notification.soundName = UILocalNotificationDefaultSoundName;
 	notification.applicationIconBadgeNumber = 1;
+
+	[ [UIApplication sharedApplication] scheduleLocalNotification:notification ];
 	
 }
 
@@ -123,12 +128,47 @@ LocationAlarmManager *instance;
 	CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter: note.coordinate
                         radius:ALARM_KM_RADIUS*1000.0f identifier: note.directory ];
 	
-	[ instance.manager startMonitoringForRegion:region desiredAccuracy:1000.0f];
+	[ instance.manager startMonitoringForRegion:region desiredAccuracy:10.0f];
 
 	[region release];
 	return YES;
 }
 
+// returns a string if the number with one decimal place of precision
+// sets the style (commas or periods) based on the locale
+NSString * formatDecimal_1(NSNumber *num) {
+	static NSNumberFormatter *numFormatter;
+	if (!numFormatter) {
+		numFormatter = [[[NSNumberFormatter alloc] init] retain];
+		[numFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+		[numFormatter setLocale:[NSLocale currentLocale]];
+		[numFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+		[numFormatter setMaximumFractionDigits:1];
+		[numFormatter setMinimumFractionDigits:1];
+	}
+	
+	return [numFormatter stringFromNumber: num ];
+	
+}
+
++ (NSString*)distanceStringFrom:(CLLocationCoordinate2D)coord{
+	
+	double distance = MKMetersBetweenMapPoints( MKMapPointForCoordinate( coord ),
+												MKMapPointForCoordinate( [ LocationAlarmManager lastCoord ] ) );
+	
+	NSString * unitName;
+	NSString *locale = [ [ NSLocale currentLocale ] localeIdentifier ];
+	if ( [ locale isEqual:@"en_US" ]) {
+		unitName = @"mi";
+		distance = distance / 1609.344;
+	} else {
+		unitName = @"km";
+		distance = distance / 1000;
+	}
+
+	return [NSString stringWithFormat:@"%@ %@", formatDecimal_1( [NSNumber numberWithDouble: distance] ), unitName ];
+	
+}
 
 #pragma mark -
 #pragma mark CLLocationManager delegate methods
@@ -141,26 +181,28 @@ LocationAlarmManager *instance;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
 	[[ NSNotificationCenter defaultCenter ] postNotificationName:@"locationUpdated" object: newLocation ];
+	NSLog(@"-----------------------> Location Manager Did Update  %.06f %.06f",newLocation.coordinate.longitude, newLocation.coordinate.latitude );
+	
 }
 
 
 - (void)locationManager:(CLLocationManager *)m didEnterRegion:(CLRegion *)region{
 	NSLog(@"-----------------------> Location Manager Entered: %@", region.identifier );
 	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
-	if ( note && note.onEnterRegion ){
+	if ( note ){ //&& note.onEnterRegion ){
 		[ self displayNoteAlarm:note ];
 	}
-	[ m stopMonitoringForRegion:region ];
+//	[ m stopMonitoringForRegion:region ];
 }
 
 - (void)locationManager:(CLLocationManager *)m didExitRegion:(CLRegion *)region{
 	NSLog(@"-----------------------> Location Manager Exited: %@", region.identifier );
 
 	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
-	if ( note && ! note.onEnterRegion ){
+	if ( note ){// && ! note.onEnterRegion ){
 		[ self displayNoteAlarm:note ];
 	}
-	[ m stopMonitoringForRegion:region ];
+//	[ m stopMonitoringForRegion:region ];
 }
 
 

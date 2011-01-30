@@ -136,6 +136,7 @@
 -(void)showWithNote:(Note*)note {
 	currentNote = note;
 	[ quickTimes reset ];
+	[ mapView reset ];
 	[ absTimes reset ];
 	[ self hideAll ];
 	self.isShowing = YES;

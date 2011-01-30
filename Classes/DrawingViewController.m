@@ -205,8 +205,6 @@
 
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	
-	NSLog(@"Touches Ended");
 	UITouch *touch = [touches anyObject];	
 	CGPoint currentPoint = [touch locationInView:self.view];
 

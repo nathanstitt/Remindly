@@ -17,6 +17,7 @@
 		45017382128CE74F003E71FE /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 45017381128CE74F003E71FE /* blank.png */; };
 		45017392128CE8C7003E71FE /* empty.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45017391128CE8C7003E71FE /* empty.plist */; };
 		4505AE2B12F464E500A057D6 /* MainToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4505AE2A12F464E500A057D6 /* MainToolBar.m */; };
+		4505B10E12F5C68700A057D6 /* UIColor+Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 4505B10D12F5C68700A057D6 /* UIColor+Expanded.m */; };
 		450ED517128B71E600E7E0C6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED516128B71E600E7E0C6 /* MainViewController.m */; };
 		45134A5B12F2314F00128C58 /* delete-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45134A5A12F2314F00128C58 /* delete-icon.png */; };
 		4548DEAC12C55D0200815580 /* StoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4548DEAB12C55D0200815580 /* StoreView.m */; };
@@ -80,6 +81,8 @@
 		45017391128CE8C7003E71FE /* empty.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = empty.plist; sourceTree = "<group>"; };
 		4505AE2912F464E500A057D6 /* MainToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainToolBar.h; sourceTree = "<group>"; };
 		4505AE2A12F464E500A057D6 /* MainToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainToolBar.m; sourceTree = "<group>"; };
+		4505B10C12F5C68700A057D6 /* UIColor+Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Expanded.h"; sourceTree = "<group>"; };
+		4505B10D12F5C68700A057D6 /* UIColor+Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Expanded.m"; sourceTree = "<group>"; };
 		450ED515128B71E600E7E0C6 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		450ED516128B71E600E7E0C6 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		45134A5A12F2314F00128C58 /* delete-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "delete-icon.png"; path = "Images/delete-icon.png"; sourceTree = "<group>"; };
@@ -172,6 +175,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4505B10C12F5C68700A057D6 /* UIColor+Expanded.h */,
+				4505B10D12F5C68700A057D6 /* UIColor+Expanded.m */,
 				4501719F128B84B1003E71FE /* Note.h */,
 				450171A0128B84B1003E71FE /* Note.m */,
 				45792CBE1294B4A2001C834B /* NSDate+HumanInterval.h */,
@@ -455,6 +460,7 @@
 				45ED5AE912F121B800CF4A1D /* HPGrowingTextView.m in Sources */,
 				45ED5AEA12F121B800CF4A1D /* HPTextViewInternal.m in Sources */,
 				4505AE2B12F464E500A057D6 /* MainToolBar.m in Sources */,
+				4505B10E12F5C68700A057D6 /* UIColor+Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

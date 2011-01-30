@@ -8,6 +8,7 @@
 
 #import "AlarmMapView.h"
 #import "AlarmViewController.h"
+#import "LocationAlarmManager.h"
 
 @interface AlarmMapView()
 @property (nonatomic,retain) MKCircle* circle;
@@ -37,17 +38,17 @@
 	self.circle = [MKCircle circleWithCenterCoordinate: map.userLocation.coordinate radius:1000];
 	[map addOverlay:circle];
 
-//	[ self.map.userLocation addObserver:self forKeyPath:@"location" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
-//           context:NULL];
+	[ self.map.userLocation addObserver:self forKeyPath:@"location" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
+           context:NULL];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationUpdated:) name:@"locationUpdated" object:nil];
+	// [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationUpdated:) name:@"locationUpdated" object:nil];
 
     return self;
 
 }
+								   
 
-
-
+									   
 -(void)moveTo:(CLLocationCoordinate2D)coord {
 	annotation.coordinate = coord;
 	MKCoordinateRegion region;
@@ -58,30 +59,25 @@
 	if ( ! map.selectedAnnotations.count ){
 		[ map selectAnnotation:annotation animated:YES ];	
 	}
-	[ map removeOverlay:self.circle ];
+	[ map removeOverlays:[map overlays ]];
+
 	self.circle = [MKCircle circleWithCenterCoordinate: annotation.coordinate radius:1000];
 	[map addOverlay:self.circle];
 }
 
--(void)locationUpdated:(NSNotification*)notif {
-	if (! dirty ){
-		[ self moveTo: ((CLLocation*)notif.object).coordinate ];
+
+-(void)observeValueForKeyPath:(NSString *)keyPath  ofObject:(id)object change:(NSDictionary *)change  context:(void *)context {  
+	if (! dirty && self.map.userLocation.location ){
+		[ self moveTo: self.map.userLocation.location.coordinate ];
 	}
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath  
-                    ofObject:(id)object  
-					change:(NSDictionary *)change  
-                    context:(void *)context {  
 
-    if ([self.map isUserLocationVisible]) {  
-		annotation.coordinate = self.map.userLocation.coordinate;
-
-		[ map removeOverlay:circle ];
-		self.circle = [MKCircle circleWithCenterCoordinate: annotation.coordinate radius:1000];
-		[map addOverlay:self.circle];
-    }
+-(void) reset {
+	dirty = NO;
 }
+
+
 
 -(UIView*)view {
 	return map;
@@ -89,9 +85,11 @@
 
 
 -(void)setFromNote:(Note*)note{
-	dirty = YES;
-	[ self moveTo: note.coordinate ];
-	annotationView.onEnter = note.onEnterRegion;
+	if ( [ note hasCoordinate ] ){
+		dirty = YES;
+		[ self moveTo: note.coordinate ];
+		annotationView.onEnter = note.onEnterRegion;
+	}
 }
 
 
@@ -145,7 +143,7 @@
 -(void) didChangeDragState:(MKAnnotationViewDragState)newDragState fromOldState:(MKAnnotationViewDragState)dragState{
 	dirty = YES;
 	if ( MKAnnotationViewDragStateStarting == newDragState ){
-		[ map removeOverlay:circle ];
+		[ map removeOverlays:[map overlays ]];
 	} else if (  MKAnnotationViewDragStateEnding == newDragState || MKAnnotationViewDragStateCanceling == newDragState ){
 		
 		self.circle = [MKCircle circleWithCenterCoordinate: annotation.coordinate radius:1000];
