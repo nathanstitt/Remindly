@@ -57,46 +57,34 @@
 	mainToolbar.barStyle = UIBarStyleBlack;
 	mainToolbar.frame = CGRectMake( 0, 420, 320, 50 );
 	[ mainToolbar sizeToFit ];
-
 	countBtn = [[ CountingButton alloc ] initWithCount: [ NotesManager count] ];
-
 	[ countBtn.button addTarget:self action: @selector(showScroller:) forControlEvents:UIControlEventTouchUpInside ];
 
 	UIBarButtonItem *del    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteNote:) ];
 	UIBarButtonItem *text  =  [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"text-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(addTextPressed:) ];
 	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 	UIBarButtonItem *add    = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
-
 	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];
 	[ eraseBtn.button addTarget:self action: @selector(toggleErase:) forControlEvents:UIControlEventTouchUpInside ];
-
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
-
 	mainToolbar.items = [ NSArray arrayWithObjects:   dcm.pickerButton, space, add, space, del, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
-
 	toggledButtons=[[NSArray alloc ] initWithObjects: dcm.pickerButton, add, del, eraseBtn, text, alarm,  NULL ];
-
 	[ del   release  ];
 	[ add   release  ];
 	[ alarm release  ];
 	[ text  release  ];
 	[ space release  ];
-
 	[self.view addSubview:mainToolbar ];
-	
 	alarmView = [[ AlarmViewController alloc ] init ];
 	[ self.view addSubview: alarmView ];
-
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDisplayNote:) name:@"DisplayNote" object:nil];
-
 	self.view.backgroundColor = [UIColor grayColor ];
-
 }
+
 
 -(void)onDisplayNote:(NSNotification*)notif{
 	[ self selectNote:(Note*)notif.object ];
 }
-
 
 
 -(void)deleteNote:(id)sel {
@@ -107,10 +95,12 @@
 	[ self updateCount ];
 }
 
+
 -(void)toggleErase:(id)sel{
 	draw.isErasing = ! draw.isErasing;
 	eraseBtn.isErasing = draw.isErasing;
 }
+
 
 -(void)addNote:(id)sel{
 	NotesManager *manager = [ NotesManager instance ];
@@ -128,13 +118,16 @@
 	}
 }
 
+
 -(void)addTextPressed:(id)sel{
 	[ draw addText ];
 }
 
+
 -(void)setAlarmPressed:(id)sel {
 	[ self showAlarm ];
 }
+
 
 -(void)showAlarm{
 	if ( alarmView.isShowing ){
@@ -142,9 +135,8 @@
 	} else {
 		[ alarmView showWithNote: draw.note ];
 	}
-		
-		
 }
+
 
 -(void) updateCount {
 	[ countBtn setCount:[ NotesManager count ] ];
@@ -163,7 +155,6 @@
 	}
 	
 }
-
 
 
 -(void)viewWillAppear:(BOOL)animated{
