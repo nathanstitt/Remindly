@@ -145,9 +145,16 @@ static NSMutableDictionary *_cache;
 	return [ plist valueForKey:@"alarmType" ];
 }
 
+
+NSComparisonResult
+compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
+	return [ [ NSNumber numberWithInt: ntb1.frame.origin.y]  compare: [ NSNumber numberWithInt: ntb2.frame.origin.y ] ];
+}
+
+
 -(NSString *) alarmText {
 	NSString *ret = [ plist valueForKey:@"alarmType" ];
-	for ( NoteTextBlob *ntb in texts ){
+	for ( NoteTextBlob *ntb in [ texts sortedArrayUsingSelector: @selector(compareByPosition:) ]  ){
 		ret = [ NSString stringWithFormat: @"%@\n%@", ret, ntb.text ];
 	}
 	return ret;
@@ -196,7 +203,6 @@ static NSMutableDictionary *_cache;
 	[ plist setObject:[ NSNumber numberWithInt: tag ] forKey:@"alarmTag" ];
 }
 
-
 -(void)save {
 	NSString *dir = [ self fullDirectoryPath ];
 
@@ -207,6 +213,7 @@ static NSMutableDictionary *_cache;
 	for ( NoteTextBlob *tb in texts ){
 		[ data addObject: [ NSKeyedArchiver archivedDataWithRootObject:tb] ];
 	}
+
 	[ plist setObject: data forKey:@"texts" ];
 	[ data release ];
 	[ plist writeToFile:[ dir stringByAppendingPathComponent:@"info.plist" ] atomically: YES ];

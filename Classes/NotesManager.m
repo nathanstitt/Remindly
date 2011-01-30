@@ -128,7 +128,7 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 }
 
 -(void)sortDirs {
-	[ dirs setArray:  [ dirs sortedArrayUsingSelector: @selector(compare:) ] ];
+	[ dirs setArray: [ dirs sortedArrayUsingSelector: @selector(compare:) ] ];
 }
 
 -(BOOL)hasNoteWithDirectory:(NSString*)dir {

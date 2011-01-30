@@ -242,10 +242,10 @@
 		452DDBBD12F3BC7F005D3B36 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				45EBDA3612BEFC72001999A4 /* PurchaseManager.h */,
-				45EBDA3712BEFC72001999A4 /* PurchaseManager.m */,
 				4501719C128B849A003E71FE /* NotesManager.h */,
 				4501719D128B849A003E71FE /* NotesManager.m */,
+				45EBDA3612BEFC72001999A4 /* PurchaseManager.h */,
+				45EBDA3712BEFC72001999A4 /* PurchaseManager.m */,
 				4569B96E12EF3AB0003BD00C /* LocationAlarmManager.h */,
 				4569B96F12EF3AB0003BD00C /* LocationAlarmManager.m */,
 			);
