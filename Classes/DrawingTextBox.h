@@ -14,7 +14,6 @@
 	NSUInteger displayStringsIndex;
 	CGPoint displacedFrom;
 	NoteTextBlob *ntb;
-	BOOL editAnimate;
 	UIButton *deleteBtn;
 }
 

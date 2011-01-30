@@ -13,7 +13,7 @@
 #import "NoteSelectorController.h"
 #import "MainViewController.h"
 #import "NotesManager.h"
-#import "NotePreviewView.h"
+#import "NoteThumbnailView.h"
 
 @implementation NoteSelectorController
 
@@ -23,6 +23,9 @@
 		return nil;
 	}
 	mainView = mv;
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(countChanged:) name:NOTES_COUNT_CHANGED_NOTICE object:nil];
+
 	return self;
 }
 
@@ -55,9 +58,8 @@
 	dots.frame = CGRectMake( 0, 390, 320, 30 );
 	dots.numberOfPages = [ NotesManager count ];
 	[dots addTarget:self action:@selector(dotsMoved:) forControlEvents:UIControlEventValueChanged];
-	
+
 	[ self.view addSubview:dots ];
-	
 }
 
 -(void)reload:(Note*)note{
@@ -71,6 +73,11 @@
 -(void) selectNoteIndex:(NSInteger)index{
 	[ scroller selectNoteIndex: index ];
 	dots.currentPage = index;
+	
+}
+
+-(NSUInteger)currentIndex {
+	return dots.currentPage;
 }
 
 -(void)dotsMoved:(id)ctrl{
@@ -78,9 +85,12 @@
 	
 }
 
+-(void)countChanged:(NSNotification*)notif	{
+	dots.numberOfPages = [ NotesManager count ];
+	dots.currentPage = scroller.currentPage;
+}
 
 -(void)refresh {
-	dots.numberOfPages = [ NotesManager count ];
 	dots.currentPage = 0;
 	[ scroller selectNoteIndex: 0];
 	[ scroller reload ];
@@ -152,6 +162,7 @@
 }
 
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self ];
 	[ scroller release];
 	[ super dealloc];
 }

@@ -16,7 +16,7 @@
 
 #import "NotesScrollView.h"
 #import "NotesManager.h"
-#import "NotePreviewView.h"
+#import "NoteThumbnailView.h"
 #import "NoteSelectorController.h"
 
 
@@ -58,14 +58,15 @@
     return self;
 }
 
--(NotePreviewView*)viewAtIndex:(NSUInteger)index {
+-(NoteThumbnailView*)viewAtIndex:(NSUInteger)index {
 
-	NotePreviewView *v = [ previews objectForKey:[ NSNumber numberWithInt:index ] ];
+	NoteThumbnailView *v = [ previews objectForKey:[ NSNumber numberWithInt:index ] ];
 	if ( ! v ){
-		v = [ [ NotePreviewView alloc ] initWithNote: [ NotesManager noteAtIndex: index ] 
+		v = [ [ NoteThumbnailView alloc ] initWithNote: [ NotesManager noteAtIndex: index ] 
 				frame:CGRectMake(0, 0, PAGE_WIDTH, PAGE_HEIGHT )
 				scroller:self ];
 		[ previews setObject: v forKey: [ NSNumber numberWithInt:index ] ];
+		[ v release ];
 	}
 	return v;
 }
@@ -77,7 +78,7 @@
 	}
 
 	// Check if the page is already loaded
-	NotePreviewView *view = [ self viewAtIndex:page ];
+	NoteThumbnailView *view = [ self viewAtIndex:page ];
 
 	// add the controller's view to the scroll view	if it's not already added
 	if (view.superview == nil) {
@@ -111,10 +112,28 @@
 }
 
 -(void)redrawNote:(Note*)note{
-	NotePreviewView *v = [ previews objectForKey:[ NSNumber numberWithInt: note.index ] ];
+	NoteThumbnailView *v = [ previews objectForKey:[ NSNumber numberWithInt: note.index ] ];
 	if ( v ){
 		v.note = note;
 	}
+}
+
+- (void)deleteThumbnail:(NoteThumbnailView*)tn {
+	[ previews removeObjectForKey:[ NSNumber numberWithInt: tn.note.index ] ];
+
+	Note *new = [[ NotesManager instance ] deleteNote: tn.note ];
+
+	[ tn removeFromSuperview ];
+
+	scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, 
+										scrollView.frame.size.height);
+
+	if ( new.index  ){
+		[ self loadPage: new.index-1 ];
+	}
+	[ self loadPage: new.index ];
+
+	[ self selectNoteIndex: new.index ];
 }
 
 - (void)reload {

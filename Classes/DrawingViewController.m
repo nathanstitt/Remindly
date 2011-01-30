@@ -100,13 +100,13 @@
 
 -(Note*)note{
 	note.image = drawImage.image;
-	
+	alarmTitle.hidden = YES;
 	UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [[UIScreen mainScreen] scale]);
 	CGContextRef context = UIGraphicsGetCurrentContext();
     [ self.view.layer renderInContext:context ];
 	note.thumbnail = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
-	
+	alarmTitle.hidden = NO;
 	return note;
 }
 

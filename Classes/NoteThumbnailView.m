@@ -13,12 +13,12 @@
     along with Remindly.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#import "NotePreviewView.h"
+#import "NoteThumbnailView.h"
 #import "NoteSelectorController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
-@implementation NotePreviewView
+@implementation NoteThumbnailView
 
 @synthesize note;
 
@@ -30,8 +30,6 @@
 	imageView = [[UIImageView alloc ] initWithFrame:CGRectMake(10, 10, frame.size.width-20, self.frame.size.height-20) ];
 	imageView.backgroundColor = [ UIColor whiteColor ];
 	imageView.image = [ note thumbnail ];
-	self.userInteractionEnabled = YES;
-
 	[imageView.layer setBorderColor: [[UIColor blackColor] CGColor]];
 	[imageView.layer setBorderWidth: 1.0];
 	imageView.layer.shadowColor = [[UIColor blackColor] CGColor];
@@ -40,11 +38,24 @@
 	imageView.layer.shadowRadius = 10.0f;
 	[self addSubview:imageView];
 
+	
+	deleteBtn = [ UIButton buttonWithType: UIButtonTypeCustom ];
+	[ deleteBtn retain ];
+	deleteBtn.frame = CGRectMake( frame.size.width-20, -4, 24, 24 );
+	[ deleteBtn setImage:[ UIImage imageNamed:@"delete-icon.png" ] forState:UIControlStateNormal ] ;
+	[ deleteBtn addTarget:self action:@selector(deletePressed:) forControlEvents:UIControlEventTouchUpInside ];
+	[ self addSubview:deleteBtn ];
+
+	self.userInteractionEnabled = YES;
+		
 	self.contentMode = UIViewContentModeScaleToFill;
 	return self;
 }
 
 
+-(void)deletePressed:(id)btn{
+	[ scroller deleteThumbnail:self ];
+}
 
 -(void) setNote:(Note*)n {
 	if ( n != note ){
@@ -64,6 +75,7 @@
 #pragma mark Memory management
 
 - (void)dealloc {
+	[ deleteBtn release  ];
 	[ imageView release  ];
 	[ super dealloc      ];
 }

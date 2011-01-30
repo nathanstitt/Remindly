@@ -12,10 +12,11 @@
 
 @class NotesScrollView;
 
-@interface NotePreviewView : UIView {
+@interface NoteThumbnailView : UIView {
 	Note *note;
 	UIImageView *imageView;
 	NotesScrollView *scroller;
+	UIButton *deleteBtn;
 }
 
 -(id)initWithNote:(Note*)n frame:(CGRect)frame scroller:(NotesScrollView*)sc;
