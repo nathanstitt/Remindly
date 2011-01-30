@@ -35,9 +35,8 @@
 	[ self sizeToFit ];
 
 	countBtn = [[ CountingButton alloc ] initWithCount: [ NotesManager count] ];
-	
 	[ countBtn.button addTarget:self action: @selector(toggleDrawingMode:) forControlEvents:UIControlEventTouchUpInside ];
-	
+
 	UIBarButtonItem *text  =  [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"text-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(addTextPressed:) ];
 	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 
@@ -53,14 +52,14 @@
 	
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSData *df =[ prefs dataForKey: @"lastColorUsed" ];
-	UIColor *color;
 	if ( df ){
-		color = [NSKeyedUnarchiver unarchiveObjectWithData:df ];
+		mvc.drawing.color = [NSKeyedUnarchiver unarchiveObjectWithData:df ];
 	} else {
-		color = [ UIColor lightGrayColor];
+		mvc.drawing.color = [ UIColor lightGrayColor];
 	}
-	pickerBtn = [ self makeBarButton: color ];
+	pickerBtn = [ self makeBarButton: mvc.drawing.color ];
 	[ pickerBtn retain ];
+
 	[ ((ColorButton*)pickerBtn.customView) removeTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
 	[ ((ColorButton*)pickerBtn.customView) addTarget:self action:@selector(showColors:) forControlEvents:UIControlEventTouchUpInside ];
 	
@@ -95,20 +94,12 @@
 	 NULL ];
 	[ colorButtons retain ];
 	
-	
-	
-//	dcm = [[ DrawingColorController alloc] initWithLastColor ];
-//	dcm.delegate = self;
-	
-//	mvc.drawing.color = dcm.selectedColor.CGColor;
-//	[ mvc.view addSubview: dcm.toolBar ];
-	
 	return self;
 }
 
 
 -(void)colorSelected:(ColorButton*)cv {
-	mvc.drawing.color = [ cv color ];
+	mvc.drawing.color =  cv.color;
 
 	NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject: cv.color ];
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];

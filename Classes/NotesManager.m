@@ -59,7 +59,7 @@ static NotesManager *_instance;
 
 +(NotesManager*)instance{
 	return _instance;
-}
+} 
 
 +(NSInteger)count {
 	return [ _instance.dirs count ];
@@ -152,18 +152,19 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 
 
 -(Note*)deleteNote:(Note*)note{
-	[ note removeSelf ];
 	[ dirs removeObject: note.directory ];
 	[ alerts removeObjectForKey: note.directory ];
-	[[ NSNotificationCenter defaultCenter ] postNotificationName:NOTES_COUNT_CHANGED_NOTICE object: self ];
-
+	Note *ret;
 	if ( ! [ dirs count ] ){
-		return [ self addNote ];
+		ret = [ self addNote ];
 	} else if ( note.index < [ NotesManager count ] ){
-		return [ NotesManager noteAtIndex: note.index ];
+		ret = [ NotesManager noteAtIndex: note.index ];
 	} else {
-		return [ NotesManager noteAtIndex: 0 ];	
+		ret = [ NotesManager noteAtIndex: 0 ];	
 	}
+	[ note removeSelf ];
+	[[ NSNotificationCenter defaultCenter ] postNotificationName:NOTES_COUNT_CHANGED_NOTICE object: self ];
+	return ret;
 }
 
 

@@ -125,6 +125,8 @@
 
 	Note *new = [[ NotesManager instance ] deleteNote: tn.note ];
 	[ tn removeFromSuperview ];
+	[ self clear ];
+
 	scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, scrollView.frame.size.height);
 	if ( new.index  ){
 		[ self loadPage: new.index-1 ];

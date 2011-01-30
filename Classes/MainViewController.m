@@ -35,15 +35,15 @@
 	selector.view.hidden = YES;
 	[ self.view addSubview: selector.view ];
 
+	toolbar = [[MainToolBar alloc] initWithController:self];
+	[self.view addSubview: toolbar ];
+
 	drawing = [[ DrawingViewController alloc ] initWithMainView:self ];
 	drawing.view.frame = CGRectMake(0, 0, 320, 420 );
 	drawing.note = [ NotesManager noteAtIndex: 0 ]; 
-	[ drawing.alarmTitle   addTarget:self action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
+	[ drawing.alarmTitle  addTarget:toolbar action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
 	[ self.view addSubview: drawing.view ];
 
-	toolbar = [[MainToolBar alloc] initWithController:self];
-	[self.view addSubview: toolbar ];
-	
 	alarm = [[ AlarmViewController alloc ] init ];
 	[ self.view addSubview: alarm ];
 

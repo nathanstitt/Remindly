@@ -87,7 +87,9 @@
 
 -(void)countChanged:(NSNotification*)notif	{
 	dots.numberOfPages = [ NotesManager count ];
-	dots.currentPage = scroller.currentPage;
+	dots.currentPage = scroller.currentPage-1;
+	Note *note = [ NotesManager noteAtIndex: dots.currentPage ];
+	noteHeader.text = [ note alarmTitle ];
 }
 
 -(void)refresh {

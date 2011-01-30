@@ -23,7 +23,7 @@
 @synthesize borderWidth, borderRadius, borderColor, fillColor;
 
 - (id)initWithFrame:(CGRect)frame {
-   self = [super initWithFrame:frame];
+	self = [super initWithFrame:frame];
 
 	self.backgroundColor = [UIColor clearColor];
 	self.contentHorizontalAlignment=UIControlContentHorizontalAlignmentCenter;

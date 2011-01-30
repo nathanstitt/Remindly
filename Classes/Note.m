@@ -121,12 +121,17 @@ static NSMutableDictionary *_cache;
 	NSDate *fire = [ notification fireDate ];
 	NSInteger tag = [ self alarmTag ];
 	if ( [ plist valueForKey:@"longitude" ] && 2 == tag ){
+		
 		CLLocationCoordinate2D nt = [ self coordinate ];
 		CLLocationCoordinate2D cur = [ LocationAlarmManager lastCoord ];
-		float distance = sqrt( (nt.latitude-cur.latitude)*(nt.latitude-cur.latitude) + (nt.longitude-cur.longitude)*(nt.longitude-cur.longitude) );
-		return [ NSString stringWithFormat:@"%@ %0.2fm from here", 
+		
+		static double earthRadius = 6376.5;
+		double A = pow ( sin( ( ( nt.latitude  - cur.latitude  ) * (M_PI/180) ) / 2 ), 2 ) + cos(cur.latitude) * cos(nt.latitude) * pow ( sin(  ( ( nt.longitude - cur.longitude ) * (M_PI/180) ) /2), 2 );
+		double C = 2 * atan2( sqrt(A), sqrt( 1 - A ));
+		double distance = earthRadius * C;
+		return [ NSString stringWithFormat:@"%@ %0.2fkm from here", 
 				[ self onEnterRegion ] ? @"Entering" : @"Exiting",
-				[ self onEnterRegion ] ? fabsf( ALARM_METER_RADIUS - distance ) : fabsf( distance-ALARM_METER_RADIUS ) 
+				[ self onEnterRegion ] ? fabsf( ALARM_KM_RADIUS - distance  ) : fabsf( distance-ALARM_KM_RADIUS ) 
 				];
 	} else if ( fire ) {
 		return [ fire humanIntervalFromNow ];

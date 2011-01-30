@@ -118,11 +118,10 @@ LocationAlarmManager *instance;
         ![CLLocationManager regionMonitoringEnabled] )
       return NO;
 
-	CLLocationDegrees radius = ALARM_METER_RADIUS;
  
 	// Create the region and start monitoring it.
 	CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter: note.coordinate
-                        radius:radius identifier: note.directory ];
+                        radius:ALARM_KM_RADIUS*1000.0f identifier: note.directory ];
 	
 	[ instance.manager startMonitoringForRegion:region desiredAccuracy:1000.0f];
 
