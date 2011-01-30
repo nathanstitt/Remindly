@@ -16,7 +16,7 @@
 @implementation MainToolBar
 
 -(UIBarButtonItem*)makeBarButton:(UIColor*)c{
-	ColorButton *b = [[ ColorButton alloc ] iniWithColor: c.CGColor ];
+	ColorButton *b = [[ ColorButton alloc ] iniWithColor: c ];
 	[ b addTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
 	UIBarButtonItem *bbt = [[UIBarButtonItem alloc ] initWithCustomView: b ];
 	[ b release ];
@@ -50,7 +50,16 @@
 	
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-	pickerBtn = [ self makeBarButton: [UIColor lightGrayColor]];
+	
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSData *df =[ prefs dataForKey: @"lastColorUsed" ];
+	UIColor *color;
+	if ( df ){
+		color = [NSKeyedUnarchiver unarchiveObjectWithData:df ];
+	} else {
+		color = [ UIColor lightGrayColor];
+	}
+	pickerBtn = [ self makeBarButton: color ];
 	[ pickerBtn retain ];
 	[ ((ColorButton*)pickerBtn.customView) removeTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
 	[ ((ColorButton*)pickerBtn.customView) addTarget:self action:@selector(showColors:) forControlEvents:UIControlEventTouchUpInside ];
@@ -102,7 +111,10 @@
 	mvc.drawing.color = [ cv color ];
 
 	NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject: cv.color ];
-
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	[ prefs setValue:colorData forKey:@"lastColorUsed" ];
+	[ prefs synchronize ];
+	
 	((ColorButton*)pickerBtn.customView).color = mvc.drawing.color;
 	[ self setItems:drawButtons animated:YES];
 }
@@ -134,11 +146,6 @@
 	[ countBtn setCount:[ NotesManager count ] ];
 }
 	
-
-
--(void) setColor:(CGColorRef)color{
-	mvc.drawing.color = color;
-}
 
 
 
@@ -190,13 +197,6 @@
 		[ store release ];
 	}
 }
-
-#pragma mark DrawingColorManagerDelegate delegate methods 
-
--(void)drawingColorManagerColorUpdated:(DrawingColorController*)manager color:(CGColorRef)color{
-	mvc.drawing.color = color;
-}
-
 
 
 - (void)dealloc {

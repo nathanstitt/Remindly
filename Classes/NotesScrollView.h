@@ -26,6 +26,8 @@
 
 - (id)initWithController:(NoteSelectorController*)cntr frame:(CGRect)frame;
 
+-(NoteThumbnailView*)loadPage:(NSUInteger)page;
+
 // called by a preview when it's tapped,
 // the notification is then passed on to the selection controller
 - (void)noteWasSelected:(Note*)note;

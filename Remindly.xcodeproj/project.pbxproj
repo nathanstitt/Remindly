@@ -38,7 +38,6 @@
 		45A6C30912A360280027AF86 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A6C30712A360280027AF86 /* Icon.png */; };
 		45A6C54812A492010027AF86 /* AlarmTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C54712A492010027AF86 /* AlarmTitleButton.m */; };
 		45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C6E812A5F7E70027AF86 /* ColorButton.m */; };
-		45A6C7F812A721430027AF86 /* DrawingColorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A6C7F712A721430027AF86 /* DrawingColorController.m */; };
 		45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */; };
 		45C3BEB512EC908A004CB303 /* AlarmMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C3BEB412EC908A004CB303 /* AlarmMapView.m */; };
 		45C3BEC312EC918C004CB303 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C3BEC212EC918C004CB303 /* MapKit.framework */; };
@@ -116,8 +115,6 @@
 		45A6C54712A492010027AF86 /* AlarmTitleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmTitleButton.m; sourceTree = "<group>"; };
 		45A6C6E712A5F7E70027AF86 /* ColorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorButton.h; sourceTree = "<group>"; };
 		45A6C6E812A5F7E70027AF86 /* ColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorButton.m; sourceTree = "<group>"; };
-		45A6C7F612A721430027AF86 /* DrawingColorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingColorController.h; sourceTree = "<group>"; };
-		45A6C7F712A721430027AF86 /* DrawingColorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingColorController.m; sourceTree = "<group>"; };
 		45BFB98D12A73604004EB7A2 /* AlarmAbsoluteTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAbsoluteTimes.h; sourceTree = "<group>"; };
 		45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAbsoluteTimes.m; sourceTree = "<group>"; };
 		45C3BEB312EC908A004CB303 /* AlarmMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmMapView.h; sourceTree = "<group>"; };
@@ -276,11 +273,12 @@
 				459A438C12ECF7D3007119A1 /* ToggleButton.m */,
 				4569AE0512EB37AD003BD00C /* NoteSelection */,
 				459402951296239800F11F95 /* AlarmsPanel */,
-				4569B3CE12EBA351003BD00C /* ColorSelector */,
 				450ED515128B71E600E7E0C6 /* MainViewController.h */,
 				450ED516128B71E600E7E0C6 /* MainViewController.m */,
 				4505AE2912F464E500A057D6 /* MainToolBar.h */,
 				4505AE2A12F464E500A057D6 /* MainToolBar.m */,
+				45A6C6E712A5F7E70027AF86 /* ColorButton.h */,
+				45A6C6E812A5F7E70027AF86 /* ColorButton.m */,
 				45853368128B69BC00793A24 /* DrawingViewController.h */,
 				45853369128B69BC00793A24 /* DrawingViewController.m */,
 				45EE569112A9F04D00732503 /* CountingButton.h */,
@@ -295,17 +293,6 @@
 				4563DFAE12B06C01004588A6 /* GradientButton.m */,
 			);
 			name = UI;
-			sourceTree = "<group>";
-		};
-		4569B3CE12EBA351003BD00C /* ColorSelector */ = {
-			isa = PBXGroup;
-			children = (
-				45A6C7F612A721430027AF86 /* DrawingColorController.h */,
-				45A6C7F712A721430027AF86 /* DrawingColorController.m */,
-				45A6C6E712A5F7E70027AF86 /* ColorButton.h */,
-				45A6C6E812A5F7E70027AF86 /* ColorButton.m */,
-			);
-			name = ColorSelector;
 			sourceTree = "<group>";
 		};
 		45823602128904C600EC555C /* Images */ = {
@@ -453,7 +440,6 @@
 				459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */,
 				45A6C54812A492010027AF86 /* AlarmTitleButton.m in Sources */,
 				45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */,
-				45A6C7F812A721430027AF86 /* DrawingColorController.m in Sources */,
 				45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */,
 				45EE569312A9F04D00732503 /* CountingButton.m in Sources */,
 				45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */,

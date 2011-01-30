@@ -26,7 +26,7 @@
 -(void)saveToNote: (Note*)note;
 
 -(id)   initWithAlarmView:(AlarmViewController*)view;
--(void) setupOverlay;
+
 -(void) didChangeDragState:(MKAnnotationViewDragState)newDragState fromOldState:(MKAnnotationViewDragState)dragState;
 
 @property (readonly,nonatomic) UIView *view;

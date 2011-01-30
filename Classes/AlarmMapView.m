@@ -88,18 +88,18 @@
 }
 
 
-
-
 -(void)setFromNote:(Note*)note{
 	dirty = YES;
 	[ self moveTo: note.coordinate ];
 	annotationView.onEnter = note.onEnterRegion;
 }
 
+
 -(void)saveToNote:(Note*)note{
 	note.alarmType = @"Geographical Region";
 	[ note setCoordinate: annotation.coordinate onEnterRegion: [ annotationView onEnter ] ];
 }
+
 
 - (void)dealloc {
 	[ circle release ];
@@ -107,14 +107,17 @@
     [super dealloc];
 }
 
+
 #pragma mark -
 #pragma mark CLLocationManagerDelegate
+
 
 -(void)onLocationUpdate:(NSNotification*)n {
 	if (! dirty ){
 		[ self moveTo: ((CLLocation*)n.object).coordinate ];
 	}
 }
+
 
 #pragma mark -
 #pragma mark MKMapViewDelegate

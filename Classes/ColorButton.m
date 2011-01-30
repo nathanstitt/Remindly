@@ -22,31 +22,32 @@
 
 @synthesize color;
 
-- (id)iniWithColor:(CGColorRef)c {
+- (id)iniWithColor:(UIColor*)c {
 	self = [ super initWithFrame:CGRectMake(0, 0, 25, 25) ];
-	color = c;
-    if ( self ) {
-        // Initialization code.
+    if ( ! self ) {
+		return nil;
     }
+	self.color = c;
 	self.backgroundColor = [ UIColor clearColor ];
     return self;
 }
 
--(void)setColor:(CGColorRef)c{
-	color = c;
+
+-(void)setColor:(UIColor*)c{
+	if ( color != c ) {
+		[ c retain ];
+		[ color release ];
+		color = c;
+	}
 	[self setNeedsDisplay];
 }
 
+
 - (void)drawRect:(CGRect)rect {
 	CGContextRef context = UIGraphicsGetCurrentContext();
-
 	CGContextBeginPath(context);
-	
-	CGContextSetFillColorWithColor(context, color );
-	
-
+	CGContextSetFillColorWithColor(context, color.CGColor );
 	NSInteger radius = self.frame.size.width / 2;
-
 	CGContextMoveToPoint(context, CGRectGetMinX(rect) + self.frame.size.width, CGRectGetMinY(rect));
     CGContextAddArc(context, CGRectGetMaxX(rect) - radius, CGRectGetMinY(rect) + radius, radius, 3 * M_PI / 2, 0, 0);
     CGContextAddArc(context, CGRectGetMaxX(rect) - radius, CGRectGetMaxY(rect) - radius, radius, 0, M_PI / 2, 0);
@@ -58,7 +59,8 @@
 
 
 - (void)dealloc {
-    [super dealloc];
+	[ color release ];
+    [ super dealloc ];
 }
 
 

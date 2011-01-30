@@ -24,7 +24,7 @@
 	AlarmTitleButton *alarmTitle;
 
 	DrawingTextBox *currentTextEditBox;
-	CGColorRef color;
+	UIColor *color;
 }
 
 // keep a pointer to the mainview 
@@ -37,7 +37,7 @@
 @property (nonatomic) BOOL hidden;
 
 // the current color
-@property (nonatomic) CGColorRef color;
+@property (retain,nonatomic) UIColor *color;
 
 // which note we're working from
 @property (nonatomic,retain) Note* note;

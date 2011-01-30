@@ -21,7 +21,7 @@
 
 -(id)initWithNote:(Note*)n frame:(CGRect)frame scroller:(NotesScrollView*)sc;
 
-
+@property (nonatomic) BOOL focused;
 @property (nonatomic,retain) Note *note;
 
 @end

@@ -10,11 +10,11 @@
 
 
 @interface ColorButton : UIButton {
-	CGColorRef color;
+	UIColor *color;
 }
 
-- (id)iniWithColor:(CGColorRef)c;
+- (id)iniWithColor:(UIColor*)c;
 
-@property (nonatomic) CGColorRef color;
+@property (retain,nonatomic) UIColor *color;
 
 @end

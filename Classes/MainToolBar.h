@@ -8,13 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ColorButton.h"
-#import "DrawingColorController.h"
 #import "CountingButton.h"
 #import "DrawEraseButton.h"
 
 @class MainViewController;
 
-@interface MainToolBar : UIToolbar <DrawingColorManagerDelegate> {
+@interface MainToolBar : UIToolbar {
 
 	MainViewController *mvc;
 
@@ -22,8 +21,6 @@
 	NSArray *selButtons;
 	NSArray *colorButtons;
 	
-	DrawingColorController *dcm;
-
 	ColorButton *colorBtn;
 	DrawEraseButton *eraseBtn;
 	UIBarButtonItem *pickerBtn;

@@ -35,23 +35,23 @@
 
 	scroller = [ [NotesScrollView alloc] 
 					initWithController:self
-					frame:CGRectMake(0, 70, 320, 320) 
-				];
-
+					frame:CGRectMake(0, 70, 320, 320) ];
 	[ scroller setBackgroundColor: [ UIColor grayColor ] ];
+
 	noteHeader = [[ UILabel alloc ] initWithFrame:CGRectMake( 0, 20, 320, 60 ) ];
 	noteHeader.lineBreakMode = UILineBreakModeWordWrap;
 	noteHeader.numberOfLines = 0;
 	noteHeader.textColor = [ UIColor whiteColor ];
 	noteHeader.font = [ UIFont systemFontOfSize:18.0];
 	noteHeader.backgroundColor = [ UIColor clearColor ];
-
 	noteHeader.textAlignment = UITextAlignmentCenter;
-	
 	[ self.view addSubview:noteHeader ];
 
 	[self.view addSubview:scroller];
 	[ scroller selectNoteIndex:0 ];
+
+	NoteThumbnailView *tn = [ scroller loadPage: 0 ];
+	tn.focused = YES;
 
 	dots = [[ UIPageControl alloc ] init ];
 	dots.backgroundColor = [ UIColor grayColor ];

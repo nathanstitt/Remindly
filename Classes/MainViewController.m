@@ -51,7 +51,6 @@
 
 	self.view.backgroundColor = [ UIColor grayColor ];
 
-	
     return self;
 }
 

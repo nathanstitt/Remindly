@@ -131,7 +131,6 @@ LocationAlarmManager *instance;
 }
 
 
-
 #pragma mark -
 #pragma mark CLLocationManager delegate methods
 
@@ -140,9 +139,11 @@ LocationAlarmManager *instance;
 	
 }
 
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
 	[[ NSNotificationCenter defaultCenter ] postNotificationName:@"locationUpdated" object: newLocation ];
 }
+
 
 - (void)locationManager:(CLLocationManager *)m didEnterRegion:(CLRegion *)region{
 	NSLog(@"-----------------------> Location Manager Entered: %@", region.identifier );

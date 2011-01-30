@@ -20,7 +20,6 @@
 #import "DrawingViewController.h"
 #import "DrawingTextBox.h"
 
-
 @implementation DrawingViewController
 
 @synthesize note,color,isErasing,alarmTitle;
@@ -34,7 +33,7 @@
 	drawImage.frame = CGRectMake(0, 0, self.view.frame.size.width, 420);
 
 	[ self.view addSubview:drawImage];
-	color = [ UIColor darkGrayColor ].CGColor;
+	color = [ UIColor darkGrayColor ];
 
 	alarmTitle = [[AlarmTitleButton alloc ] initWithFrame:CGRectMake( 0, 0, 320, 27 ) ];
 	[ self.view addSubview:alarmTitle ];
@@ -49,12 +48,12 @@
 }
 
 
-
 - (void)clearPoints {
         for ( NSInteger i=0; i<4; i++){
                 points[i] = CGPointZero;
         }       
 }
+
 
 -(void)addText{
 	DrawingTextBox *pv = [[ DrawingTextBox alloc ] initWithTextBlob: [ note addTextBlob ] ];
@@ -67,9 +66,11 @@
 	
 }
 
+
 -(void)updateTitle:(id)sel {
 	alarmTitle.text = [ note alarmTitle ];
 }
+
 
 -(void)setNote:(Note *)n{
 	if ( note != n ){
@@ -96,8 +97,6 @@
 }
 
 
-
-
 -(Note*)note{
 	note.image = drawImage.image;
 	alarmTitle.hidden = YES;
@@ -110,8 +109,10 @@
 	return note;
 }
 
+
 #define GROW_ANIMATION_DURATION_SECONDS 0.15
 #define SHRINK_ANIMATION_DURATION_SECONDS 0.15
+
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
@@ -168,7 +169,7 @@
 	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  5.0 );
 
 	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
-									 self.isErasing ? [ UIColor whiteColor].CGColor : color );
+									 self.isErasing ? [ UIColor whiteColor].CGColor : color.CGColor );
 
 	CGContextBeginPath(UIGraphicsGetCurrentContext());
 
@@ -233,7 +234,7 @@
 
 	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  5.0 );
 	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
-									 self.isErasing ? [ UIColor whiteColor].CGColor : color );
+									 self.isErasing ? [ UIColor whiteColor].CGColor : color.CGColor );
 	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
 	if( wasMoved ){
 		CGContextAddQuadCurveToPoint( UIGraphicsGetCurrentContext(), 
@@ -250,25 +251,25 @@
 	UIGraphicsEndImageContext();
 }
 
+
 -(BOOL)hidden {
 	return self.view.hidden;
 }
 
+
 -(void)setHidden:(BOOL)h {
 	self.view.hidden = h;
 }
+
 
 - (void)clear {
 	drawImage.image = nil;
 }
 
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
 
 
 @end

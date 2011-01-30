@@ -38,24 +38,42 @@
 	imageView.layer.shadowRadius = 10.0f;
 	[self addSubview:imageView];
 
-	
 	deleteBtn = [ UIButton buttonWithType: UIButtonTypeCustom ];
-	[ deleteBtn retain ];
 	deleteBtn.frame = CGRectMake( frame.size.width-20, -4, 24, 24 );
+//	deleteBtn.hidden = YES;
+	[ self addSubview:deleteBtn ];
+	
+	[ deleteBtn retain ];
 	[ deleteBtn setImage:[ UIImage imageNamed:@"delete-icon.png" ] forState:UIControlStateNormal ] ;
 	[ deleteBtn addTarget:self action:@selector(deletePressed:) forControlEvents:UIControlEventTouchUpInside ];
 	[ self addSubview:deleteBtn ];
 
 	self.userInteractionEnabled = YES;
-		
+
 	self.contentMode = UIViewContentModeScaleToFill;
 	return self;
+}
+
+
+-(void) setFocused:(BOOL) s {
+	if ( s ){
+		deleteBtn.hidden = NO;
+	} else {
+		deleteBtn.hidden = YES;
+	}
+//	[ deleteBtn setNeedsDisplay ];
+}
+
+
+-(BOOL) focused {
+	return ! deleteBtn.hidden;
 }
 
 
 -(void)deletePressed:(id)btn{
 	[ scroller deleteThumbnail:self ];
 }
+
 
 -(void) setNote:(Note*)n {
 	if ( n != note ){
@@ -66,10 +84,12 @@
 	imageView.image = [note thumbnail];
 }
 
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	NSLog(@"Touches began");
 	[ scroller noteWasSelected: note ];
 }
+
 
 #pragma mark -
 #pragma mark Memory management

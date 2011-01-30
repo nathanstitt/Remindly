@@ -36,7 +36,7 @@
 	controller = cntr;
 	previews = [[ NSMutableDictionary alloc ] init ];
 	firstLayout = YES;
-	currentPage = 0;
+	currentPage = NSNotFound;
 
 	// Position and size the scrollview. It will be centered in the view.
 	CGRect scrollViewRect = CGRectMake(0, 0, PAGE_WIDTH, PAGE_HEIGHT );
@@ -54,12 +54,11 @@
  
 	[ self addSubview:scrollView ];
 
-             	
     return self;
 }
 
--(NoteThumbnailView*)viewAtIndex:(NSUInteger)index {
 
+-(NoteThumbnailView*)viewAtIndex:(NSUInteger)index {
 	NoteThumbnailView *v = [ previews objectForKey:[ NSNumber numberWithInt:index ] ];
 	if ( ! v ){
 		v = [ [ NoteThumbnailView alloc ] initWithNote: [ NotesManager noteAtIndex: index ] 
@@ -71,10 +70,11 @@
 	return v;
 }
 
--(void)loadPage:(NSUInteger)page {
+
+-(NoteThumbnailView*)loadPage:(NSUInteger)page {
 	// Sanity checks
     if ( page > [ NotesManager count ]-1 ){
-		return;
+		return nil;
 	}
 
 	// Check if the page is already loaded
@@ -91,7 +91,7 @@
  
 		[ scrollView addSubview:view];
 	}
-
+	return view;
 }
 
 
@@ -103,13 +103,14 @@
 	}
 }
 
+
 -(void)clear {
 	for (UIView *view in [ scrollView subviews]) {
-		[view removeFromSuperview];
+		[ view removeFromSuperview ];
 	}
 	[ previews removeAllObjects ];
-	
 }
+
 
 -(void)redrawNote:(Note*)note{
 	NoteThumbnailView *v = [ previews objectForKey:[ NSNumber numberWithInt: note.index ] ];
@@ -118,32 +119,27 @@
 	}
 }
 
+
 - (void)deleteThumbnail:(NoteThumbnailView*)tn {
 	[ previews removeObjectForKey:[ NSNumber numberWithInt: tn.note.index ] ];
 
 	Note *new = [[ NotesManager instance ] deleteNote: tn.note ];
-
 	[ tn removeFromSuperview ];
-
-	scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, 
-										scrollView.frame.size.height);
-
+	scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, scrollView.frame.size.height);
 	if ( new.index  ){
 		[ self loadPage: new.index-1 ];
 	}
 	[ self loadPage: new.index ];
-
 	[ self selectNoteIndex: new.index ];
 }
 
 - (void)reload {
-	scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, 
-											 scrollView.frame.size.height);
+	scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, scrollView.frame.size.height);
 
 	[ self clear ];
 	[ self loadPage:0 ];
 	[ self loadPage:1 ];
-	
+
 	[ self selectNoteIndex: 0 ];
 }
 
@@ -162,9 +158,7 @@
 }
  
 
-
 -(NSUInteger)calcPage {
-	
 	CGFloat pageWidth = scrollView.frame.size.width;
     return MIN( [ NotesManager count ]-1,
 			   MAX( 0, floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1 ) );
@@ -190,12 +184,18 @@
 	[ controller pageChanged: page ];
 
 	// Load the visible and neighbouring pages 
-	if ( page > 1 ){
-		[self loadPage:page-1];
+	NoteThumbnailView *tn;
+	if ( page > 0 ){
+		tn = [self loadPage:page-1];
+		tn.focused = NO;
 	}
-	[self loadPage:page];
+
+	tn = [self loadPage:page];
+	tn.focused = YES;
+
 	if ( page < [ NotesManager count ] ){
-		[self loadPage:page+1];
+		tn =[self loadPage:page+1];
+		tn.focused = NO;
 	}
 
 	currentPage = page;
