@@ -21,5 +21,5 @@
 + (BOOL)registerNote:(Note*)note;
 + (BOOL)unregisterNote:(Note*)note;
 + (CLLocationCoordinate2D)lastCoord;
-
++ (NSString*)distanceStringFrom:(CLLocationCoordinate2D)coord;
 @end

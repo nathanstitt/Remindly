@@ -29,6 +29,8 @@
 
 -(void) didChangeDragState:(MKAnnotationViewDragState)newDragState fromOldState:(MKAnnotationViewDragState)dragState;
 
+-(void) reset;
+
 @property (readonly,nonatomic) UIView *view;
 @property (readonly,nonatomic) MKMapView *map;
 @property (readonly,nonatomic) AlarmAnnotation *annotation;

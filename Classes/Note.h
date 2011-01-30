@@ -57,6 +57,9 @@
 // does this note have a UILocalNotification set yet?
 -(BOOL)hasNotification;
 
+// does this note have a coordinate set?
+-(BOOL)hasCoordinate;
+
 // set coordinate and entering/leaving geo based alarm
 -(void)setCoordinate:(CLLocationCoordinate2D)coordinate onEnterRegion:(BOOL)enter;
 

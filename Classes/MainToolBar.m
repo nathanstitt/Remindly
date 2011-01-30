@@ -12,6 +12,7 @@
 #import "DrawingViewController.h"
 #import "NoteSelectorController.h"
 #import "StoreView.h"
+#import "UIColor+Expanded.h"
 
 @implementation MainToolBar
 
@@ -41,21 +42,16 @@
 	UIBarButtonItem *text  =  [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"text-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(addTextPressed:) ];
 	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 
-	GradientButton *addb = [[ GradientButton alloc ] initWithFrame:CGRectMake(0,0, 100, 25 ) ];
-	[ addb setTitle: @"New Note" forState:UIControlStateNormal ];
-
-	UIBarButtonItem *add = [[ UIBarButtonItem alloc ] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:) ];
 	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];
 	[ eraseBtn.button addTarget:self action: @selector(toggleErase:) forControlEvents:UIControlEventTouchUpInside ];
 	
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-	
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSData *df =[ prefs dataForKey: @"lastColorUsed" ];
+    NSString *df =[ prefs stringForKey:@"lastColorUsed" ];
 	UIColor *color;
 	if ( df ){
-		color = [NSKeyedUnarchiver unarchiveObjectWithData:df ];
+		color = [ UIColor colorWithHexString: df ];
 	} else {
 		color = [ UIColor lightGrayColor];
 	}
@@ -63,12 +59,14 @@
 	[ pickerBtn retain ];
 	[ ((ColorButton*)pickerBtn.customView) removeTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
 	[ ((ColorButton*)pickerBtn.customView) addTarget:self action:@selector(showColors:) forControlEvents:UIControlEventTouchUpInside ];
-	
-	drawButtons=[ NSArray arrayWithObjects:   pickerBtn, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
+
+	drawButtons=[ NSArray arrayWithObjects: pickerBtn, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
 	[ drawButtons retain ];
 	self.items = drawButtons;
 
-	selButtons  = [ NSArray arrayWithObjects:  add, NULL ];
+	UIBarButtonItem *add = [[ UIBarButtonItem alloc ] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:) ];
+	UIBarButtonItem *done = [[ UIBarButtonItem alloc ] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleDrawingMode:) ];
+	selButtons  = [ NSArray arrayWithObjects:  add, space, done, NULL ];
 	[ selButtons retain ];
 	
 	[ add   release  ];
@@ -110,9 +108,9 @@
 -(void)colorSelected:(ColorButton*)cv {
 	mvc.drawing.color = [ cv color ];
 
-	NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject: cv.color ];
+
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-	[ prefs setValue:colorData forKey:@"lastColorUsed" ];
+	[ prefs setValue:[ cv.color hexStringFromColor] forKey:@"lastColorUsed" ];
 	[ prefs synchronize ];
 	
 	((ColorButton*)pickerBtn.customView).color = mvc.drawing.color;

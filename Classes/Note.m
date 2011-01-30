@@ -64,6 +64,7 @@
 @synthesize directory,image, notification,index,textBlobs=texts;
 
 static NSMutableDictionary *_cache;
+
 +(void)	primeCache{
 	_cache = [[ NSMutableDictionary alloc ] init ];
 }
@@ -121,13 +122,15 @@ static NSMutableDictionary *_cache;
 	NSDate *fire = [ notification fireDate ];
 	NSInteger tag = [ self alarmTag ];
 	if ( [ plist valueForKey:@"longitude" ] && 2 == tag ){
-		CLLocationCoordinate2D nt = [ self coordinate ];
-		CLLocationCoordinate2D cur = [ LocationAlarmManager lastCoord ];
-		float distance = sqrt( (nt.latitude-cur.latitude)*(nt.latitude-cur.latitude) + (nt.longitude-cur.longitude)*(nt.longitude-cur.longitude) );
-		return [ NSString stringWithFormat:@"%@ %0.2fm from here", 
+//		CLLocationCoordinate2D nt = [ self coordinate ];
+//		CLLocationCoordinate2D cur = [ LocationAlarmManager lastCoord ];
+//		float distance = sqrt( (nt.latitude-cur.latitude)*(nt.latitude-cur.latitude) + (nt.longitude-cur.longitude)*(nt.longitude-cur.longitude) );
+		return [ NSString stringWithFormat:@"%@ %@ from here", 
 				[ self onEnterRegion ] ? @"Entering" : @"Exiting",
-				[ self onEnterRegion ] ? fabsf( ALARM_METER_RADIUS - distance ) : fabsf( distance-ALARM_METER_RADIUS ) 
+				[ LocationAlarmManager distanceStringFrom: [ self coordinate ] ]
 				];
+		
+//		[ self onEnterRegion ] ? fabsf( ALARM_METER_RADIUS - distance ) : fabsf( distance-ALARM_METER_RADIUS ) 		
 	} else if ( fire ) {
 		return [ fire humanIntervalFromNow ];
 	} else { 
@@ -194,6 +197,9 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 	return NULL != notification;
 }
 
+-(BOOL)hasCoordinate {
+	return ( nil != [plist valueForKey:@"longitude"] );
+}
 
 -(NSInteger)alarmTag {
 	return [[ plist valueForKey:@"alarmTag" ] intValue ];
