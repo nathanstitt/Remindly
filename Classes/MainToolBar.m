@@ -84,7 +84,7 @@
 	 [ self makeBarButton:[UIColor blueColor ] ],
 	 [ self makeBarButton:[UIColor yellowColor ] ],
 	 [ self makeBarButton:[UIColor magentaColor ] ],
-	 [ self makeBarButton:[UIColor purpleColor ] ],
+	 [ self makeBarButton:[UIColor orangeColor ] ],
 	 [ self makeBarButton:[UIColor brownColor ] ],
 	 NULL ];
 	[ colorButtons retain ];
