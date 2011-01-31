@@ -49,9 +49,8 @@
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 
     NSString *df =[ prefs stringForKey:@"lastColorUsed" ];
-	UIColor *color;
 	if ( df ){
-		color = [ UIColor colorWithHexString: df ];
+		mvc.drawing.color = [ UIColor colorWithHexString: df ];
 	} else {
 		mvc.drawing.color = [ UIColor lightGrayColor];
 	}
@@ -79,43 +78,44 @@
 
 	colorButtons = [ NSArray arrayWithObjects:
 	 [ self makeBarButton:[UIColor blackColor] ],
-	 [ self makeBarButton:[UIColor darkGrayColor ] ],
-	 [ self makeBarButton:[UIColor lightGrayColor ] ],
 	 [ self makeBarButton:[UIColor grayColor ] ],
 	 [ self makeBarButton:[UIColor redColor ] ],
 	 [ self makeBarButton:[UIColor greenColor ] ],
 	 [ self makeBarButton:[UIColor blueColor ] ],
-	 [ self makeBarButton:[UIColor cyanColor ] ],
 	 [ self makeBarButton:[UIColor yellowColor ] ],
 	 [ self makeBarButton:[UIColor magentaColor ] ],
-	 [ self makeBarButton:[UIColor orangeColor ] ],
 	 [ self makeBarButton:[UIColor purpleColor ] ],
 	 [ self makeBarButton:[UIColor brownColor ] ],
 	 NULL ];
 	[ colorButtons retain ];
 	
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(drawingBegan:) name:DRAWING_BEGAN_NOTIFICATION object:nil];
+	
 	return self;
+}
+
+
+-(void)drawingBegan:(NSNotification*)note {
+	if ( mvc.alarm.isShowing ){
+		mvc.alarm.isShowing=NO;
+	}
 }
 
 
 -(void)colorSelected:(ColorButton*)cv {
 	mvc.drawing.color =  cv.color;
-
-
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 	[ prefs setValue:[ cv.color hexStringFromColor] forKey:@"lastColorUsed" ];
 	[ prefs synchronize ];
-	
 	((ColorButton*)pickerBtn.customView).color = mvc.drawing.color;
 	[ self setItems:drawButtons animated:YES];
 }
 
 
-
 -(void) showColors:(id)sel{
 	[ self setItems:colorButtons animated:YES];	
 }
-
 
 
 -(void) setDrawingMode:(BOOL)draw{
@@ -132,6 +132,7 @@
 	eraseBtn.isErasing = mvc.drawing.isErasing;
 	
 }
+
 
 -(void)countChanged:(NSNotification*)notif	{
 	[ countBtn setCount:[ NotesManager count ] ];
@@ -154,9 +155,11 @@
 	}
 }
 
+
 -(void)addTextPressed:(id)sel{
 	[ mvc.drawing addText ];
 }
+
 
 -(void)showAlarm{
 	if ( mvc.alarm.isShowing ){
@@ -171,7 +174,6 @@
 -(void)setAlarmPressed:(id)sel {
 	[ self showAlarm ];
 }
-
 
 
 -(void)toggleDrawingMode:(id)btn {

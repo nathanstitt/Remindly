@@ -42,14 +42,13 @@
 	[ self addSubview: absTimes.view ];
 
 	NSArray *titles;
-//	if ( [CLLocationManager regionMonitoringAvailable] && [CLLocationManager regionMonitoringEnabled] ){
+	if ( [CLLocationManager regionMonitoringAvailable] && [CLLocationManager regionMonitoringEnabled] ){
 		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
 		[ self addSubview: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", @"Map", nil]; 
-//	} else {
-//		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", nil];
-//	}
-
+	} else {
+		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", nil];
+	}
 
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:titles];
 	typeCtrl.selectedSegmentIndex = 0;
@@ -59,15 +58,15 @@
 	[ typeCtrl addTarget:self action:@selector(typeCtrlChanged:) forControlEvents:UIControlEventValueChanged ];
 	[ self addSubview: typeCtrl ];
 	[ typeCtrl release ];
-	
-	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(35, 250, 80, 30 ) ];
+
+	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(35, 260, 80, 30 ) ];
 	[ b addTarget:self action:@selector(cancelTouched:) forControlEvents:UIControlEventTouchUpInside ];
 	[ b setTitle:@"Cancel" forState:UIControlStateNormal ];
 	[ b useBlackStyle ];
 	[ self addSubview: b ];
 	[ b release ];
 
-	b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(200, 250, 80, 30 ) ];
+	b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(200, 260, 80, 30 ) ];
 	[ b addTarget:self action:@selector(saveTouched:) forControlEvents:UIControlEventTouchUpInside ];
 	[ b setTitle:@"Save" forState:UIControlStateNormal ];
 	[ b useBlackStyle ];
@@ -174,7 +173,7 @@
 	NSInteger ht = self.frame.size.height;
 	if ( v ){
 		typeCtrl.selectedSegmentIndex = 0;
-		frame.origin.y = 480 - ( ht - 20 );
+		frame.origin.y = 480 - ( ht  );
 	} else {
 		frame.origin.y = 480;
 	}

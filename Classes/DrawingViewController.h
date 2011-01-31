@@ -13,6 +13,8 @@
 
 @class MainViewController,AlarmTitleButton,Note;
 
+#define DRAWING_BEGAN_NOTIFICATION @"DrawingBeganNotification"
+
 @interface DrawingViewController : UIViewController {
 	CGPoint lastPoint;
 	CGPoint points[4];

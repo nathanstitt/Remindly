@@ -226,7 +226,7 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 }
 
 -(BOOL)isAllowedMoreNotes {
-	return YES; // ( [ dirs count ] < self.maxNumberOfNotes );
+	return ( [ dirs count ] < self.maxNumberOfNotes );
 }
 
 -(Note*)defaultEditingNote {

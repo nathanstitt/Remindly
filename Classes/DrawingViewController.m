@@ -124,7 +124,9 @@
 		[ (DrawingTextBox*)[touch view] liftUp ];
 		return;
 	}
-	
+
+	[[ NSNotificationCenter defaultCenter ] postNotificationName:DRAWING_BEGAN_NOTIFICATION object: self ];
+
 	[ self clearPoints ];
 	points[0] = lastPoint = currentPoint;
 }
@@ -156,6 +158,7 @@
 	for ( NSInteger i=3; i>0; i--){
 		points[i] = points[i-1];
 	}
+
 	points[0] = currentPoint;
 
 	if ( CGPointEqualToPoint( CGPointZero , points[3] ) ){
