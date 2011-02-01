@@ -27,6 +27,7 @@
 +(NotesManager*)instance;
 +(NSInteger)count;
 +(Note*)noteAtIndex:(NSUInteger)index;
++(NSArray*)notesWithLocationAlarms;
 
 -(Note*)addNote;
 -(BOOL)isAllowedMoreNotes;

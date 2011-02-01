@@ -13,7 +13,7 @@
 @implementation AlarmAnnotationView
 
 
-@synthesize delegate, dragState, map;
+@synthesize delegate, dragState, map, button;
 
 -initWithMap:(AlarmMapView*)m{
 	map = m;
@@ -25,6 +25,7 @@
 														[ UIImage imageNamed:@"DepartingIcon.png"],
 													    [ UIImage imageNamed:@"ArrivingIcon.png" ],nil  ] 
 													Frame: CGRectMake(0, 0, 30, 30 ) ];
+	button.toggleOnTouch = NO;
 	self.leftCalloutAccessoryView = button;
 	self.draggable = YES;
 	self.canShowCallout = YES;

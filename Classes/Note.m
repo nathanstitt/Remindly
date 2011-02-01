@@ -121,7 +121,7 @@ static NSMutableDictionary *_cache;
 -(NSString*)alarmTitle{
 	NSDate *fire = [ notification fireDate ];
 	NSInteger tag = [ self alarmTag ];
-	if ( [ plist valueForKey:@"longitude" ] && 2 == tag ){
+	if ( [ self hasCoordinate ] && 2 == tag ){
 		return [ NSString stringWithFormat:@"%@ %@ from here", 
 				[ self onEnterRegion ] ? @"Entering" : @"Exiting",
 				[ LocationAlarmManager distanceStringFrom: [ self coordinate ] ]
@@ -152,7 +152,7 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 
 -(NSString *) alarmText {
 	NSString *ret = [ plist valueForKey:@"alarmType" ];
-	for ( NoteTextBlob *ntb in [ texts sortedArrayUsingSelector: @selector(compareByPosition:) ]  ){
+	for ( NoteTextBlob *ntb in [ texts sortedArrayUsingFunction: compareByPosition context:NULL ] ){
 		ret = [ NSString stringWithFormat: @"%@\n%@", ret, ntb.text ];
 	}
 	return ret;
@@ -175,6 +175,9 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 		[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
 	}
 	[ LocationAlarmManager unregisterNote: self ];
+	[ plist removeObjectForKey:@"longitude" ];
+	[ plist removeObjectForKey:@"latitude" ];
+
 }
 
 -(void)removeSelf {
@@ -221,16 +224,17 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 }
 
 -(void)scedule {
-	[ self unScedule ];
+
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
-	if ( 2 == [ self alarmTag ] ){
+	if ( [self hasCoordinate ] && 2 == [ self alarmTag ] ){
 		[ LocationAlarmManager registerNote: self ];
 	} else if ( [ fd timeIntervalSinceNow ] > 0 ){
-
+		if ( notification ){
+			[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
+		}
 		notification.fireDate = fd;
 		notification.timeZone = [NSTimeZone defaultTimeZone];
 		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmText ];
-		notification.alertLaunchImage = [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ];
 		notification.alertAction = @"View Note";
 		notification.soundName = UILocalNotificationDefaultSoundName;
 		notification.applicationIconBadgeNumber = 1;

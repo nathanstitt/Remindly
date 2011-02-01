@@ -17,7 +17,6 @@
 		deleteBtn.frame = CGRectMake( frame.size.width-20, -4, 24, 24 );
 		[ deleteBtn setImage:[ UIImage imageNamed:@"delete-icon.png" ] forState:UIControlStateNormal ] ;
 		[ deleteBtn addTarget:self action:@selector(deletePressed:) forControlEvents:UIControlEventTouchUpInside ];
-		self.internalTextView.text = ntb.text;
 
 		self.internalTextView.userInteractionEnabled = NO;
 		self.internalTextView.font = [ UIFont systemFontOfSize: 22 ];
@@ -32,7 +31,10 @@
 		self.backgroundColor = [ UIColor whiteColor ];
 		self.opaque = NO;
 		
-    
+		self.text = ntb.text;
+		self.animateHeightChange = YES;
+		[ self textViewDidChange:self.internalTextView ];
+		self.animateHeightChange = NO;
 	}
 	return self;
 }
@@ -116,7 +118,7 @@
 		}
 		[ self.internalTextView  resignFirstResponder ];
 		self.internalTextView.userInteractionEnabled = NO;
-		ntb.text = self.internalTextView.text;
+		ntb.text = self.text;
 		[ self drop ];
 		[  deleteBtn removeFromSuperview ];
 		[[self layer] setShadowColor:[UIColor clearColor].CGColor];

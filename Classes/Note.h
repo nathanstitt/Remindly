@@ -62,7 +62,7 @@
 
 // set coordinate and entering/leaving geo based alarm
 -(void)setCoordinate:(CLLocationCoordinate2D)coordinate onEnterRegion:(BOOL)enter;
-
+-(void)unScedule;
 -(BOOL)onEnterRegion;
 -(CLLocationCoordinate2D)coordinate;
 

@@ -65,6 +65,17 @@ static NotesManager *_instance;
 	return [ _instance.dirs count ];
 }
 
++(NSArray*)notesWithLocationAlarms {
+	NSMutableArray *notes = [[ NSMutableArray alloc ] init ];
+	for ( NSUInteger i = 0; i < _instance.dirs.count; i++ ){
+		Note *note = [ NotesManager noteAtIndex:i ];
+		if ( [note hasCoordinate] ){
+			[ notes addObject: note ];
+		}
+	}
+	return [notes autorelease];
+}
+
 +(Note*)noteAtIndex:(NSUInteger)index {
 	Note *note = [ Note noteWithDirectory:[ _instance.dirs objectAtIndex:index] ];
 	note.index = index;

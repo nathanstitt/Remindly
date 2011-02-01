@@ -12,6 +12,7 @@
 
 @interface ToggleButton : UIButton {
 	NSArray *choices;
+	BOOL toggleOnTouch;
 }
 
 -(id)initWithImages:(NSArray*)images Frame:(CGRect)frame;
@@ -21,6 +22,8 @@
 
 // the currently selected image's index
 @property (nonatomic) NSInteger selectedIndex;
+
+@property (nonatomic) BOOL toggleOnTouch;
 
 // anything other than the first image returns true
 @property (nonatomic) BOOL boolValue;

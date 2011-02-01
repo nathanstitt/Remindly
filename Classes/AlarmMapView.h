@@ -22,13 +22,10 @@
 	BOOL dirty;
 }
 
--(void)setFromNote:(Note*)note;
--(void)saveToNote: (Note*)note;
-
+-(void) setFromNote:(Note*)note;
+-(void) saveToNote: (Note*)note;
 -(id)   initWithAlarmView:(AlarmViewController*)view;
-
 -(void) didChangeDragState:(MKAnnotationViewDragState)newDragState fromOldState:(MKAnnotationViewDragState)dragState;
-
 -(void) reset;
 
 @property (readonly,nonatomic) UIView *view;

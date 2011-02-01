@@ -9,6 +9,7 @@
 #import "AlarmMapView.h"
 #import "AlarmViewController.h"
 #import "LocationAlarmManager.h"
+#import "ToggleButton.h"
 
 @interface AlarmMapView()
 @property (nonatomic,retain) MKCircle* circle;
@@ -28,7 +29,7 @@
 	map = [[MKMapView alloc] initWithFrame: view.childFrame ];
 	map.mapType = MKMapTypeStandard;
 	map.showsUserLocation = YES;
-	
+
 	map.delegate=self;
 
 
@@ -46,9 +47,8 @@
     return self;
 
 }
-								   
 
-									   
+
 -(void)moveTo:(CLLocationCoordinate2D)coord {
 	annotation.coordinate = coord;
 	MKCoordinateRegion region;
@@ -76,7 +76,6 @@
 -(void) reset {
 	dirty = NO;
 }
-
 
 
 -(UIView*)view {
@@ -145,8 +144,11 @@
 	if ( MKAnnotationViewDragStateStarting == newDragState ){
 		[ map removeOverlays:[map overlays ]];
 	} else if (  MKAnnotationViewDragStateEnding == newDragState || MKAnnotationViewDragStateCanceling == newDragState ){
-		
 		self.circle = [MKCircle circleWithCenterCoordinate: annotation.coordinate radius:1000];
+
+		annotation.entering = annotationView.button.boolValue = ! ( ALARM_METER_RADIUS > MKMetersBetweenMapPoints(MKMapPointForCoordinate( annotation.coordinate ),
+																			 MKMapPointForCoordinate( map.userLocation.location.coordinate ) ) );
+
 		[ map addOverlay:self.circle ];
 		[ map selectAnnotation:annotation animated:YES ];	
 	}

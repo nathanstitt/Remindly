@@ -21,7 +21,7 @@
 }
 
 -initWithMap:(AlarmMapView*)map;
-
+@property (nonatomic,readonly) ToggleButton *button;
 @property (nonatomic) BOOL onEnter;
 @property (nonatomic, assign) id <MKMapViewDelegate> delegate;
 @property (nonatomic, assign) MKAnnotationViewDragState dragState;

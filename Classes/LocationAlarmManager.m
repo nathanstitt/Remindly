@@ -15,19 +15,21 @@ LocationAlarmManager *instance;
 @interface LocationAlarmManager()
 -(void)startMonitor;
 @property (nonatomic,retain) CLLocationManager *manager;
-@property (nonatomic,retain) Note *pendingNote;
+@property (nonatomic,readonly) NSMutableDictionary *notes;
+@property (nonatomic,retain ) CLLocation *lastLocation;
 @end
 
 @implementation LocationAlarmManager
 
-@synthesize manager,pendingNote;
+@synthesize manager, notes, lastLocation;
 
 + (void)startup {
     // Create the location manager if this object does not
     // already have one.
-	
+
     if ( ! instance ){
 		instance = [[ LocationAlarmManager alloc ] init ];
+		
 	} else {
 		instance.startMonitor;
 	}
@@ -38,43 +40,28 @@ LocationAlarmManager *instance;
 	manager.delegate = self;
     [ manager startMonitoringSignificantLocationChanges];
 	
-	
 }
+
 -(id) init {
 	self = [ super init ];
 	if ( ! self ){
 		return nil;
 	}
+	notes = [[ NSMutableDictionary alloc ] init ];
+	for ( Note *note in [ NotesManager notesWithLocationAlarms ] ){
+		[ notes setObject: note forKey: note.directory ];
+	}
 	self.manager = [[CLLocationManager alloc] init];
 	manager.purpose = @"In order to use geographical alarms that alert you when leaving or entering an area";
     manager.delegate = self;
 	[ manager startUpdatingLocation ];
-
 	[ manager release ];
-
-	for ( CLRegion *region in [ instance.manager monitoredRegions ] ){
-		NSLog(@"Region alert %d,%d at %@" , 
-			  region.center.longitude, 
-			  region.center.latitude, 
-			  region.identifier );
-	};
-
 
 	return self;
 }
 
--(void)displayAlert:(NSString*)text {
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"
-											message: text
-											delegate:self 
-											cancelButtonTitle:@"Cancel" otherButtonTitles:@"View",NULL];
-	[alert show];
-	[alert release];		
-}
 
--(void)displayNoteAlarm:(Note*)note {
-	self.pendingNote = note;
-	
+-(void)fireNoteAlarm:(Note*)note {
 	UILocalNotification *notification = [[UILocalNotification alloc] init];
 
 	notification.fireDate =  [ NSDate date ];
@@ -82,57 +69,39 @@ LocationAlarmManager *instance;
 	notification.alertBody = [ NSString stringWithFormat:@"Location %@\n%@", 
 							   note.onEnterRegion ? @"Reached" : @"Left",
 							   note.alarmText ];
-	notification.alertLaunchImage = [ [ note fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ];
 	notification.alertAction = @"View Note";
 	notification.soundName = UILocalNotificationDefaultSoundName;
 	notification.applicationIconBadgeNumber = 1;
 
-	[ [UIApplication sharedApplication] scheduleLocalNotification:notification ];
-	
+	[ [UIApplication sharedApplication] presentLocalNotificationNow:notification ];
+	[ notification release ];
+	[ note unScedule ];
 }
 
 
 
 -(void)dealloc {
 	[ [ NSNotificationCenter defaultCenter] removeObserver:self];
-	
+	[ notes   release ];
 	[ manager release ];
 	[ super dealloc ];
 }
 
 
-+ (BOOL)unregisterNote:(Note*)note{
-	for ( CLRegion *region in [ instance.manager monitoredRegions ] ){
-		Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
-		if ( note ){
-			[ instance.manager stopMonitoringForRegion:region ];
-			return YES;
-		}
-	};
-	return NO;
++(void)unregisterNote:(Note*)note{
+	[ instance.notes removeObjectForKey: note.directory ];
 }
 
-+(CLLocationCoordinate2D)lastCoord{
-	return instance.manager.location.coordinate;
+
++(CLLocation*)lastCoord {
+	return instance.manager.location;
 }
 
-+ (BOOL)registerNote:(Note*)note {
 
-   // Do not create regions if support is unavailable or disabled.
-   if ( ![CLLocationManager regionMonitoringAvailable] ||
-        ![CLLocationManager regionMonitoringEnabled] )
-      return NO;
-
- 
-	// Create the region and start monitoring it.
-	CLRegion* region = [[CLRegion alloc] initCircularRegionWithCenter: note.coordinate
-                        radius:ALARM_KM_RADIUS*1000.0f identifier: note.directory ];
-	
-	[ instance.manager startMonitoringForRegion:region desiredAccuracy:10.0f];
-
-	[region release];
-	return YES;
++ (void)registerNote:(Note*)note {
+	[ instance.notes setObject:note forKey:note.directory ];
 }
+
 
 // returns a string if the number with one decimal place of precision
 // sets the style (commas or periods) based on the locale
@@ -146,16 +115,12 @@ NSString * formatDecimal_1(NSNumber *num) {
 		[numFormatter setMaximumFractionDigits:1];
 		[numFormatter setMinimumFractionDigits:1];
 	}
-	
 	return [numFormatter stringFromNumber: num ];
-	
 }
 
 + (NSString*)distanceStringFrom:(CLLocationCoordinate2D)coord{
-	
 	double distance = MKMetersBetweenMapPoints( MKMapPointForCoordinate( coord ),
-												MKMapPointForCoordinate( [ LocationAlarmManager lastCoord ] ) );
-	
+												MKMapPointForCoordinate( [ LocationAlarmManager lastCoord ].coordinate ) );
 	NSString * unitName;
 	NSString *locale = [ [ NSLocale currentLocale ] localeIdentifier ];
 	if ( [ locale isEqual:@"en_US" ]) {
@@ -165,9 +130,7 @@ NSString * formatDecimal_1(NSNumber *num) {
 		unitName = @"km";
 		distance = distance / 1000;
 	}
-
 	return [NSString stringWithFormat:@"%@ %@", formatDecimal_1( [NSNumber numberWithDouble: distance] ), unitName ];
-	
 }
 
 #pragma mark -
@@ -180,30 +143,42 @@ NSString * formatDecimal_1(NSNumber *num) {
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-	[[ NSNotificationCenter defaultCenter ] postNotificationName:@"locationUpdated" object: newLocation ];
-	NSLog(@"-----------------------> Location Manager Did Update  %.06f %.06f",newLocation.coordinate.longitude, newLocation.coordinate.latitude );
-	
-}
+	double meters = [ lastLocation distanceFromLocation: newLocation ];
+	if ( ! lastLocation || meters > 10 ){
+		for ( Note *note in [ notes allValues ] ){
+			meters = MKMetersBetweenMapPoints(  MKMapPointForCoordinate( newLocation.coordinate ),
+												MKMapPointForCoordinate( note.coordinate ) );
 
-
-- (void)locationManager:(CLLocationManager *)m didEnterRegion:(CLRegion *)region{
-	NSLog(@"-----------------------> Location Manager Entered: %@", region.identifier );
-	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
-	if ( note ){ //&& note.onEnterRegion ){
-		[ self displayNoteAlarm:note ];
+			if ( meters < ALARM_METER_RADIUS && note.onEnterRegion ){
+				[ self fireNoteAlarm:note ];
+			} else if ( meters > ( ALARM_METER_RADIUS + 200 ) && ! note.onEnterRegion ) {
+				[ self fireNoteAlarm:note ];
+			}
+		}
+		self.lastLocation = newLocation;
 	}
-//	[ m stopMonitoringForRegion:region ];
 }
 
-- (void)locationManager:(CLLocationManager *)m didExitRegion:(CLRegion *)region{
-	NSLog(@"-----------------------> Location Manager Exited: %@", region.identifier );
+// this sucks balls, terribly inaccurate, alarms only fire about 1/3 of the time
 
-	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
-	if ( note ){// && ! note.onEnterRegion ){
-		[ self displayNoteAlarm:note ];
-	}
-//	[ m stopMonitoringForRegion:region ];
-}
+//- (void)locationManager:(CLLocationManager *)m didEnterRegion:(CLRegion *)region{
+//	NSLog(@"-----------------------> Location Manager Entered: %@", region.identifier );
+//	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
+//	if ( note ){ //&& note.onEnterRegion ){
+//		[ self displayNoteAlarm:note ];
+//	}
+////	[ m stopMonitoringForRegion:region ];
+//}
+//
+//- (void)locationManager:(CLLocationManager *)m didExitRegion:(CLRegion *)region{
+//	NSLog(@"-----------------------> Location Manager Exited: %@", region.identifier );
+//
+//	Note *note = [ [NotesManager instance] noteWithDirectory: region.identifier ];
+//	if ( note ){// && ! note.onEnterRegion ){
+//		[ self displayNoteAlarm:note ];
+//	}
+////	[ m stopMonitoringForRegion:region ];
+//}
 
 
 @end

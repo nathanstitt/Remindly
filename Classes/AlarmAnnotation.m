@@ -25,14 +25,11 @@
 	
 }
 
-- (NSString *)title
-{
-	return @"Tap to Change";
-	if ( self.entering ){
-		return @"When Entering";
-	} else {
-		return @"When Leaving";
-	}
+-(void)setEntering:(BOOL)v{
+	entering = v;
+}
+- (NSString *)title {
+	return entering ? @"Entering" : @"Exiting";
 }
 
 // optional

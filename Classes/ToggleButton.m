@@ -19,6 +19,7 @@
 
 @implementation ToggleButton
 
+@synthesize toggleOnTouch;
 
 -(id)initWithImages:(NSArray*)images Frame:(CGRect)frame{
 	self = [ super initWithFrame: frame ];
@@ -28,30 +29,47 @@
 	choices = images;
 	[ choices retain ];
 	self.selectedIndex = 0;
-	
-	[ self addTarget:self action:@selector(moveNext:) forControlEvents:UIControlEventTouchUpInside];
+	[ self setToggleOnTouch:YES ];
+
 	return self;
 }
+
+-(void)setToggleOnTouch:(BOOL)v {
+	if ( v != toggleOnTouch ){
+		if ( v ){
+			[ self addTarget:self action:@selector(moveNext:) forControlEvents:UIControlEventTouchUpInside];
+		} else {
+			[ self removeTarget:self action:@selector(moveNext:) forControlEvents:UIControlEventTouchUpInside ];
+		}
+	}
+	toggleOnTouch = v;
+}
+
 
 -(void)moveNext:(id)sel {
 	[ self toggle ];
 }
 
+
 -(NSInteger)selectedIndex {
 	return [ choices indexOfObject: [ self imageForState: UIControlStateNormal ] ];
 }
+
 
 -(void) setSelectedIndex:(NSInteger)index {
 	[ self setImage: [ choices objectAtIndex:index ] forState:UIControlStateNormal ];
 }
 
+
 -(void) setBoolValue:(BOOL)v{
 	self.selectedIndex=v;
 }
 
+
 -(BOOL)boolValue{
 	return self.selectedIndex;
 }
+
 
 -(void)toggle {
 	if ( self.selectedIndex + 1 >= choices.count ){
