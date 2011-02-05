@@ -56,15 +56,18 @@
 	}
 	pickerBtn = [ self makeBarButton: mvc.drawing.color ];
 	[ pickerBtn retain ];
+	
+	UIBarButtonItem *add = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
 	[ ((ColorButton*)pickerBtn.customView) removeTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
 	[ ((ColorButton*)pickerBtn.customView) addTarget:self action:@selector(showColors:) forControlEvents:UIControlEventTouchUpInside ];
 
-	drawButtons=[ NSArray arrayWithObjects: pickerBtn, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
+	drawButtons=[ NSArray arrayWithObjects: pickerBtn, space, add, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
 	[ drawButtons retain ];
 	self.items = drawButtons;
-
-	UIBarButtonItem *add = [[ UIBarButtonItem alloc ] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:) ];
+	[add release ];
+	
+	add = [[ UIBarButtonItem alloc ] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:) ];
 	UIBarButtonItem *done = [[ UIBarButtonItem alloc ] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleDrawingMode:) ];
 	selButtons  = [ NSArray arrayWithObjects:  add, space, done, NULL ];
 	[ selButtons retain ];

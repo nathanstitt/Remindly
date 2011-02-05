@@ -143,8 +143,23 @@ NSString * formatDecimal_1(NSNumber *num) {
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+
+    if (locationAge > 5.0) return;
+
+    // test that the horizontal accuracy does not indicate an invalid measurement
+    if (newLocation.horizontalAccuracy < 0) return;
+
 	double meters = [ lastLocation distanceFromLocation: newLocation ];
-	if ( ! lastLocation || meters > 10 ){
+	
+	NSLog(@"Location: %f %f - %fm", newLocation.coordinate.latitude, newLocation.coordinate.longitude, meters);
+
+    // test the measurement to see if it is more accurate than the previous measurement
+	if (lastLocation == nil || meters > 5 ) {
+		double meters = [ lastLocation distanceFromLocation: newLocation ];
+
+		NSLog(@"Location: %f %f - moved %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude, meters );
+
 		for ( Note *note in [ notes allValues ] ){
 			meters = MKMetersBetweenMapPoints(  MKMapPointForCoordinate( newLocation.coordinate ),
 												MKMapPointForCoordinate( note.coordinate ) );
@@ -154,7 +169,9 @@ NSString * formatDecimal_1(NSNumber *num) {
 			} else if ( meters > ( ALARM_METER_RADIUS + 200 ) && ! note.onEnterRegion ) {
 				[ self fireNoteAlarm:note ];
 			}
+
 		}
+
 		self.lastLocation = newLocation;
 	}
 }
