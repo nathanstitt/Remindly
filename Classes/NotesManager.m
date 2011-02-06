@@ -109,7 +109,7 @@ static NotesManager *_instance;
 
 	NSDirectoryEnumerator *dirEnum = [ fm enumeratorAtPath:path ];
 	NSString *note_file;
-	while ( note_file = [dirEnum nextObject] ) {
+	while ( (note_file = [dirEnum nextObject]) ) {
 		[ dirEnum skipDescendents ];
 		NSString *dir = [ path stringByAppendingPathComponent:note_file ];
 		if ( [ [ [ fm attributesOfItemAtPath:dir error:NULL ] valueForKey:@"NSFileType"] isEqualToString:@"NSFileTypeDirectory" ] ){

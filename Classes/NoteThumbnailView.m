@@ -39,12 +39,12 @@
 	[self addSubview:imageView];
 
 	deleteBtn = [ UIButton buttonWithType: UIButtonTypeCustom ];
-	deleteBtn.frame = CGRectMake( frame.size.width-20, -4, 24, 24 );
+	deleteBtn.frame = CGRectMake( frame.size.width-28, 0, 33, 33 );
 //	deleteBtn.hidden = YES;
 	[ self addSubview:deleteBtn ];
 	
 	[ deleteBtn retain ];
-	[ deleteBtn setImage:[ UIImage imageNamed:@"delete-icon.png" ] forState:UIControlStateNormal ] ;
+	[ deleteBtn setImage:[ UIImage imageNamed:@"delete-icon" ] forState:UIControlStateNormal ] ;
 	[ deleteBtn addTarget:self action:@selector(deletePressed:) forControlEvents:UIControlEventTouchUpInside ];
 	[ self addSubview:deleteBtn ];
 

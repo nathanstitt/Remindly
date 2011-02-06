@@ -50,8 +50,8 @@
 		45EBDA3312BEFB4F001999A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EBDA3212BEFB4F001999A4 /* StoreKit.framework */; };
 		45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EBDA3712BEFC72001999A4 /* PurchaseManager.m */; };
 		45EC0C6A12ECADE900DBD0B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */; };
-		45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */; };
-		45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */; };
+		45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationPin.m */; };
+		45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotationLabel.m */; };
 		45ED57F512F0CEFC00CF4A1D /* text-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45ED57F412F0CEFC00CF4A1D /* text-icon.png */; };
 		45ED586312F0F97F00CF4A1D /* DrawingTextBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ED586212F0F97F00CF4A1D /* DrawingTextBox.m */; };
 		45ED5AE912F121B800CF4A1D /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ED5AE612F121B800CF4A1D /* HPGrowingTextView.m */; };
@@ -132,10 +132,10 @@
 		45EBDA3612BEFC72001999A4 /* PurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseManager.h; sourceTree = "<group>"; };
 		45EBDA3712BEFC72001999A4 /* PurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseManager.m; sourceTree = "<group>"; };
 		45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		45EC0D7612ECC4C100DBD0B4 /* AlarmAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotationView.h; sourceTree = "<group>"; };
-		45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotationView.m; sourceTree = "<group>"; };
-		45EC0D7912ECC54900DBD0B4 /* AlarmAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotation.h; sourceTree = "<group>"; };
-		45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotation.m; sourceTree = "<group>"; };
+		45EC0D7612ECC4C100DBD0B4 /* AlarmAnnotationPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotationPin.h; sourceTree = "<group>"; };
+		45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotationPin.m; sourceTree = "<group>"; };
+		45EC0D7912ECC54900DBD0B4 /* AlarmAnnotationLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = AlarmAnnotationLabel.h; sourceTree = "<group>"; };
+		45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotationLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotationLabel.m; sourceTree = "<group>"; };
 		45ED57F412F0CEFC00CF4A1D /* text-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text-icon.png"; path = "Images/text-icon.png"; sourceTree = "<group>"; };
 		45ED586112F0F97F00CF4A1D /* DrawingTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingTextBox.h; sourceTree = "<group>"; };
 		45ED586212F0F97F00CF4A1D /* DrawingTextBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingTextBox.m; sourceTree = "<group>"; };
@@ -333,10 +333,10 @@
 				45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */,
 				45C3BEB312EC908A004CB303 /* AlarmMapView.h */,
 				45C3BEB412EC908A004CB303 /* AlarmMapView.m */,
-				45EC0D7612ECC4C100DBD0B4 /* AlarmAnnotationView.h */,
-				45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationView.m */,
-				45EC0D7912ECC54900DBD0B4 /* AlarmAnnotation.h */,
-				45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotation.m */,
+				45EC0D7612ECC4C100DBD0B4 /* AlarmAnnotationPin.h */,
+				45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationPin.m */,
+				45EC0D7912ECC54900DBD0B4 /* AlarmAnnotationLabel.h */,
+				45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotationLabel.m */,
 			);
 			name = AlarmsPanel;
 			sourceTree = "<group>";
@@ -452,8 +452,8 @@
 				45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */,
 				4548DEAC12C55D0200815580 /* StoreView.m in Sources */,
 				45C3BEB512EC908A004CB303 /* AlarmMapView.m in Sources */,
-				45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationView.m in Sources */,
-				45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotation.m in Sources */,
+				45EC0D7812ECC4C100DBD0B4 /* AlarmAnnotationPin.m in Sources */,
+				45EC0D7B12ECC54900DBD0B4 /* AlarmAnnotationLabel.m in Sources */,
 				459A438D12ECF7D3007119A1 /* ToggleButton.m in Sources */,
 				4569B97012EF3AB0003BD00C /* LocationAlarmManager.m in Sources */,
 				45ED586312F0F97F00CF4A1D /* DrawingTextBox.m in Sources */,

@@ -6,10 +6,10 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "AlarmAnnotation.h"
+#import "AlarmAnnotationLabel.h"
 
 
-@implementation AlarmAnnotation
+@implementation AlarmAnnotationLabel
 
 @synthesize coordinate,entering;
 
@@ -18,7 +18,7 @@
 	if ( ! self ){
 		return nil;
 	}
-	entering = YES;
+	entering = NO;
 	coordinate.latitude = 37.810000;
 	coordinate.longitude = -122.477989;
     return self;
@@ -28,10 +28,14 @@
 -(void)setEntering:(BOOL)v{
 	entering = v;
 }
+
 - (NSString *)title {
 	return entering ? @"Entering" : @"Exiting";
 }
 
+-(NSString*)subtitle {
+    return @"Press & Hold to drag";
+}
 // optional
 
 @end

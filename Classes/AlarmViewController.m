@@ -42,7 +42,7 @@
 	[ self addSubview: absTimes.view ];
 
 	NSArray *titles;
-	if ( [CLLocationManager regionMonitoringAvailable] && [CLLocationManager regionMonitoringEnabled] ){
+	if ( [CLLocationManager significantLocationChangeMonitoringAvailable] || YES ){
 		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
 		[ self addSubview: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", @"Map", nil]; 

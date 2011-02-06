@@ -151,7 +151,7 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 
 
 -(NSString *) alarmText {
-	NSString *ret = [ plist valueForKey:@"alarmType" ];
+	NSString *ret = @"";
 	for ( NoteTextBlob *ntb in [ texts sortedArrayUsingFunction: compareByPosition context:NULL ] ){
 		ret = [ NSString stringWithFormat: @"%@\n%@", ret, ntb.text ];
 	}
@@ -234,7 +234,9 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 		}
 		notification.fireDate = fd;
 		notification.timeZone = [NSTimeZone defaultTimeZone];
-		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!", self.alarmText ];
+		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!%@\n%@", 
+                                   self.alarmType,
+                                   self.alarmText ];
 		notification.alertAction = @"View Note";
 		notification.soundName = UILocalNotificationDefaultSoundName;
 		notification.applicationIconBadgeNumber = 1;

@@ -31,7 +31,7 @@ LocationAlarmManager *instance;
 		instance = [[ LocationAlarmManager alloc ] init ];
 		
 	} else {
-		instance.startMonitor;
+		[ instance startMonitor ];
 	}
 }
 
@@ -152,11 +152,8 @@ NSString * formatDecimal_1(NSNumber *num) {
 
 	double meters = [ lastLocation distanceFromLocation: newLocation ];
 	
-	NSLog(@"Location: %f %f - %fm", newLocation.coordinate.latitude, newLocation.coordinate.longitude, meters);
-
     // test the measurement to see if it is more accurate than the previous measurement
 	if (lastLocation == nil || meters > 5 ) {
-		double meters = [ lastLocation distanceFromLocation: newLocation ];
 
 		NSLog(@"Location: %f %f - moved %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude, meters );
 

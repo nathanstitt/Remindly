@@ -6,31 +6,36 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "AlarmAnnotationView.h"
+#import "AlarmAnnotationPin.h"
 #import "ToggleButton.h"
 #import "AlarmMapView.h"
 
-@implementation AlarmAnnotationView
+#import "AlarmAnnotationLabel.h"
+
+@implementation AlarmAnnotationPin
 
 
-@synthesize delegate, dragState, map, button;
+@synthesize delegate, dragState, map, button, label;
 
--initWithMap:(AlarmMapView*)m{
+-initWithMap:(AlarmMapView*)m {
 	map = m;
-	self=[super initWithAnnotation: map.annotation reuseIdentifier:@"alarmIdentifier" ];
+    AlarmAnnotationLabel *l = [[ AlarmAnnotationLabel alloc ] init ];
+	self=[super initWithAnnotation: l reuseIdentifier:@"alarmIdentifier" ];
 	if ( ! self ){
 		return nil;
 	}
+    label = l;
 	button = [ [ ToggleButton alloc ] initWithImages: [ NSArray arrayWithObjects: 
 														[ UIImage imageNamed:@"DepartingIcon.png"],
 													    [ UIImage imageNamed:@"ArrivingIcon.png" ],nil  ] 
 													Frame: CGRectMake(0, 0, 30, 30 ) ];
+    label = self.annotation;
 	button.toggleOnTouch = NO;
 	self.leftCalloutAccessoryView = button;
 	self.draggable = YES;
 	self.canShowCallout = YES;
 	return self;
-}	
+}
 
 
 - (void)setDragState:(MKAnnotationViewDragState)newDragState animated:(BOOL)animated {
@@ -50,10 +55,12 @@
 }
 
 -(void)setOnEnter:(BOOL)v{
-	button.boolValue = v;
+	
+    self.label.entering = button.boolValue = v;
 }
 
 - (void)dealloc {
+    [ label release ];
 	[ button release ];
     [ super  dealloc ];
 }

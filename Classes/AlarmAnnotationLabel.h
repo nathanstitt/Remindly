@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import "AlarmAnnotationPin.h"
 
-@class AlarmMapView;
+@class AlarmAnnotationPin;
 
-@interface AlarmAnnotation : NSObject <MKAnnotation> {
+@interface AlarmAnnotationLabel : NSObject <MKAnnotation> {
 	CLLocationCoordinate2D coordinate;
 	BOOL entering;
 }

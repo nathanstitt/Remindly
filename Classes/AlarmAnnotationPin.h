@@ -9,19 +9,20 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-#import "AlarmAnnotation.h"
 
-@class ToggleButton;
+@class ToggleButton,AlarmMapView,AlarmAnnotationLabel;
 
-@interface AlarmAnnotationView : MKPinAnnotationView 
+@interface AlarmAnnotationPin : MKPinAnnotationView 
 {
     id <MKMapViewDelegate> delegate;
     MKAnnotationViewDragState dragState;
 	ToggleButton *button;
+    AlarmAnnotationLabel *label;
 }
 
 -initWithMap:(AlarmMapView*)map;
 @property (nonatomic,readonly) ToggleButton *button;
+@property (nonatomic,readonly) AlarmAnnotationLabel *label;
 @property (nonatomic) BOOL onEnter;
 @property (nonatomic, assign) id <MKMapViewDelegate> delegate;
 @property (nonatomic, assign) MKAnnotationViewDragState dragState;
