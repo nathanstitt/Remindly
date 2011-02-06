@@ -134,7 +134,7 @@
 		45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		45EC0D7612ECC4C100DBD0B4 /* AlarmAnnotationPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotationPin.h; sourceTree = "<group>"; };
 		45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotationPin.m; sourceTree = "<group>"; };
-		45EC0D7912ECC54900DBD0B4 /* AlarmAnnotationLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; path = AlarmAnnotationLabel.h; sourceTree = "<group>"; };
+		45EC0D7912ECC54900DBD0B4 /* AlarmAnnotationLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmAnnotationLabel.h; sourceTree = "<group>"; };
 		45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotationLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmAnnotationLabel.m; sourceTree = "<group>"; };
 		45ED57F412F0CEFC00CF4A1D /* text-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text-icon.png"; path = "Images/text-icon.png"; sourceTree = "<group>"; };
 		45ED586112F0F97F00CF4A1D /* DrawingTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingTextBox.h; sourceTree = "<group>"; };
