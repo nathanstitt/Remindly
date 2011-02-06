@@ -234,7 +234,7 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 		}
 		notification.fireDate = fd;
 		notification.timeZone = [NSTimeZone defaultTimeZone];
-		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@",@"IT'S TIME!%@\n%@", 
+		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@\n%@",@"IT'S TIME!", 
                                    self.alarmType,
                                    self.alarmText ];
 		notification.alertAction = @"View Note";

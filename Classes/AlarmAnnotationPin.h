@@ -12,8 +12,7 @@
 
 @class ToggleButton,AlarmMapView,AlarmAnnotationLabel;
 
-@interface AlarmAnnotationPin : MKPinAnnotationView 
-{
+@interface AlarmAnnotationPin : MKPinAnnotationView {
     id <MKMapViewDelegate> delegate;
     MKAnnotationViewDragState dragState;
 	ToggleButton *button;

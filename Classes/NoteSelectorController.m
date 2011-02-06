@@ -33,9 +33,9 @@
     [super viewDidLoad];
 	self.view.backgroundColor = [ UIColor grayColor ];
 
-	scroller = [ [NotesScrollView alloc] 
-					initWithController:self
-					frame:CGRectMake(0, 70, 320, 320) ];
+    scroller = [ [NotesScrollView alloc] 
+                initWithController:self
+                frame:CGRectMake(0, 70, 320, 320) ];
 	[ scroller setBackgroundColor: [ UIColor grayColor ] ];
 
 	noteHeader = [[ UILabel alloc ] initWithFrame:CGRectMake( 0, 20, 320, 60 ) ];
@@ -47,20 +47,21 @@
 	noteHeader.textAlignment = UITextAlignmentCenter;
 	[ self.view addSubview:noteHeader ];
 
-	[self.view addSubview:scroller];
+    [self.view addSubview:scroller];
 	[ scroller selectNoteIndex:0 ];
 
 	NoteThumbnailView *tn = [ scroller loadPage: 0 ];
 	tn.focused = YES;
-
+    
 	dots = [[ UIPageControl alloc ] init ];
 	dots.backgroundColor = [ UIColor grayColor ];
-	dots.frame = CGRectMake( 0, 390, 320, 30 );
+    dots.frame = CGRectMake( 0, 390, 320, 30 );
 	dots.numberOfPages = [ NotesManager count ];
 	[dots addTarget:self action:@selector(dotsMoved:) forControlEvents:UIControlEventValueChanged];
-
+    
 	[ self.view addSubview:dots ];
 }
+
 
 -(void)reload:(Note*)note{
 	[ scroller redrawNote: note ];
@@ -73,7 +74,6 @@
 -(void) selectNoteIndex:(NSInteger)index{
 	[ scroller selectNoteIndex: index ];
 	dots.currentPage = index;
-	
 }
 
 -(NSUInteger)currentIndex {
@@ -127,15 +127,6 @@
 }
 
 
--(BOOL)hidden {
-	return self.view.hidden;
-}
-
-
--(void)setHidden:(BOOL)h {
-	self.view.hidden = h;
-}
-
 
 #pragma mark -
 #pragma mark PreviewScrollViewDelegate methods
@@ -158,8 +149,9 @@
     [ super didReceiveMemoryWarning ];
 
 	// if we aren't shown, clear the scroller
-	if ( self.hidden ){
+	if ( ! self.view.superview ){
 		[ scroller clear ];
+        
 	}
 }
 
