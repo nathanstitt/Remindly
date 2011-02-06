@@ -27,8 +27,8 @@
 -(id)initAndShowInto:(UIView*)view {
     
     self = [super initWithFrame: CGRectMake(0, 480, 320, 480 )];
-    if (self) {
-        // Initialization code.
+    if (!self) {
+        return nil;
     }
 	NSSet *productIDs;
 
@@ -239,7 +239,7 @@
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-	SKPayment *payment;
+	SKPayment *payment=nil;
 	tv.hidden = YES;
 	message.hidden = NO;
 	if ( 0 == indexPath.section ){
@@ -249,8 +249,9 @@
 		message.text = [ NSString stringWithFormat:@"Purchasing %@", secondOption.textLabel.text ];
 		payment = [SKPayment paymentWithProductIdentifier: UNLIMITED_PRODUCT_ID ];
 	}
-
-	[[SKPaymentQueue defaultQueue] addPayment:payment];
+    if ( payment ){
+        [[SKPaymentQueue defaultQueue] addPayment:payment];
+    }
 }
 
 #pragma mark UIAlertViewDelegate methods

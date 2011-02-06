@@ -22,6 +22,7 @@
     AlarmAnnotationLabel *l = [[ AlarmAnnotationLabel alloc ] init ];
 	self=[super initWithAnnotation: l reuseIdentifier:@"alarmIdentifier" ];
 	if ( ! self ){
+        [ l release ];
 		return nil;
 	}
     label = l;

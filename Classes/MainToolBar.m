@@ -17,7 +17,7 @@
 @implementation MainToolBar
 
 -(UIBarButtonItem*)makeBarButton:(UIColor*)c{
-	ColorButton *b = [[ ColorButton alloc ] iniWithColor: c ];
+	ColorButton *b = [[ ColorButton alloc ] initWithColor: c ];
 	[ b addTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
 	UIBarButtonItem *bbt = [[UIBarButtonItem alloc ] initWithCustomView: b ];
 	[ b release ];
@@ -76,6 +76,7 @@
 	[ alarm release  ];
 	[ text  release  ];
 	[ space release  ];
+    [ done  release  ];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(countChanged:) name:NOTES_COUNT_CHANGED_NOTICE object:nil];
 

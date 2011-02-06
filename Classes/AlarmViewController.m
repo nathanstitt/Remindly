@@ -28,8 +28,8 @@
 - (id)init {
     
     self = [super initWithFrame:CGRectMake( 0, 480, 320, 320 )];
-    if (self) {
-        // Initialization code.
+    if (!self) {
+        return  nil;
     }
 	self.backgroundColor = [ UIColor blackColor ];
 
