@@ -24,6 +24,7 @@
 		4532504412FF37FF0074A57F /* departing2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4532504212FF37FF0074A57F /* departing2@2x.png */; };
 		4548DEAC12C55D0200815580 /* StoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4548DEAB12C55D0200815580 /* StoreView.m */; };
 		456342AC12FFA94300DDCB28 /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 456342AB12FFA94300DDCB28 /* README.markdown */; };
+		456342AF12FFAD9700DDCB28 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 456342AE12FFAD9700DDCB28 /* Default@2x.png */; };
 		4563DFB012B06C01004588A6 /* GradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4563DFAE12B06C01004588A6 /* GradientButton.m */; };
 		4569B24912EB7A37003BD00C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4569B24812EB7A37003BD00C /* LICENSE.txt */; };
 		4569B97012EF3AB0003BD00C /* LocationAlarmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4569B96F12EF3AB0003BD00C /* LocationAlarmManager.m */; };
@@ -98,6 +99,7 @@
 		4548DEAA12C55D0200815580 /* StoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreView.h; sourceTree = "<group>"; };
 		4548DEAB12C55D0200815580 /* StoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreView.m; sourceTree = "<group>"; };
 		456342AB12FFA94300DDCB28 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
+		456342AE12FFAD9700DDCB28 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Images/Default@2x.png"; sourceTree = "<group>"; };
 		4563DFAE12B06C01004588A6 /* GradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientButton.m; sourceTree = "<group>"; };
 		4563DFAF12B06C01004588A6 /* GradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientButton.h; sourceTree = "<group>"; };
 		4569B24812EB7A37003BD00C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -221,8 +223,6 @@
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				4569B24812EB7A37003BD00C /* LICENSE.txt */,
 				456342AB12FFA94300DDCB28 /* README.markdown */,
-				45C3BEC212EC918C004CB303 /* MapKit.framework */,
-				45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -250,6 +250,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45C3BEC212EC918C004CB303 /* MapKit.framework */,
+				45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -318,11 +320,12 @@
 		45823602128904C600EC555C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				459EBCA912FF307D00FF1DC0 /* Default.png */,
+				456342AE12FFAD9700DDCB28 /* Default@2x.png */,
 				4532504112FF37FF0074A57F /* departing2.png */,
 				4532504212FF37FF0074A57F /* departing2@2x.png */,
 				459EBCA712FF307C00FF1DC0 /* arriving_icon.png */,
 				459EBCA812FF307D00FF1DC0 /* arriving_icon@2x.png */,
-				459EBCA912FF307D00FF1DC0 /* Default.png */,
 				459EBCAA12FF307D00FF1DC0 /* draw_icon.png */,
 				459EBCAB12FF307D00FF1DC0 /* draw_icon@2x.png */,
 				459EBCAC12FF307D00FF1DC0 /* erase_icon@2x.png */,
@@ -449,6 +452,7 @@
 				4532504312FF37FF0074A57F /* departing2.png in Resources */,
 				4532504412FF37FF0074A57F /* departing2@2x.png in Resources */,
 				456342AC12FFA94300DDCB28 /* README.markdown in Resources */,
+				456342AF12FFAD9700DDCB28 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
