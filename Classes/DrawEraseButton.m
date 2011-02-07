@@ -22,9 +22,9 @@
 @synthesize button;
 
 -(id)initWithDrawingState:(BOOL)v {
-	drawImg  = [UIImage imageNamed:@"draw-icon"];
+	drawImg  = [UIImage imageNamed:@"draw_icon"];
 	[ drawImg retain ];
-	eraseImg = [UIImage imageNamed:@"erase-icon"];
+	eraseImg = [UIImage imageNamed:@"erase_icon"];
 	[eraseImg retain ];
 	button = [ UIButton buttonWithType: UIButtonTypeCustom ];
 	[ button retain ];

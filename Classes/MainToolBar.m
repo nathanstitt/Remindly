@@ -38,8 +38,8 @@
 	countBtn = [[ CountingButton alloc ] initWithCount: [ NotesManager count] ];
 	[ countBtn.button addTarget:self action: @selector(toggleDrawingMode:) forControlEvents:UIControlEventTouchUpInside ];
 
-	UIBarButtonItem *text  =  [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"text-icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(addTextPressed:) ];
-	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
+	UIBarButtonItem *text  =  [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"text_icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(addTextPressed:) ];
+	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm_icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 
 	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];
 	[ eraseBtn.button addTarget:self action: @selector(toggleErase:) forControlEvents:UIControlEventTouchUpInside ];
