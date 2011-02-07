@@ -44,7 +44,7 @@
 	[ self addSubview:deleteBtn ];
 	
 	[ deleteBtn retain ];
-	[ deleteBtn setImage:[ UIImage imageNamed:@"delete-icon" ] forState:UIControlStateNormal ] ;
+	[ deleteBtn setImage:[ UIImage imageNamed:@"delete_icon" ] forState:UIControlStateNormal ] ;
 	[ deleteBtn addTarget:self action:@selector(deletePressed:) forControlEvents:UIControlEventTouchUpInside ];
 	[ self addSubview:deleteBtn ];
 

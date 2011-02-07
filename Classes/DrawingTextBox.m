@@ -1,12 +1,12 @@
 
 #import "DrawingTextBox.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "NotesManager.h"
 @implementation DrawingTextBox
 
 - (id)initWithTextBlob:(NoteTextBlob*)n {
-	// Retrieve the image for the view and determine its size
-	CGRect frame = CGRectEqualToRect(CGRectZero, n.frame) ? CGRectMake( 100, 100, 160, 28 ) : n.frame;
+
+	CGRect frame = CGRectEqualToRect(CGRectZero, n.frame) ? CGRectMake( 80, 30 * n.note.textBlobs.count, 160, 28 ) : n.frame;
 
 	if ( ( self = [self initWithFrame: frame ]) ) {
 		ntb = n;
@@ -15,7 +15,7 @@
 		deleteBtn = [ UIButton buttonWithType: UIButtonTypeCustom ];
 		[ deleteBtn retain ];
 		deleteBtn.frame = CGRectMake( frame.size.width-24, 0, 65, 65 );
-		[ deleteBtn setImage:[ UIImage imageNamed:@"delete-icon" ] forState:UIControlStateNormal ] ;
+		[ deleteBtn setImage:[ UIImage imageNamed:@"delete_icon" ] forState:UIControlStateNormal ] ;
 		[ deleteBtn addTarget:self action:@selector(deletePressed:) forControlEvents:UIControlEventTouchUpInside ];
 
 		self.internalTextView.userInteractionEnabled = NO;
