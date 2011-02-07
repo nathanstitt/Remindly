@@ -237,6 +237,7 @@ compare(NSString *dir1, NSString *dir2, void *context) {
 }
 
 -(BOOL)isAllowedMoreNotes {
+//    return YES;
 	return ( [ dirs count ] < self.maxNumberOfNotes );
 }
 
