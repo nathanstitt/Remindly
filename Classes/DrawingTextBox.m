@@ -1,15 +1,20 @@
 
 #import "DrawingTextBox.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DrawingViewController.h"
 #import "NotesManager.h"
+
+#define ANIMATION_DURATION_SECONDS 0.5f
+
 @implementation DrawingTextBox
 
-- (id)initWithTextBlob:(NoteTextBlob*)n {
+- (id)initWithTextBlob:(NoteTextBlob*)n Controller:(DrawingViewController*)d {
 
 	CGRect frame = CGRectEqualToRect(CGRectZero, n.frame) ? CGRectMake( 80, 30 * n.note.textBlobs.count, 160, 28 ) : n.frame;
 
 	if ( ( self = [self initWithFrame: frame ]) ) {
 		ntb = n;
+        dvc = d;
 		[ ntb retain ];
 		
 		deleteBtn = [ UIButton buttonWithType: UIButtonTypeCustom ];
@@ -41,21 +46,12 @@
 }
 
 -(void)deletePressed:(id)sel {
-	[ ntb remove ];
-	[ deleteBtn removeFromSuperview ];
-	[ self removeFromSuperview ];
+    [ dvc removeText: self ];
 }
 
-#define GROW_ANIMATION_DURATION_SECONDS 0.15
-#define SHRINK_ANIMATION_DURATION_SECONDS 0.15
+
 
 - (void)liftUp {
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:GROW_ANIMATION_DURATION_SECONDS];
-
-//	CGAffineTransform transform = CGAffineTransformMakeScale(1.2, 1.2);
-//	self.transform = transform;
-//	[UIView commitAnimations];
 
 	[self setAlpha:1];
 	[[self layer] setShadowColor:[UIColor blackColor].CGColor];
@@ -66,12 +62,7 @@
 }
 
 -(void)drop {
-//	[UIView beginAnimations:nil context:NULL];
-//	[UIView setAnimationDuration:GROW_ANIMATION_DURATION_SECONDS+GROW_ANIMATION_DURATION_SECONDS ];
-//	CGAffineTransform transform = CGAffineTransformMakeScale(1.0, 1.0);
-//	self.transform = transform;
-//	[UIView commitAnimations];
-	
+
 	ntb.frame = self.frame;
 	
 }
@@ -85,8 +76,8 @@
 
 -(void)showDelButton {
 	CGRect frame = CGRectMake( self.frame.origin.x+self.frame.size.width-14, self.frame.origin.y-10, 30, 30 );
-	[UIView animateWithDuration:GROW_ANIMATION_DURATION_SECONDS
-			                          animations:^{ deleteBtn.frame = frame; }
+	[UIView animateWithDuration:ANIMATION_DURATION_SECONDS
+                     animations:^{ deleteBtn.frame = frame; }
 			                          completion:^(BOOL finished)
 	 { [ self.superview addSubview: deleteBtn ]; } ];
 }
@@ -97,7 +88,7 @@
 			displacedFrom = self.center;
 			CGRect f = self.frame;
 			f.origin.y = 100;
-			[UIView animateWithDuration:GROW_ANIMATION_DURATION_SECONDS
+			[UIView animateWithDuration:ANIMATION_DURATION_SECONDS
 			                          animations:^{ self.frame = f; }
 			                          completion:^(BOOL finished)
 			 { [ self showDelButton ]; }];
@@ -112,7 +103,7 @@
 	} else {
 		if ( ! CGPointEqualToPoint(CGPointZero, displacedFrom ) ){
 
-			[UIView animateWithDuration:GROW_ANIMATION_DURATION_SECONDS
+			[UIView animateWithDuration:ANIMATION_DURATION_SECONDS
 							 animations:^{ self.center = displacedFrom; }
 							 completion:^(BOOL finished){  } ];
 			
@@ -135,7 +126,7 @@
 
 -(void)moveToAndDrop:(CGPoint)point {
 	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:SHRINK_ANIMATION_DURATION_SECONDS];
+	[UIView setAnimationDuration: ANIMATION_DURATION_SECONDS];
 	self.center = point;
 	[UIView commitAnimations];
 
@@ -152,7 +143,9 @@
 
 
 - (void)dealloc {
+    [ ntb remove  ];
 	[ ntb release ];
+    [ deleteBtn removeFromSuperview ];
 	[ deleteBtn release ];
 	[placardImage release];
 	[currentDisplayString release];
