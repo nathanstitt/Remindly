@@ -1,6 +1,7 @@
 Remindly.xcodeproj/xcuserdata/*
 Remindly.xcodeproj/project.xcworkspace/xcuserdata/*
 *~
+.#
 build/
 .DS_Store
 **/*.pbxuser
