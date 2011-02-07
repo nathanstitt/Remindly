@@ -170,16 +170,6 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 	[ plist setValue: date forKey:@"fireDate" ];
 }
 
--(void)unScedule {
-	if ( notification ){
-		[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
-	}
-	[ LocationAlarmManager unregisterNote: self ];
-	[ plist removeObjectForKey:@"longitude" ];
-	[ plist removeObjectForKey:@"latitude" ];
-
-}
-
 -(void)removeSelf {
 	NSFileManager *fm = [NSFileManager defaultManager];
 	[ self unScedule ];
@@ -223,6 +213,16 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 	[ plist writeToFile:[ dir stringByAppendingPathComponent:@"info.plist" ] atomically: YES ];
 }
 
+-(void)unScedule {
+	if ( notification ){
+		[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
+	}
+	[ LocationAlarmManager unregisterNote: self ];
+	[ plist removeObjectForKey:@"longitude" ];
+	[ plist removeObjectForKey:@"latitude" ];
+    
+}
+
 -(void)scedule {
 
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
@@ -234,9 +234,10 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 		}
 		notification.fireDate = fd;
 		notification.timeZone = [NSTimeZone defaultTimeZone];
-		notification.alertBody =  [ NSString stringWithFormat:@"%@\n%@\n%@",@"IT'S TIME!", 
+		notification.alertBody =  [ NSString stringWithFormat:@"IT'S TIME!\n%@\n%@", 
                                    self.alarmType,
                                    self.alarmText ];
+        NSLog(@"Added Alarm:\n%@",notification.alertBody);
 		notification.alertAction = @"View Note";
 		notification.soundName = UILocalNotificationDefaultSoundName;
 		notification.applicationIconBadgeNumber = 1;
