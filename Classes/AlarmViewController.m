@@ -28,8 +28,8 @@
 - (id)init {
     
     self = [super initWithFrame:CGRectMake( 0, 480, 320, 320 )];
-    if (self) {
-        // Initialization code.
+    if (!self) {
+        return  nil;
     }
 	self.backgroundColor = [ UIColor blackColor ];
 
@@ -42,7 +42,7 @@
 	[ self addSubview: absTimes.view ];
 
 	NSArray *titles;
-	if ( [CLLocationManager significantLocationChangeMonitoringAvailable] || YES ){
+	if ( [CLLocationManager significantLocationChangeMonitoringAvailable] ){
 		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
 		[ self addSubview: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Shortcuts", @"Time/Date", @"Map", nil]; 

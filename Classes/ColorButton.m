@@ -22,7 +22,7 @@
 
 @synthesize color;
 
-- (id)iniWithColor:(UIColor*)c {
+- (id)initWithColor:(UIColor*)c {
 	self = [ super initWithFrame:CGRectMake(0, 0, 25, 25) ];
     if ( ! self ) {
 		return nil;

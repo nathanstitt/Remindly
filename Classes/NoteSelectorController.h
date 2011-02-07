@@ -67,7 +67,5 @@
 // a note was selected
 -(void) noteWasSelected:(Note*)note;
 
-@property (nonatomic) BOOL hidden;
-
 @end
 

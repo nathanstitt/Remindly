@@ -31,8 +31,6 @@
 
 
 	selector = [[ NoteSelectorController alloc ] initWithMainView:self ];
-	selector.view.frame = CGRectMake(0, 0, 320, 420 );
-	selector.view.hidden = YES;
 
 	drawing = [[ DrawingViewController alloc ] initWithMainView:self ];
 	drawing.view.frame = CGRectMake(0, 0, 320, 420 );
@@ -43,10 +41,6 @@
 	toolbar = [[MainToolBar alloc] initWithController:self];
 	[ drawing.alarmTitle  addTarget:toolbar action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
 
-	[ self.view addSubview: toolbar ];
-	[ self.view addSubview: selector.view ];
-	[ self.view addSubview: drawing.view ];
-	[ self.view addSubview: alarm ];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDisplayNote:) name:@"DisplayNote" object:nil];
 
@@ -56,24 +50,37 @@
 }
 
 
+-(void)loadView {
+    self.view = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, 320, 480) ];
+	[ self.view addSubview: drawing.view ];
+	[ self.view addSubview: toolbar ];
+	[ self.view addSubview: alarm ];
+}
+
 -(void) setDrawingMode:(BOOL)v {
 	if ( v ){
 		drawing.note = [ NotesManager noteAtIndex: [ selector currentIndex ] ];
-		drawing.view.hidden  = NO;
-		selector.view.hidden = YES;
+        
+        if ( [ selector isViewLoaded ] ){
+            [ selector.view removeFromSuperview ];
+        }
+        drawing.view.hidden = NO;
 	} else {
 		Note *note = drawing.note;
-		selector.view.hidden = NO;
+
+        [ self.view addSubview: selector.view ];
 		drawing.view.hidden  = YES;
 		[selector selectNoteIndex: note.index ];
+
 		[selector reload: note ];
 	}
 	[ toolbar setDrawingMode:v ];
+
 }
 
 
 -(BOOL) drawingMode {
-	return ! drawing.view.hidden;
+	return ( nil != drawing.view.superview );
 }
 
 

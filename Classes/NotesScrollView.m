@@ -95,20 +95,12 @@
 }
 
 
-- (void)layoutSubviews {
-	// We need to do some setup once the view is visible. This will only be done once.
-	if(firstLayout)	{
-		[ self reload ];
-		firstLayout = NO;
-	}
-}
-
-
 -(void)clear {
 	for (UIView *view in [ scrollView subviews]) {
 		[ view removeFromSuperview ];
 	}
 	[ previews removeAllObjects ];
+    firstLayout = YES;
 }
 
 
@@ -167,7 +159,17 @@
 }
 
 - (void)selectNoteIndex:(NSInteger)index{
-	[ scrollView setContentOffset:CGPointMake(scrollView.frame.size.width*index,0 ) ];
+    if(firstLayout)	{
+        scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, scrollView.frame.size.height);
+        if ( index > 1 ){
+            [ [ self loadPage: index - 1 ] setFocused:NO ];
+        }
+        [ [ self loadPage: index ] setFocused: YES ];
+        [ [ self loadPage: index+1 ] setFocused: NO ];
+		firstLayout = NO;
+	} else {
+        [ scrollView setContentOffset:CGPointMake(scrollView.frame.size.width*index,0 ) ];
+    }
 }
 
 -(void) noteWasSelected:(Note*)note{

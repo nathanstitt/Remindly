@@ -13,7 +13,7 @@
 	UIColor *color;
 }
 
-- (id)iniWithColor:(UIColor*)c;
+- (id)initWithColor:(UIColor*)c;
 
 @property (retain,nonatomic) UIColor *color;
 
