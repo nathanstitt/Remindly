@@ -12,8 +12,7 @@ The quickest way to create a reminder on your iPhone™.  It starts up quickly, 
  * Bezier curves for smoothing lines while drawing.  Many drawing apps don't seem to do this, they really should.
  * Background locaiton updates which fire geographical alarms when leaving or nearing a location
  * Xibless design with application created only in code.
- * Uses in-app purchase, a good reference for a often-confusing subject.  When building for yourself, you probably want to modify method -(BOOL)isAllowedMoreNotes in  
-[NotesManager.m](https://github.com/nathanstitt/Remindly/blob/master/Classes/NotesManager.m) to always return true.
+ * Uses in-app purchase, a good reference for a often-confusing subject.  When building for yourself, you probably want to modify method -(BOOL)isAllowedMoreNotes in [NotesManager.m](https://github.com/nathanstitt/Remindly/blob/master/Classes/NotesManager.m) to always return true.
 
 ## License
  * Source code is released under the GPL v3.
