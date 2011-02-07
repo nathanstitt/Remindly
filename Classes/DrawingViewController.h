@@ -52,4 +52,8 @@
 
 // add a text bubble
 -(void) addText;
+
+// remove a text bubble
+-(void) removeText:(DrawingTextBox*)ntb;
+
 @end

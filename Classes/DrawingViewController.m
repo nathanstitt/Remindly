@@ -56,7 +56,7 @@
 
 
 -(void)addText{
-	DrawingTextBox *pv = [[ DrawingTextBox alloc ] initWithTextBlob: [ note addTextBlob ] ];
+	DrawingTextBox *pv = [[ DrawingTextBox alloc ] initWithTextBlob: [ note addTextBlob ] Controller:self ];
 	[self.view addSubview: pv ];
 	[ pv liftUp ];
 	wasMoved = NO;
@@ -66,6 +66,13 @@
 	
 }
 
+
+-(void) removeText:(DrawingTextBox*)dtb{
+    if ( currentTextEditBox == dtb ){ 
+        currentTextEditBox = nil;
+    }
+    [ dtb removeFromSuperview ];
+}
 
 -(void)updateTitle:(id)sel {
 	alarmTitle.text = [ note alarmTitle ];
@@ -86,7 +93,7 @@
 		}
 	}
 	for ( NoteTextBlob *text in note.textBlobs ){
-		DrawingTextBox *pv = [[ DrawingTextBox alloc ] initWithTextBlob: text ];
+		DrawingTextBox *pv = [[ DrawingTextBox alloc ] initWithTextBlob: text Controller:self ];
 		[self.view addSubview: pv ];
 		[ pv release];
 	}
@@ -108,10 +115,6 @@
 	alarmTitle.hidden = NO;
 	return note;
 }
-
-
-#define GROW_ANIMATION_DURATION_SECONDS 0.15
-#define SHRINK_ANIMATION_DURATION_SECONDS 0.15
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -186,12 +189,12 @@
 	CGPoint end = points[0];
 
 	CGContextAddCurveToPoint(UIGraphicsGetCurrentContext(), 
-                                                         points[2].x,
-                                                         points[2].y,
-                                                         points[1].x,
-                                                         points[1].y,
-                                                         points[0].x,
-                                                         points[0].y );
+                             points[2].x,
+                             points[2].y,
+                             points[1].x,
+                             points[1].y,
+                             points[0].x,
+                             points[0].y );
 
 	[ self clearPoints ];
 	points[0] = first;
@@ -226,9 +229,7 @@
 		currentTextEditBox = nil;
 		return;
 	}
-	if ( [ self distanceBetweenPoint:points[0] andPoint: currentPoint ] < 10 ){
-		return;
-	}
+	
 	UIGraphicsBeginImageContext(self.view.frame.size);
 	[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 	CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
@@ -239,10 +240,10 @@
 	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);
 	if( wasMoved ){
 		CGContextAddQuadCurveToPoint( UIGraphicsGetCurrentContext(), 
-								 points[0].x,
-								 points[0].y,
-								 currentPoint.x,
-								 currentPoint.y );
+                                     points[0].x,
+                                     points[0].y,
+                                     currentPoint.x,
+                                     currentPoint.y );
 	} else {
 		CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y);
 	}
