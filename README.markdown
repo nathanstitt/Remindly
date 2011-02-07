@@ -5,7 +5,7 @@ The quickest way to create a reminder on your iPhone™.  It starts up quickly, 
 ## Features:
  * Enter a reminder in just a few seconds
  * Uses the UILocalNotification features found in iOs 4.0, allowing reminders to continue to fire even if Remindly isn't running
- * Created by IoGee
+ * Created by [IoGee](http://iogee.com/remindly)
  * Inspired by Palm application Diddlebug.
  * Available from [App Store](http://itunes.apple.com/us/app/remindly/id411254165?mt=8&uo=4)
 
