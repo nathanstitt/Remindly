@@ -112,6 +112,7 @@
     [ self.view.layer renderInContext:context ];
 	note.thumbnail = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
+    [ note save ];
 	alarmTitle.hidden = NO;
 	return note;
 }
