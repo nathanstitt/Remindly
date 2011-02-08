@@ -41,9 +41,7 @@
 
 	[ self.map.userLocation addObserver:self forKeyPath:@"location" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
            context:NULL];
-	
-	// [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationUpdated:) name:@"locationUpdated" object:nil];
-
+    
     return self;
 
 }
@@ -161,15 +159,6 @@
 
 -(BOOL)hidden {
 	return map.hidden;
-}
-
-
-
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;{
-	
-//    DDAnnotation *anno = view.annotation;
-    //access object via
-//    [anno.objectX callSomeMethod];
 }
 
 
