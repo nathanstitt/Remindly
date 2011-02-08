@@ -151,7 +151,11 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 
 
 -(NSString *) alarmText {
-	return [[ texts sortedArrayUsingFunction: compareByPosition context:NULL ] componentsJoinedByString:@"\n"];
+    NSMutableArray *nms = [ NSMutableArray array ];
+    for ( NoteTextBlob *ntb in [ texts sortedArrayUsingFunction: compareByPosition context:NULL ] ){
+        [ nms addObject: ntb.text ];
+    }
+	return [ nms componentsJoinedByString:@"\n" ];
 }
 
 
