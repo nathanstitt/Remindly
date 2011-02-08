@@ -34,7 +34,7 @@
 
 	drawing = [[ DrawingViewController alloc ] initWithMainView:self ];
 	drawing.view.frame = CGRectMake(0, 0, 320, 420 );
-	drawing.note = [ NotesManager noteAtIndex: 0 ]; 
+	//drawing.note = [ NotesManager noteAtIndex: 0 ]; 
 
 	alarm = [[ AlarmViewController alloc ] init ];
 
@@ -103,14 +103,23 @@
 
 -(void)viewWillAppear:(BOOL)animated{
 	[ super viewWillAppear:animated ];
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSNumber *index =[ prefs objectForKey:@"lastIndexEdited" ];
+
 	[ drawing viewWillAppear:animated ];
-	[ self setDrawingMode: YES ];
+	drawing.view.hidden = NO;
+    drawing.note = [ NotesManager noteAtIndex: [ index intValue ] ];
 }
 
 
 -(void)viewWillDisappear:(BOOL)animated{
 	[ super viewWillDisappear:animated ];
-	[ drawing.note save ];
+	Note *note = drawing.note;
+    [note save];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [ prefs setObject:[ NSNumber numberWithInt: note.index ] forKey:@"lastIndexEdited" ];
+    [ prefs synchronize ];
 }
 
 
