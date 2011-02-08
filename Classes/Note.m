@@ -151,12 +151,9 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 
 
 -(NSString *) alarmText {
-	NSString *ret = @"";
-	for ( NoteTextBlob *ntb in [ texts sortedArrayUsingFunction: compareByPosition context:NULL ] ){
-		ret = [ NSString stringWithFormat: @"%@\n%@", ret, ntb.text ];
-	}
-	return ret;
+	return [[ texts sortedArrayUsingFunction: compareByPosition context:NULL ] componentsJoinedByString:@"\n"];
 }
+
 
 -(NSDate*)fireDate{
 	if ( [ self hasNotification ] ){
