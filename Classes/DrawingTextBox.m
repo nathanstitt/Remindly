@@ -47,6 +47,7 @@
 
 -(void)deletePressed:(id)sel {
     [ dvc removeText: self ];
+    [ ntb remove ];
 }
 
 
@@ -143,7 +144,6 @@
 
 
 - (void)dealloc {
-    [ ntb remove  ];
 	[ ntb release ];
     [ deleteBtn removeFromSuperview ];
 	[ deleteBtn release ];
