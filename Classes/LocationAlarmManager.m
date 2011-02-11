@@ -38,8 +38,9 @@ LocationAlarmManager *instance;
 -(void)startMonitor {
 	NSLog(@"Started Monitor");
 	manager.delegate = self;
+    manager.distanceFilter = ALARM_METER_RADIUS / 0.5;
     [ manager startMonitoringSignificantLocationChanges];
-	
+//	[ manager startUpdatingLocation ];
 }
 
 -(id) init {
@@ -72,6 +73,8 @@ LocationAlarmManager *instance;
 	notification.alertAction = @"View Note";
 	notification.soundName = UILocalNotificationDefaultSoundName;
 	notification.applicationIconBadgeNumber = 1;
+
+    NSLog(@"Fired Alarm: %@", note.directory );
 
 	[ [UIApplication sharedApplication] presentLocalNotificationNow:notification ];
 	[ notification release ];
@@ -142,7 +145,8 @@ NSString * formatDecimal_1(NSNumber *num) {
 }
 
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation 
+{
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
 
     if (locationAge > 5.0) return;
@@ -155,21 +159,29 @@ NSString * formatDecimal_1(NSNumber *num) {
     // test the measurement to see if it is more accurate than the previous measurement
 	if (lastLocation == nil || meters > 5 ) {
 
-		NSLog(@"Location: %f %f - moved %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude, meters );
+		NSLog(@"Location: %f %f moved: %f accuracy: %f", 
+              newLocation.coordinate.latitude, 
+              newLocation.coordinate.longitude,
+              meters,
+              newLocation.horizontalAccuracy );
 
-		for ( Note *note in [ notes allValues ] ){
-			meters = MKMetersBetweenMapPoints(  MKMapPointForCoordinate( newLocation.coordinate ),
-												MKMapPointForCoordinate( note.coordinate ) );
+        if ( newLocation.horizontalAccuracy < ALARM_METER_RADIUS ){
+            NSLog(@"Good accuracy");
+            for ( Note *note in [ notes allValues ] ){
+                meters = MKMetersBetweenMapPoints( MKMapPointForCoordinate( newLocation.coordinate ),
+                                                   MKMapPointForCoordinate( note.coordinate ) );
 
-			if ( meters < ALARM_METER_RADIUS && note.onEnterRegion ){
-				[ self fireNoteAlarm:note ];
-			} else if ( meters > ( ALARM_METER_RADIUS + 200 ) && ! note.onEnterRegion ) {
-				[ self fireNoteAlarm:note ];
-			}
-
+                if ( meters < ALARM_METER_RADIUS && note.onEnterRegion ){
+                    [ self fireNoteAlarm:note ];
+                } else if ( meters > ( ALARM_METER_RADIUS * 1.5 ) && ! note.onEnterRegion ) {
+                    [ self fireNoteAlarm:note ];
+                }
+            }
+            
+            self.lastLocation = newLocation;
+            
 		}
 
-		self.lastLocation = newLocation;
 	}
 }
 
