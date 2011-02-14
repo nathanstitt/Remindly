@@ -104,14 +104,6 @@
 }
 
 
--(void)redrawNote:(Note*)note{
-	NoteThumbnailView *v = [ previews objectForKey:[ NSNumber numberWithInt: note.index ] ];
-	if ( v ){
-		v.note = note;
-	}
-}
-
-
 - (void)deleteThumbnail:(NoteThumbnailView*)tn {
 	[ previews removeObjectForKey:[ NSNumber numberWithInt: tn.note.index ] ];
 

@@ -146,10 +146,9 @@
 -(void)addNote:(id)sel{
 	NotesManager *manager = [ NotesManager instance ];
 	if ( [ manager isAllowedMoreNotes ] ){
-		Note *n = [ manager addNote ];
-		[ mvc.selector addNote:n ];
-		mvc.drawing.note = n;
+		mvc.drawing.note = [ manager addNote ];
 		mvc.drawingMode = YES;
+		[ mvc.selector addNote: mvc.drawing.note ];
 	} else {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more reminders"
 														message:@"You've reached the maximum number of reminders.\n\nWould you like to view options for purchasing additional reminders?"  

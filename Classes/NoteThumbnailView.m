@@ -25,8 +25,7 @@
 -(id)initWithNote:(Note*)n frame:(CGRect)frame scroller:(NotesScrollView*)sc {
 	scroller = sc;
 	self = [ super initWithFrame:frame ];
-
-	note = n;
+    note = [ n retain ];
 	imageView = [[UIImageView alloc ] initWithFrame:CGRectMake(10, 10, frame.size.width-20, self.frame.size.height-20) ];
 	imageView.backgroundColor = [ UIColor whiteColor ];
 	imageView.image = [ note thumbnail ];
@@ -42,7 +41,7 @@
 	deleteBtn.frame = CGRectMake( frame.size.width-28, 0, 33, 33 );
 //	deleteBtn.hidden = YES;
 	[ self addSubview:deleteBtn ];
-	
+
 	[ deleteBtn retain ];
 	[ deleteBtn setImage:[ UIImage imageNamed:@"delete_icon" ] forState:UIControlStateNormal ] ;
 	[ deleteBtn addTarget:self action:@selector(deletePressed:) forControlEvents:UIControlEventTouchUpInside ];
@@ -51,7 +50,10 @@
 	self.userInteractionEnabled = YES;
 
 	self.contentMode = UIViewContentModeScaleToFill;
-	return self;
+
+    [ note addObserver:self forKeyPath:@"thumbnail" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:NULL];
+
+    return self;
 }
 
 
@@ -88,11 +90,18 @@
 	[ scroller noteWasSelected: note ];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ( [ keyPath isEqual:@"thumbnail" ] ) {
+        imageView.image = note.thumbnail;
+    }
+}
 
 #pragma mark -
 #pragma mark Memory management
 
 - (void)dealloc {
+    [ note removeObserver:self forKeyPath:@"thumbnail" ];
+    [ note      release ];
 	[ deleteBtn release  ];
 	[ imageView release  ];
 	[ super dealloc      ];

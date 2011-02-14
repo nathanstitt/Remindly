@@ -38,9 +38,6 @@
 // remove specified thumbnail
 - (void)deleteThumbnail:(NoteThumbnailView*)tn;
 
-// redraw the note
-- (void)redrawNote:(Note*)note;
-
 // clears all notes, moves to the first index
 // and then loads the first and second note previews
 - (void)reload;

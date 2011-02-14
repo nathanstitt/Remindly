@@ -57,6 +57,7 @@
 	[ self.view addSubview: alarm ];
 }
 
+
 -(void) setDrawingMode:(BOOL)v {
 	if ( v ){
 		drawing.note = [ NotesManager noteAtIndex: [ selector currentIndex ] ];
@@ -102,10 +103,12 @@
 
 -(void)viewWillAppear:(BOOL)animated{
 	[ super viewWillAppear:animated ];
-    
+
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSNumber *index =[ prefs objectForKey:@"lastIndexEdited" ];
-
+    if ( [index intValue] >= [ NotesManager count ] ){
+        index = [ NSNumber numberWithInt: [ NotesManager count ] - 1 ];
+    }
 	[ drawing viewWillAppear:animated ];
 	drawing.view.hidden = NO;
     drawing.note = [ NotesManager noteAtIndex: [ index intValue ] ];
