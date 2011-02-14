@@ -61,7 +61,6 @@
 	} else {
 		deleteBtn.hidden = YES;
 	}
-//	[ deleteBtn setNeedsDisplay ];
 }
 
 
@@ -86,7 +85,6 @@
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"Touches began");
 	[ scroller noteWasSelected: note ];
 }
 

@@ -72,7 +72,6 @@
 		drawing.view.hidden  = YES;
 		[selector selectNoteIndex: note.index ];
 
-		[selector reload: note ];
 	}
 	[ toolbar setDrawingMode:v ];
 
@@ -80,7 +79,7 @@
 
 
 -(BOOL) drawingMode {
-	return ( nil != drawing.view.superview );
+	return ! drawing.view.hidden;
 }
 
 
@@ -91,9 +90,9 @@
 
 -(void) selectNote:(Note*)note{
 	drawing.note = note;
-	[ selector selectNoteIndex: note.index ];
-	[ self setDrawingMode:YES ];
-	
+    if ( ! [ self drawingMode ] ){
+        [ self setDrawingMode: YES ];
+    }
 }
 
 -(void)onDisplayNote:(NSNotification*)notif{

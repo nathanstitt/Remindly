@@ -161,7 +161,7 @@
 - (void)selectNoteIndex:(NSInteger)index{
     if(firstLayout)	{
         scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, scrollView.frame.size.height);
-        if ( index > 1 ){
+        if ( index >= 1 ){
             [ [ self loadPage: index - 1 ] setFocused:NO ];
         }
         [ [ self loadPage: index ] setFocused: YES ];

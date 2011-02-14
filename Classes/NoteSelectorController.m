@@ -48,7 +48,6 @@
 	[ self.view addSubview:noteHeader ];
 
     [self.view addSubview:scroller];
-	[ scroller selectNoteIndex:0 ];
 
 	NoteThumbnailView *tn = [ scroller loadPage: 0 ];
 	tn.focused = YES;
@@ -93,8 +92,8 @@
 }
 
 -(void)refresh {
+	dots.numberOfPages = [ NotesManager count ];
 	dots.currentPage = 0;
-	[ scroller selectNoteIndex: 0];
 	[ scroller reload ];
 }
 
@@ -108,9 +107,7 @@
 
 
 -(void) addNote:(Note*) note {
-	dots.numberOfPages += 1;
-	dots.selected = 0;
-	[ scroller reload ];
+    [ self refresh ];
 }
 
 
