@@ -93,11 +93,6 @@ static NSMutableDictionary *_cache;
 		ntb.note = self;
 		[texts addObject: ntb ];
 	}
-
-	image = [ UIImage imageWithContentsOfFile: [ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] ];
-	
-	[ image retain ];
-	
 	return self;
 }
 
@@ -254,8 +249,7 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 -(void)setThumbnail:(UIImage*)tn{
 	if ( thumbnail != tn ){
 		[ thumbnail release ];
-		[ tn retain ];
-		thumbnail = tn;
+		thumbnail = [ tn retain ];
 	}
 	[ UIImagePNGRepresentation(thumbnail) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"thumbnail.png" ] atomically:YES];
 }
@@ -273,8 +267,7 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 -(void)setImage:(UIImage*)img{
 	if ( image != img ){
 		[ image release ];
-		[ img retain ];
-		image = img;
+		image = [ img retain ];
 	}
 	[ UIImagePNGRepresentation(image) writeToFile:[ [ self fullDirectoryPath ] stringByAppendingPathComponent:@"image.png" ] atomically:YES];
 }
@@ -313,9 +306,10 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 		[ [ UIApplication sharedApplication] cancelLocalNotification: notification ];
 		[ notification release];
 	}
-	[ directory    release ];
-	[ image release ];
-	[ plist release ];
-    [ super dealloc ];
+    [ thumbnail release ];
+	[ directory release ];
+	[ image     release ];
+	[ plist     release ];
+    [ super     dealloc ];
 }
 @end
