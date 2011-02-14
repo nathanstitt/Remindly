@@ -74,8 +74,6 @@ LocationAlarmManager *instance;
 	notification.soundName = UILocalNotificationDefaultSoundName;
 	notification.applicationIconBadgeNumber = 1;
 
-    NSLog(@"Fired Alarm: %@", note.directory );
-
 	[ [UIApplication sharedApplication] presentLocalNotificationNow:notification ];
 	[ notification release ];
 	[ note unScedule ];
@@ -166,15 +164,23 @@ NSString * formatDecimal_1(NSNumber *num) {
               newLocation.horizontalAccuracy );
 
         if ( newLocation.horizontalAccuracy < ALARM_METER_RADIUS ){
-            NSLog(@"Good accuracy");
+            
             for ( Note *note in [ notes allValues ] ){
                 meters = MKMetersBetweenMapPoints( MKMapPointForCoordinate( newLocation.coordinate ),
                                                    MKMapPointForCoordinate( note.coordinate ) );
 
                 if ( meters < ALARM_METER_RADIUS && note.onEnterRegion ){
                     [ self fireNoteAlarm:note ];
+                    NSLog(@"Fired Enter Alarm: %f %f distance: %f", 
+                          note.coordinate.latitude, 
+                          note.coordinate.longitude,
+                          meters );
                 } else if ( meters > ( ALARM_METER_RADIUS * 1.5 ) && ! note.onEnterRegion ) {
                     [ self fireNoteAlarm:note ];
+                    NSLog(@"Fired Exit Alarm: %f %f distance: %f", 
+                          note.coordinate.latitude, 
+                          note.coordinate.longitude,
+                          meters );
                 }
             }
             
