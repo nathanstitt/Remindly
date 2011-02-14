@@ -63,7 +63,6 @@
 
 
 -(void)reload:(Note*)note{
-	[ scroller redrawNote: note ];
 	if ( note.index == scroller.currentPage ){
 		noteHeader.text = [ note alarmTitle ];
 	}
