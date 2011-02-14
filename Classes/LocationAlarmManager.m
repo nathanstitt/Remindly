@@ -24,9 +24,6 @@ LocationAlarmManager *instance;
 @synthesize manager, notes, lastLocation;
 
 + (void)startup {
-    // Create the location manager if this object does not
-    // already have one.
-
     if ( ! instance ){
 		instance = [[ LocationAlarmManager alloc ] init ];
 		
@@ -40,7 +37,6 @@ LocationAlarmManager *instance;
 	manager.delegate = self;
     manager.distanceFilter = ALARM_METER_RADIUS / 0.5;
     [ manager startMonitoringSignificantLocationChanges];
-//	[ manager startUpdatingLocation ];
 }
 
 -(id) init {
