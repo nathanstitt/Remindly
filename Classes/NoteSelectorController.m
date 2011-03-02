@@ -35,10 +35,10 @@
 
     scroller = [ [NotesScrollView alloc] 
                 initWithController:self
-                frame:CGRectMake(0, 70, 320, 320) ];
+                frame:CGRectMake(0, 40, 320, 320) ];
 	[ scroller setBackgroundColor: [ UIColor grayColor ] ];
 
-	noteHeader = [[ UILabel alloc ] initWithFrame:CGRectMake( 0, 20, 320, 60 ) ];
+	noteHeader = [[ UILabel alloc ] initWithFrame:CGRectMake( 0, 0, 320, 40 ) ];
 	noteHeader.lineBreakMode = UILineBreakModeWordWrap;
 	noteHeader.numberOfLines = 0;
 	noteHeader.textColor = [ UIColor whiteColor ];
@@ -54,11 +54,13 @@
     
 	dots = [[ UIPageControl alloc ] init ];
 	dots.backgroundColor = [ UIColor grayColor ];
-    dots.frame = CGRectMake( 0, 390, 320, 30 );
+    dots.frame = CGRectMake( 0, 360, 320, 30 );
 	dots.numberOfPages = [ NotesManager count ];
 	[dots addTarget:self action:@selector(dotsMoved:) forControlEvents:UIControlEventValueChanged];
     
 	[ self.view addSubview:dots ];
+    
+    [ self pageChanged:0 ];
 }
 
 
@@ -70,8 +72,10 @@
 
 
 -(void) selectNoteIndex:(NSInteger)index{
-	[ scroller selectNoteIndex: index ];
-	dots.currentPage = index;
+    if ( index >= 0 && index <= dots.numberOfPages ){
+        [ scroller selectNoteIndex: index ];
+        dots.currentPage = index;
+    }
 }
 
 -(NSUInteger)currentIndex {
