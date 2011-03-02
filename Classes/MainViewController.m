@@ -14,17 +14,18 @@
 */
 
 #import "MainViewController.h"
-#import "AlarmViewController.h"
+#import "AlarmPopUpView.h"
 #import "ColorButton.h"
 #import "DrawingViewController.h"
 #import "NotesManager.h"
 #import "StoreView.h"
 #import "NoteSelectorController.h"
+#import "DrawingToolsPanel.h"
 
 
 @implementation MainViewController
 
-@synthesize drawing,selector,alarm;
+@synthesize drawing,selector,alarm,drawTools;
 
 - (id)init {
     self = [super init ];
@@ -36,7 +37,8 @@
 	drawing.view.frame = CGRectMake(0, 0, 320, 420 );
 	//drawing.note = [ NotesManager noteAtIndex: 0 ]; 
 
-	alarm = [[ AlarmViewController alloc ] init ];
+	alarm = [[ AlarmPopUpView alloc ] init ];
+    drawTools = [[DrawingToolsPanel alloc] init ];
 
 	toolbar = [[MainToolBar alloc] initWithController:self];
 	[ drawing.alarmTitle  addTarget:toolbar action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
@@ -53,8 +55,10 @@
 -(void)loadView {
     self.view = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, 320, 480) ];
 	[ self.view addSubview: drawing.view ];
+    [ self.view addSubview: drawTools ];
 	[ self.view addSubview: toolbar ];
 	[ self.view addSubview: alarm ];
+
 }
 
 
@@ -68,8 +72,7 @@
         drawing.view.hidden = NO;
 	} else {
 		Note *note = drawing.note;
-
-        [ self.view addSubview: selector.view ];
+        [ self.view insertSubview:selector.view belowSubview: drawing.view ];
 		drawing.view.hidden  = YES;
 		[selector selectNoteIndex: note.index ];
 

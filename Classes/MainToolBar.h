@@ -11,7 +11,7 @@
 #import "CountingButton.h"
 #import "DrawEraseButton.h"
 
-@class MainViewController;
+@class MainViewController,DrawingToolsPanel;
 
 @interface MainToolBar : UIToolbar {
 

@@ -13,6 +13,7 @@
 #import "NoteSelectorController.h"
 #import "StoreView.h"
 #import "UIColor+Expanded.h"
+#import "DrawingToolsPanel.h"
 
 @implementation MainToolBar
 
@@ -69,9 +70,17 @@
 	
 	add = [[ UIBarButtonItem alloc ] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:) ];
 	UIBarButtonItem *done = [[ UIBarButtonItem alloc ] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleDrawingMode:) ];
-	selButtons  = [ NSArray arrayWithObjects:  add, space, done, NULL ];
+
+    UIBarButtonItem *backward = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(noteBackward:) ];
+
+    UIBarButtonItem *forward = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(noteForward:) ];
+
+    
+	selButtons  = [ NSArray arrayWithObjects:  add, space, backward, space, forward, space, done, NULL ];
 	[ selButtons retain ];
-	
+
+    [ backward release ];
+    [ forward  release ];
 	[ add   release  ];
 	[ alarm release  ];
 	[ text  release  ];
@@ -99,6 +108,13 @@
 	return self;
 }
 
+-(void)noteBackward:(id)btn {
+    [ mvc.selector selectNoteIndex:  [ mvc.selector currentIndex ] - 1 ];
+}
+
+-(void)noteForward:(id)btn {
+    [ mvc.selector selectNoteIndex:  [ mvc.selector currentIndex ] + 1 ];
+}
 
 -(void)drawingBegan:(NSNotification*)note {
 	if ( mvc.alarm.isShowing ){
@@ -118,7 +134,8 @@
 
 
 -(void) showColors:(id)sel{
-	[ self setItems:colorButtons animated:YES];	
+    mvc.drawTools.isShowing = ! mvc.drawTools.isShowing;
+//	[ self setItems:colorButtons animated:YES];	
 }
 
 
@@ -164,7 +181,7 @@
 }
 
 
--(void)showAlarm{
+-(void)showAlarm {
 	if ( mvc.alarm.isShowing ){
 		mvc.alarm.isShowing=NO;
 	} else {

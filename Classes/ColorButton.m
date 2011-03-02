@@ -20,7 +20,7 @@
 
 @implementation ColorButton
 
-@synthesize color;
+@synthesize color,selected;
 
 - (id)initWithColor:(UIColor*)c {
 	self = [ super initWithFrame:CGRectMake(0, 0, 25, 25) ];
@@ -44,6 +44,7 @@
 
 
 - (void)drawRect:(CGRect)rect {
+    
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGContextBeginPath(context);
 	CGContextSetFillColorWithColor(context, color.CGColor );
@@ -52,11 +53,26 @@
     CGContextAddArc(context, CGRectGetMaxX(rect) - radius, CGRectGetMinY(rect) + radius, radius, 3 * M_PI / 2, 0, 0);
     CGContextAddArc(context, CGRectGetMaxX(rect) - radius, CGRectGetMaxY(rect) - radius, radius, 0, M_PI / 2, 0);
     CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMaxY(rect) - radius, radius, M_PI / 2, M_PI, 0);
-    CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMinY(rect) + radius, radius, M_PI, 3 * M_PI / 2, 0);	
+    CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMinY(rect) + radius, radius, M_PI, 3 * M_PI / 2, 0);
     CGContextClosePath(context);
     CGContextFillPath(context);
-}
 
+    
+    if ( selected ){
+        CGContextBeginPath(context);
+        CGContextMoveToPoint(context, 0, 0 );
+        
+        CGContextAddLineToPoint(context, 0, self.frame.size.height );
+        
+        CGContextAddLineToPoint(context, self.frame.size.width, self.frame.size.height );
+        
+        CGContextAddLineToPoint(context, self.frame.size.width, 0 );
+        CGContextAddLineToPoint(context, 0, 0);
+        
+        CGContextDrawPath(context, kCGPathFillStroke);
+   
+    }
+}
 
 - (void)dealloc {
 	[ color release ];

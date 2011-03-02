@@ -16,5 +16,6 @@
 - (id)initWithColor:(UIColor*)c;
 
 @property (retain,nonatomic) UIColor *color;
+@property (nonatomic) BOOL selected;
 
 @end
