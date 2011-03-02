@@ -7,7 +7,7 @@
 //
 
 #import "AlarmMapView.h"
-#import "AlarmViewController.h"
+#import "AlarmPopUpView.h"
 #import "LocationAlarmManager.h"
 #import "ToggleButton.h"
 
@@ -19,14 +19,14 @@
 
 @synthesize  map, circle;
 
--(id)initWithAlarmView:(AlarmViewController*)view{
+-(id)initWithAlarmView:(AlarmPopUpView*)view{
 	self = [ super init ];
 	if ( ! self ){
 		return nil;
 	}
 	
 
-	map = [[MKMapView alloc] initWithFrame: view.childFrame ];
+	map = [[MKMapView alloc] initWithFrame: CGRectMake(0, 30, 320, 370 ) ];
 	map.mapType = MKMapTypeStandard;
 	map.showsUserLocation = YES;
 
@@ -68,6 +68,7 @@
 -(void)observeValueForKeyPath:(NSString *)keyPath  ofObject:(id)object change:(NSDictionary *)change  context:(void *)context {  
 	if (! dirty && self.map.userLocation.location ){
 		[ self moveTo: self.map.userLocation.location.coordinate ];
+        dirty = YES;
 	}
 }
 

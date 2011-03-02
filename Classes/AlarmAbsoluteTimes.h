@@ -9,16 +9,18 @@
 
 #import <UIKit/UIKit.h>
 
-@class Note,AlarmViewController;
+@class Note,AlarmPopUpView;
 
 @interface AlarmAbsoluteTimes : NSObject {
 	UIDatePicker *picker;
 }
 
--(id)initWithAlarmView:(AlarmViewController*)view;
+-(id)initWithAlarmView:(AlarmPopUpView*)view;
 -(void)reset;
 -(void)saveToNote:(Note*)note;
 
 @property (readonly,nonatomic) UIView *view;
 @property (nonatomic,assign) NSDate *date;
+
+@property (nonatomic,readonly ) BOOL wasSet;
 @end

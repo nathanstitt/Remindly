@@ -17,21 +17,21 @@
 
 
 #import "AlarmQuickTImes.h"
-#import "AlarmViewController.h"
+#import "AlarmPopUpView.h"
 #import "Note.h"
 
 @implementation AlarmQuickTimes
 
 @synthesize view=picker,wasSet;
 
--(id)initWithAlarmView:(AlarmViewController*)view {
+-(id)initWithAlarmView:(AlarmPopUpView*)view {
 	self = [ super init ];
 	if ( ! self ){
 		return nil;
 	}
 
 	alarmView = view;
-	picker = [[UIPickerView alloc] initWithFrame: view.childFrame ];
+	picker = [[UIPickerView alloc] initWithFrame: CGRectMake(0.0, 20.0, 320.0, 90.0) ];
     picker.delegate = self;
     picker.showsSelectionIndicator = YES;
 	picker.dataSource = self;
@@ -46,11 +46,13 @@
 }
 
 -(void)reset {
+    wasSet = NO;
 	[ picker selectRow:4 inComponent:0 animated:YES ];
 }
 
 -(void)saveToNote:(Note*)note{
 	note.alarmType = [ quickChoices objectAtIndex:[ picker selectedRowInComponent:0 ] ];
+    note.alarmTag = 0;
 	note.fireDate  = [ self date ];
 }
 
