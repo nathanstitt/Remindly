@@ -59,7 +59,7 @@
     [ rvbar release ];
 
 	NSArray *titles;
-	if ( YES || [CLLocationManager significantLocationChangeMonitoringAvailable] ){
+	if ( [CLLocationManager significantLocationChangeMonitoringAvailable] ){
         mapView = [[ AlarmMapView alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 415 )];
         [ panels addObject: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Map", nil]; 
@@ -70,7 +70,7 @@
     for ( UIView *v in panels ){
         [ self.view addSubview: v ];
     }
- 
+
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:titles];
 	typeCtrl.selectedSegmentIndex = 0;
 
