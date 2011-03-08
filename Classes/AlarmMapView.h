@@ -11,19 +11,19 @@
 #import "AlarmAnnotationPin.h"
 #import "Note.h"
 
-@class AlarmPopUpView;
+@class AlarmPopUpController;
 
 @interface AlarmMapView : NSObject <MKMapViewDelegate,CLLocationManagerDelegate>{
-	AlarmPopUpView *alarmView;
+	AlarmPopUpController *alarmView;
 	MKMapView *map;
 	MKCircle* circle;
 	AlarmAnnotationPin *pin;
 	BOOL dirty;
 }
 
+-(id)   initWithAlarmView:(AlarmPopUpController*)view frame:(CGRect)frame;
 -(void) setFromNote:(Note*)note;
 -(void) saveToNote: (Note*)note;
--(id)   initWithAlarmView:(AlarmPopUpView*)view;
 -(void) didChangeDragState:(MKAnnotationViewDragState)newDragState fromOldState:(MKAnnotationViewDragState)dragState;
 -(void) reset;
 

@@ -11,11 +11,14 @@
 
 @interface ColorButton : UIButton {
 	UIColor *color;
+    BOOL marked;
+    UIImage *image;
 }
 
 - (id)initWithColor:(UIColor*)c;
+- (void)setBrushImage:(UIImage*)image;
 
 @property (retain,nonatomic) UIColor *color;
-@property (nonatomic) BOOL selected;
+@property (nonatomic) BOOL marked;
 
 @end

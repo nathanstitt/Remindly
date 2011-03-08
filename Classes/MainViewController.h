@@ -13,27 +13,29 @@
 // calling actions, which would neaten this up quite a bit
 
 #import <UIKit/UIKit.h>
-#import "AlarmPopUpView.h"
+#import "AlarmPopUpController.h"
 #import "MainToolBar.h"
 
-@class DrawingViewController, NoteSelectorController, DrawingToolsPanel;
+@class DrawingViewController, NoteSelectorController, DrawingPaletteController;
 
 @interface MainViewController : UIViewController <UIAlertViewDelegate> {
 	NoteSelectorController *selector;
 	MainToolBar *toolbar;
 
-    DrawingToolsPanel *drawTools;
+    DrawingPaletteController *drawTools;
 	DrawingViewController *drawing;
-	AlarmPopUpView *alarm;
+	AlarmPopUpController *alarm;
 }
 
 -(void) toggleDrawingMode;
 -(void) selectNote:(Note*)note;
 
+@property (nonatomic) BOOL isAlarmShowing;
+@property (nonatomic) BOOL isDrawToolsShowing;
 @property (nonatomic) BOOL drawingMode;
-@property (readonly,nonatomic) DrawingToolsPanel      *drawTools;
+@property (readonly,nonatomic) DrawingPaletteController     *drawTools;
 @property (readonly,nonatomic) DrawingViewController  *drawing;
-@property (readonly,nonatomic) AlarmPopUpView         *alarm;
+@property (readonly,nonatomic) AlarmPopUpController         *alarm;
 @property (readonly,nonatomic) NoteSelectorController *selector;
 
 

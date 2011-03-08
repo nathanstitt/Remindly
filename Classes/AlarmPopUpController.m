@@ -16,64 +16,101 @@
 */
 
 
-#import "AlarmPopUpView.h"
+#import "AlarmPopUpController.h"
 #import "AlarmQuickTimes.h"
 #import "GradientButton.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation AlarmPopUpView
+
+@implementation AlarmPopUpController
 
 @synthesize wasSet;
 
-- (id)init {
-    
-    self = [super initWithFrame:CGRectMake( 0, 480, 320, 480 )];
-    if (!self) {
-        return  nil;
-    }
+
+-(void)loadView {
+    self.view = [ [ UIView alloc ] initWithFrame:CGRectMake( 0, 480, 320, 480 ) ];
   
-	self.backgroundColor = [ UIColor blackColor ];
+	self.view.backgroundColor = [ UIColor blackColor ];
 
-	quickTimes = [[ AlarmQuickTimes alloc ] initWithAlarmView:self ];
+    panels = [ NSMutableArray arrayWithObjects:
+              [[[ UIView alloc ] initWithFrame: CGRectMake(0, 20, 320, 390 ) ] autorelease ],
+              NULL
+              ];
+    [ panels retain ];
+	quickTimes = [[ AlarmQuickTimes alloc ] initWithAlarmView:self frame:CGRectMake( 0, 185, 320, 320) ];
+	absTimes = [[AlarmAbsoluteTimes alloc ] initWithAlarmView:self frame:CGRectMake(0.0, 0.0, 320.0, 90.0)];
 
-	absTimes = [[AlarmAbsoluteTimes alloc ] initWithAlarmView:self ];
+	[ [ panels objectAtIndex:0 ] addSubview: quickTimes.view ];
+	[ [ panels objectAtIndex:0 ] addSubview: absTimes.view ];
 
-	[ self addSubview: quickTimes.view ];
-	[ self addSubview: absTimes.view ];
+    UIView *hbar = [ [UIView alloc ] initWithFrame: CGRectMake( 0, 207, 320, 8) ];
+    hbar.backgroundColor = [ UIColor blackColor ];
+    [ [ panels objectAtIndex:0 ] addSubview: hbar ];
+    [ hbar release ];
+    
+    UIView *lvbar = [ [UIView alloc ] initWithFrame: CGRectMake( 0, 120, 10, 200 ) ];
+    lvbar.backgroundColor = [ UIColor blackColor ];
+    [ [ panels objectAtIndex:0 ] addSubview: lvbar ];
+    [ lvbar release ];
+
+    UIView *rvbar = [ [UIView alloc ] initWithFrame: CGRectMake( 310, 120, 10, 200 ) ];
+    rvbar.backgroundColor = [ UIColor blackColor ];
+    [ [ panels objectAtIndex:0 ] addSubview: rvbar ];
+    [ rvbar release ];
 
 	NSArray *titles;
 	if ( YES || [CLLocationManager significantLocationChangeMonitoringAvailable] ){
-		mapView = [[ AlarmMapView alloc ] initWithAlarmView:self ];
-		[ self addSubview: mapView.view ];
+        mapView = [[ AlarmMapView alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 415 )];
+        [ panels addObject: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Map", nil]; 
 	} else {
 		titles = [ NSArray arrayWithObjects: @"Time/Date", nil];
 	}
 
+    for ( UIView *v in panels ){
+        [ self.view addSubview: v ];
+    }
+ 
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:titles];
 	typeCtrl.selectedSegmentIndex = 0;
+
 	typeCtrl.frame = CGRectMake( 0, 0, 320, 30 );
 	typeCtrl.segmentedControlStyle = UISegmentedControlStyleBezeled;
 	typeCtrl.tintColor = [ UIColor darkGrayColor	];
 	[ typeCtrl addTarget:self action:@selector(typeCtrlChanged:) forControlEvents:UIControlEventValueChanged ];
-	[ self addSubview: typeCtrl ];
+	[ self.view addSubview: typeCtrl ];
 	[ typeCtrl release ];
 
+    
 	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(20, 425, 120, 35 ) ];
 	[ b addTarget:self action:@selector(cancelTouched:) forControlEvents:UIControlEventTouchUpInside ];
 	[ b setTitle:@"Cancel" forState:UIControlStateNormal ];
 	[ b useBlackStyle ];
-	[ self addSubview: b ];
+	[ self.view addSubview: b ];
 	[ b release ];
 
 	b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(170, 425, 120, 35 ) ];
 	[ b addTarget:self action:@selector(saveTouched:) forControlEvents:UIControlEventTouchUpInside ];
 	[ b setTitle:@"Save" forState:UIControlStateNormal ];
 	[ b useBlueStyle ];
-	[ self addSubview: b ];
+	[ self.view addSubview: b ];
 	[ b release ];
 
-    return self;
+}
+
+-(void) viewDidUnload {
+	[ quickTimes  release ];
+	[ absTimes    release ];
+	[ mapView     release ];
+	[ typeCtrl    release ];
+	[ currentNote release ];
+    [ panels release ];
+}
+
+
+- (void)dealloc {
+    [ super viewDidUnload ];
+    [ super dealloc ];
 }
 
 
@@ -85,19 +122,18 @@
 -(void)saveTouched:(id)btn {
 	switch ( typeCtrl.selectedSegmentIndex ) {
 		case 0:
-            if ( absTimes.wasSet ){
-                [ absTimes saveToNote: currentNote ];
-            } else {
+            if ( [ quickTimes isSet ] ){
                 [ quickTimes saveToNote: currentNote ];
+            } else {
+                [ absTimes saveToNote: currentNote ];
             }
 			break;
-		case 2:
+		case 1:
 			[ mapView saveToNote: currentNote ];
 			break;
 		default:
 			break;
 	}
-//	currentNote.alarmTag = typeCtrl.selectedSegmentIndex;	
 	[ currentNote save ];
 	[ currentNote scedule ];
 	self.isShowing = NO;
@@ -106,22 +142,16 @@
 
 
 -(void)hideAll{
-	quickTimes.view.hidden = YES;
-	absTimes.view.hidden = YES;
-	mapView.view.hidden = YES;
+    for ( UIView *v in panels ){
+        v.hidden = YES;
+    }
 }
 
 
 -(void)typeCtrlChanged:(id)tbc {
-	if ( 0 ==  typeCtrl.selectedSegmentIndex ){
-        mapView.view.hidden = YES;
-		quickTimes.view.hidden = NO;
-        absTimes.view.hidden = NO;
-	} else if ( 1 == typeCtrl.selectedSegmentIndex ){
-		mapView.view.hidden = NO;
-		quickTimes.view.hidden = YES;
-        absTimes.view.hidden = YES;
-	}
+    [ self hideAll ];
+    NSInteger indx = typeCtrl.selectedSegmentIndex;
+    ((UIView*)[ panels objectAtIndex: indx ]).hidden = NO;
 }
 
 	
@@ -160,40 +190,32 @@
 }
 
 
+-(void)absSelectionMade{
+    [ quickTimes selectBlank ];
+}
+
 -(void)setIsShowing:(BOOL)v {
-	CGRect frame = self.frame;
-
-
+	CGRect frame = self.view.frame;
 	if ( v ){
 		typeCtrl.selectedSegmentIndex = 0;
 		frame.origin.y = 0;
 	} else {
-        [[UIApplication sharedApplication] setStatusBarHidden: v ];
-
-
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault ];
 		frame.origin.y = 480;
 	}
     [UIView animateWithDuration:0.4f animations:^{
-        self.frame = frame;
-    }
-    completion:^ (BOOL finished) {
-        
-        self.superview.frame = [UIScreen mainScreen].applicationFrame;
-
-        [[UIApplication sharedApplication] setStatusBarHidden: v ];
+        self.view.frame = frame;
+    } completion:^ (BOOL finished) {
+        if ( v ){
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque ];
+        }
     }];
 
 }
 
 
 -(BOOL)isShowing{
-	return ( self.frame.origin.y < 420 );
-}
-
-
-- (void)dealloc {
-	[ quickTimes   release ];
-    [super dealloc];
+	return ( self.view.frame.origin.y < 420 );
 }
 
 

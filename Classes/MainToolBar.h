@@ -11,7 +11,7 @@
 #import "CountingButton.h"
 #import "DrawEraseButton.h"
 
-@class MainViewController,DrawingToolsPanel;
+@class MainViewController,DrawingPaletteController;
 
 @interface MainToolBar : UIToolbar {
 
@@ -19,9 +19,7 @@
 
 	NSArray *drawButtons;
 	NSArray *selButtons;
-	NSArray *colorButtons;
 	
-	ColorButton *colorBtn;
 	DrawEraseButton *eraseBtn;
 	UIBarButtonItem *pickerBtn;
 	CountingButton *countBtn;

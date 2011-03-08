@@ -7,9 +7,10 @@
 //
 
 #import "AlarmMapView.h"
-#import "AlarmPopUpView.h"
+#import "AlarmPopUpController.h"
 #import "LocationAlarmManager.h"
 #import "ToggleButton.h"
+#import <QuartzCore/QuartzCore.h> 
 
 @interface AlarmMapView()
 @property (nonatomic,retain) MKCircle* circle;
@@ -19,23 +20,20 @@
 
 @synthesize  map, circle;
 
--(id)initWithAlarmView:(AlarmPopUpView*)view{
+-(id)initWithAlarmView:(AlarmPopUpController*)view frame:(CGRect)frame {
 	self = [ super init ];
 	if ( ! self ){
 		return nil;
 	}
-	
 
-	map = [[MKMapView alloc] initWithFrame: CGRectMake(0, 30, 320, 370 ) ];
+	map = [[MKMapView alloc] initWithFrame: frame ];
 	map.mapType = MKMapTypeStandard;
 	map.showsUserLocation = YES;
-
 	map.delegate=self;
-
-
+    map.layer.cornerRadius = 20.0f;
 	pin = [[ AlarmAnnotationPin alloc ] initWithMap:self ];
 	[ map addAnnotation: pin.annotation ];
-	
+
 	self.circle = [MKCircle circleWithCenterCoordinate: map.userLocation.coordinate radius:1000];
 	[map addOverlay:circle];
 
@@ -96,6 +94,7 @@
 
 
 -(void)saveToNote:(Note*)note{
+    note.alarmTag = 2;
 	note.alarmType = @"Geographical Region";
 	[ note setCoordinate: pin.annotation.coordinate onEnterRegion: pin.onEnter ];
 }

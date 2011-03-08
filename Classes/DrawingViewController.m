@@ -22,7 +22,7 @@
 
 @implementation DrawingViewController
 
-@synthesize note,color,isErasing,alarmTitle;
+@synthesize note,color,isErasing,alarmTitle,lineWidth;
 
 - (id)initWithMainView:(MainViewController*)mv {
     self = [super init ];
@@ -31,6 +31,8 @@
 
 	drawImage = [[UIImageView alloc] initWithImage:nil];
 	drawImage.frame = CGRectMake(0, 0, self.view.frame.size.width, 420);
+    
+    lineWidth = 5.0;
 
 	[ self.view addSubview:drawImage];
 	color = [ UIColor darkGrayColor ];
@@ -173,7 +175,7 @@
 	[ drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
 	CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  5.0 );
+	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  lineWidth );
 
 	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
 									 self.isErasing ? [ UIColor whiteColor].CGColor : color.CGColor );
@@ -235,7 +237,7 @@
 	[drawImage.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 	CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
 
-	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  5.0 );
+	CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.isErasing ? 20.0 :  lineWidth );
 	CGContextSetStrokeColorWithColor( UIGraphicsGetCurrentContext(), 
 									 self.isErasing ? [ UIColor whiteColor].CGColor : color.CGColor );
 	CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y);

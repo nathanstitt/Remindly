@@ -14,13 +14,13 @@
 */
 
 #import "MainViewController.h"
-#import "AlarmPopUpView.h"
+#import "AlarmPopUpController.h"
 #import "ColorButton.h"
 #import "DrawingViewController.h"
 #import "NotesManager.h"
 #import "StoreView.h"
 #import "NoteSelectorController.h"
-#import "DrawingToolsPanel.h"
+#import "DrawingPaletteController.h"
 
 
 @implementation MainViewController
@@ -30,15 +30,13 @@
 - (id)init {
     self = [super init ];
 
-
 	selector = [[ NoteSelectorController alloc ] initWithMainView:self ];
 
 	drawing = [[ DrawingViewController alloc ] initWithMainView:self ];
 	drawing.view.frame = CGRectMake(0, 0, 320, 420 );
 	//drawing.note = [ NotesManager noteAtIndex: 0 ]; 
 
-	alarm = [[ AlarmPopUpView alloc ] init ];
-    drawTools = [[DrawingToolsPanel alloc] init ];
+    drawTools = [[DrawingPaletteController alloc] init ];
 
 	toolbar = [[MainToolBar alloc] initWithController:self];
 	[ drawing.alarmTitle  addTarget:toolbar action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
@@ -55,10 +53,35 @@
 -(void)loadView {
     self.view = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, 320, 480) ];
 	[ self.view addSubview: drawing.view ];
-    [ self.view addSubview: drawTools ];
 	[ self.view addSubview: toolbar ];
-	[ self.view addSubview: alarm ];
+}
 
+-(BOOL)isAlarmShowing {
+    return ( alarm && [ alarm isShowing ] );
+}
+
+-(void)setIsAlarmShowing:(BOOL)v{
+    if ( v && ! alarm ){
+        alarm = [[ AlarmPopUpController alloc ] init ];
+        [ self.view addSubview: alarm.view ];
+    }
+    if ( ! v && alarm.isShowing ){
+        alarm.isShowing = NO;
+    } else if ( v ) {
+        [ alarm showWithNote: drawing.note ];
+    }
+}
+
+
+-(void)setIsDrawToolsShowing:(BOOL)v{
+    if ( ! drawTools.isViewLoaded ){
+        [ self.view insertSubview: drawTools.view belowSubview: toolbar ];
+    }
+    drawTools.isShowing = v;
+}
+
+-(BOOL)isDrawToolsShowing {
+    return [ drawTools isShowing ];
 }
 
 

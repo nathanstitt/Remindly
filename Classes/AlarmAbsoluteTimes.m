@@ -16,19 +16,20 @@
 */
 
 #import "AlarmAbsoluteTimes.h"
-#import "AlarmPopUpView.h"
+#import "AlarmPopUpController.h"
 #import "Note.h"
 
 @implementation AlarmAbsoluteTimes
 
-@synthesize view=picker,wasSet;
+@synthesize view=picker;
 
--(id)initWithAlarmView:(AlarmPopUpView*)view {
+-(id)initWithAlarmView:(AlarmPopUpController*)c frame:(CGRect)frame {
 	self = [ super init ];
 	if ( ! self ){
 		return nil;
 	}
-	picker = [[ UIDatePicker alloc ] initWithFrame: CGRectMake( 0, 205, 320, 320) ];
+    controller = c;
+	picker = [[ UIDatePicker alloc ] initWithFrame: frame ];
     [ picker addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
 
 	return self;
@@ -36,11 +37,10 @@
 
 
 -(void)datePickerChanged:(id)picker {
-    wasSet = YES;
+    [ controller absSelectionMade ];
 }
 
 -(void)reset {
-    wasSet = NO;
 	picker.date = [ NSDate date ];
 }
 
@@ -48,15 +48,18 @@
 	return picker.date;
 }
 
+
 -(void)setDate:(NSDate*)date{
 	if ( date ){
 		picker.date = date;
 	}
 }
 
+
 - (void)dealloc {
     [super dealloc];
 }
+
 
 -(void)saveToNote:(Note*)note{
 	static NSDateFormatter *formmatter;

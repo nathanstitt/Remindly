@@ -13,18 +13,10 @@
 #import "NoteSelectorController.h"
 #import "StoreView.h"
 #import "UIColor+Expanded.h"
-#import "DrawingToolsPanel.h"
+#import "DrawingPaletteController.h"
+#import "DrawingPaletteTool.h"
 
 @implementation MainToolBar
-
--(UIBarButtonItem*)makeBarButton:(UIColor*)c{
-	ColorButton *b = [[ ColorButton alloc ] initWithColor: c ];
-	[ b addTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
-	UIBarButtonItem *bbt = [[UIBarButtonItem alloc ] initWithCustomView: b ];
-	[ b release ];
-	return [ bbt autorelease ];
-}
-
 
 -(id)initWithController:(MainViewController*)m {
 	self = [ super init ];
@@ -47,27 +39,22 @@
 	
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
 
-    NSString *df =[ prefs stringForKey:@"lastColorUsed" ];
-	if ( df ){
-		mvc.drawing.color = [ UIColor colorWithHexString: df ];
-	} else {
-		mvc.drawing.color = [ UIColor lightGrayColor];
-	}
-	pickerBtn = [ self makeBarButton: mvc.drawing.color ];
-	[ pickerBtn retain ];
-	
+    ColorButton *b = [[ ColorButton alloc ] initWithColor: mvc.drawTools.color ];
+    [ b  setBrushImage: [ mvc.drawTools.tool imageView ].image ];
+    [ b addTarget:self action:@selector(showColors:) forControlEvents:UIControlEventTouchUpInside ];
+	pickerBtn = [[UIBarButtonItem alloc ] initWithCustomView: b ];
+	[ b release ];
+    
+		
 	UIBarButtonItem *add = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
-	[ ((ColorButton*)pickerBtn.customView) removeTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
-	[ ((ColorButton*)pickerBtn.customView) addTarget:self action:@selector(showColors:) forControlEvents:UIControlEventTouchUpInside ];
-
-	drawButtons=[ NSArray arrayWithObjects: pickerBtn, space, add, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
+	drawButtons=[ NSArray arrayWithObjects: add, space, pickerBtn, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
 	[ drawButtons retain ];
-	self.items = drawButtons;
 	[add release ];
-	
+    
+	self.items = drawButtons;
+    
 	add = [[ UIBarButtonItem alloc ] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:) ];
 	UIBarButtonItem *done = [[ UIBarButtonItem alloc ] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleDrawingMode:) ];
 
@@ -75,7 +62,6 @@
 
     UIBarButtonItem *forward = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(noteForward:) ];
 
-    
 	selButtons  = [ NSArray arrayWithObjects:  add, space, backward, space, forward, space, done, NULL ];
 	[ selButtons retain ];
 
@@ -89,23 +75,29 @@
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(countChanged:) name:NOTES_COUNT_CHANGED_NOTICE object:nil];
 
-	colorButtons = [ NSArray arrayWithObjects:
-	 [ self makeBarButton:[UIColor blackColor] ],
-	 [ self makeBarButton:[UIColor grayColor ] ],
-	 [ self makeBarButton:[UIColor redColor ] ],
-	 [ self makeBarButton:[UIColor greenColor ] ],
-	 [ self makeBarButton:[UIColor blueColor ] ],
-	 [ self makeBarButton:[UIColor yellowColor ] ],
-	 [ self makeBarButton:[UIColor magentaColor ] ],
-	 [ self makeBarButton:[UIColor orangeColor ] ],
-	 [ self makeBarButton:[UIColor brownColor ] ],
-	 NULL ];
-	[ colorButtons retain ];
-	
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(drawingBegan:) name:DRAWING_BEGAN_NOTIFICATION object:nil];
 	
+    [ mvc.drawTools addObserver:self forKeyPath:@"color" options:(NSKeyValueObservingOptionNew ) context:NULL];
+
+    [ mvc.drawTools addObserver:self forKeyPath:@"tool" options:(NSKeyValueObservingOptionNew ) context:NULL];
+    mvc.drawing.lineWidth = mvc.drawTools.tool.drawingWidth;
+    
 	return self;
+}
+
+
+-(void) showColors:(id)sel{
+    mvc.isDrawToolsShowing = ! mvc.isDrawToolsShowing;
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ( [ keyPath isEqual:@"color" ] ) {
+        ((ColorButton*)pickerBtn.customView).color = mvc.drawing.color = mvc.drawTools.color;
+    } else if ( [ keyPath isEqual:@"tool" ] ){
+        mvc.drawing.lineWidth = ( ( mvc.drawTools.tool.tag * 3.0 ) + 1 );
+        [ ((ColorButton*)pickerBtn.customView) setBrushImage: [ mvc.drawTools.tool imageView ].image ];
+    }
 }
 
 -(void)noteBackward:(id)btn {
@@ -123,22 +115,6 @@
 }
 
 
--(void)colorSelected:(ColorButton*)cv {
-	mvc.drawing.color =  cv.color;
-	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-	[ prefs setValue:[ cv.color hexStringFromColor] forKey:@"lastColorUsed" ];
-	[ prefs synchronize ];
-	((ColorButton*)pickerBtn.customView).color = mvc.drawing.color;
-	[ self setItems:drawButtons animated:YES];
-}
-
-
--(void) showColors:(id)sel{
-    mvc.drawTools.isShowing = ! mvc.drawTools.isShowing;
-//	[ self setItems:colorButtons animated:YES];	
-}
-
-
 -(void) setDrawingMode:(BOOL)draw{
 	if ( draw ){
 		[ self setItems: drawButtons animated:YES];	
@@ -151,7 +127,7 @@
 -(void)toggleErase:(id)sel{
 	mvc.drawing.isErasing = ! mvc.drawing.isErasing;
 	eraseBtn.isErasing = mvc.drawing.isErasing;
-	
+	mvc.isDrawToolsShowing = NO;
 }
 
 
@@ -173,22 +149,20 @@
 		[alert show];
 		[alert release];
 	}
+	mvc.isDrawToolsShowing = NO;
 }
 
 
 -(void)addTextPressed:(id)sel{
 	[ mvc.drawing addText ];
+	mvc.isDrawToolsShowing = NO;
 }
 
 
 -(void)showAlarm {
-	if ( mvc.alarm.isShowing ){
-		mvc.alarm.isShowing=NO;
-	} else {
-		[ mvc.alarm showWithNote: mvc.drawing.note ];
-	}
+	mvc.isDrawToolsShowing = NO;
+    mvc.isAlarmShowing = ! mvc.isAlarmShowing;
 }
-
 
 
 -(void)setAlarmPressed:(id)sel {
@@ -198,10 +172,11 @@
 
 -(void)toggleDrawingMode:(id)btn {
 	[ mvc toggleDrawingMode ];
+	mvc.isDrawToolsShowing = NO;
 }
 
-
 #pragma mark UIAlertViewDelegate delegate methods
+
 - (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if ( 1 == buttonIndex ){
 		StoreView *store = [[ StoreView alloc ] initAndShowInto: mvc.view ];
@@ -214,7 +189,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self ];
 	[ drawButtons release ];
 	[ selButtons release ];
-	[ colorBtn release ];
 	[ eraseBtn release ];
     [super dealloc];
 }

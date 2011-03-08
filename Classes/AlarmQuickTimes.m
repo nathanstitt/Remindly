@@ -17,21 +17,21 @@
 
 
 #import "AlarmQuickTImes.h"
-#import "AlarmPopUpView.h"
+#import "AlarmPopUpController.h"
 #import "Note.h"
 
 @implementation AlarmQuickTimes
 
-@synthesize view=picker,wasSet;
+@synthesize view=picker;
 
--(id)initWithAlarmView:(AlarmPopUpView*)view {
+-(id)initWithAlarmView:(AlarmPopUpController*)view frame:(CGRect)frame {
 	self = [ super init ];
 	if ( ! self ){
 		return nil;
 	}
 
 	alarmView = view;
-	picker = [[UIPickerView alloc] initWithFrame: CGRectMake(0.0, 20.0, 320.0, 90.0) ];
+	picker = [[UIPickerView alloc] initWithFrame: frame ];
     picker.delegate = self;
     picker.showsSelectionIndicator = YES;
 	picker.dataSource = self;
@@ -45,8 +45,15 @@
 	return self;
 }
 
+-(void)selectBlank {
+    [ picker selectRow:0 inComponent:0 animated:YES ];
+}
+
+- (BOOL) isSet {
+    return ( [ picker selectedRowInComponent:0 ] > 0 );
+}
+
 -(void)reset {
-    wasSet = NO;
 	[ picker selectRow:4 inComponent:0 animated:YES ];
 }
 
@@ -84,6 +91,7 @@
 }
 
 
+
 - (void)dealloc {
 	[ picker release ];
 	[ super dealloc  ];
@@ -92,7 +100,6 @@
 #pragma mark PickerViewController delegate methods
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-	wasSet = YES;
 	[ alarmView quickSelectionMade ];
 }
 

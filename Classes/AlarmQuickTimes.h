@@ -10,24 +10,25 @@
 
 #import <Foundation/Foundation.h>
 
-@class AlarmPopUpView,Note;
+@class AlarmPopUpController,Note;
 
 @interface AlarmQuickTimes : NSObject <UIPickerViewDelegate,UIPickerViewDataSource> {
 	UIPickerView *picker;
-	BOOL wasSet;
-	AlarmPopUpView *alarmView;
+	AlarmPopUpController *alarmView;
 	NSDictionary *choicesTimes;
 	NSArray *quickChoices;
 }
 
--(id)initWithAlarmView:(AlarmPopUpView*)view;
+-(id)initWithAlarmView:(AlarmPopUpController*)view frame:(CGRect)frame;
 -(void)setFromNote:(Note*)note;
 -(void)saveToNote:(Note*)note;
 -(NSDate*)date;
 -(void)reset;
 -(BOOL)hasDateType:(NSString*)name;
 
+
 @property (readonly,nonatomic) UIView *view;
-@property (nonatomic,readonly ) BOOL wasSet;
+-(void)selectBlank;
+-(BOOL)isSet;
 
 @end

@@ -15,11 +15,10 @@
 #import "AlarmAbsoluteTimes.h"
 #import "AlarmMapView.h"
 
-@class AlarmViewController;
+@class AlarmPopUpController;
 
 
-
-@interface AlarmViewController : UIView {
+@interface AlarmPopUpController : UIViewController {
 	AlarmQuickTimes *quickTimes;
 	AlarmAbsoluteTimes *absTimes;
 	AlarmMapView *mapView;
@@ -28,14 +27,14 @@
 	NSInteger lastTab;
 	UITabBar *tabBar;
 	Note *currentNote;
+
+    NSMutableArray *panels;
 }
 
 -(void)showWithNote:(Note*)note;
-
-
 -(void)quickSelectionMade;
+-(void)absSelectionMade;
 
-@property (nonatomic,readonly) CGRect childFrame;
 @property (nonatomic,readonly ) BOOL wasSet;
 @property (nonatomic) BOOL isShowing;
 

@@ -24,7 +24,6 @@
 	BOOL isErasing;
 	BOOL wasMoved;
 	AlarmTitleButton *alarmTitle;
-
 	DrawingTextBox *currentTextEditBox;
 	UIColor *color;
 }
@@ -40,6 +39,9 @@
 
 // the current color
 @property (retain,nonatomic) UIColor *color;
+
+// how thick the line should be
+@property (nonatomic) CGFloat lineWidth;
 
 // which note we're working from
 @property (nonatomic,retain) Note* note;
