@@ -39,22 +39,21 @@
 	
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
-
+    mvc.drawing.color = mvc.drawTools.color;
     ColorButton *b = [[ ColorButton alloc ] initWithColor: mvc.drawTools.color ];
     [ b  setBrushImage: [ mvc.drawTools.tool imageView ].image ];
     [ b addTarget:self action:@selector(showColors:) forControlEvents:UIControlEventTouchUpInside ];
 	pickerBtn = [[UIBarButtonItem alloc ] initWithCustomView: b ];
 	[ b release ];
-    
-		
+
 	UIBarButtonItem *add = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
 	drawButtons=[ NSArray arrayWithObjects: add, space, pickerBtn, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
 	[ drawButtons retain ];
 	[add release ];
-    
+
 	self.items = drawButtons;
-    
+
 	add = [[ UIBarButtonItem alloc ] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:) ];
 	UIBarButtonItem *done = [[ UIBarButtonItem alloc ] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(toggleDrawingMode:) ];
 
@@ -62,7 +61,7 @@
 
     UIBarButtonItem *forward = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(noteForward:) ];
 
-	selButtons  = [ NSArray arrayWithObjects:  add, space, backward, space, forward, space, done, NULL ];
+	selButtons = [ NSArray arrayWithObjects:  add, space, backward, space, forward, space, done, NULL ];
 	[ selButtons retain ];
 
     [ backward release ];

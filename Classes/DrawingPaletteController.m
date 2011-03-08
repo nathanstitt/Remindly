@@ -33,8 +33,9 @@
     if ( ! self ){
         return nil;
     }
-    
+
     self.color = [ UIColor colorWithHexString:[ [NSUserDefaults standardUserDefaults] stringForKey:@"lastColorUsed" ] ];
+
     tools = [ NSArray arrayWithObjects:    
              [ DrawingPaletteTool withImage: [ UIImage imageNamed:@"brush_small_picker"  ] frame: CGRectMake(230, 50, 45,70) ],
              [ DrawingPaletteTool withImage: [ UIImage imageNamed:@"brush_medium_picker" ] frame: CGRectMake(170, 50, 45,70) ],
