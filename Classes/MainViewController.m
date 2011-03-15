@@ -84,7 +84,6 @@
     return [ drawTools isShowing ];
 }
 
-
 -(void) setDrawingMode:(BOOL)v {
 	if ( v ){
 		drawing.note = [ NotesManager noteAtIndex: [ selector currentIndex ] ];

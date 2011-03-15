@@ -34,8 +34,17 @@
 	UIBarButtonItem *text  =  [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"text_icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(addTextPressed:) ];
 	UIBarButtonItem *alarm  = [[UIBarButtonItem alloc ] initWithImage:[UIImage imageNamed:@"alarm_icon" ] style:UIBarButtonItemStylePlain target:self action:@selector(setAlarmPressed:) ];
 
-	eraseBtn = [[DrawEraseButton alloc ] initWithDrawingState: YES ];
-	[ eraseBtn.button addTarget:self action: @selector(toggleErase:) forControlEvents:UIControlEventTouchUpInside ];
+    
+    UIImage *drawImg = [UIImage imageNamed:@"draw_icon"];
+	eraseBtn = [[ToggleButton alloc ] initWithImages: [ NSArray arrayWithObjects: 
+                                                      drawImg,
+                                                      [UIImage imageNamed:@"erase_icon"],
+                                                      nil ]
+                                              Frame: CGRectMake(0, 0, drawImg.size.width, drawImg.size.height) ];
+               
+	[ eraseBtn addTarget:self action: @selector(toggleErase:) forControlEvents:UIControlEventTouchUpInside ];
+    
+    UIBarButtonItem *deBtn = [[ UIBarButtonItem alloc ] initWithCustomView:eraseBtn ];
 	
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
@@ -48,7 +57,9 @@
 
 	UIBarButtonItem *add = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNote:) ];
 
-	drawButtons=[ NSArray arrayWithObjects: add, space, pickerBtn, space, eraseBtn, space, text, space, alarm, space, countBtn, NULL ];
+	drawButtons=[ NSArray arrayWithObjects: add, space, pickerBtn, space, deBtn, space, 
+                 text, space, alarm, space, countBtn, NULL ];
+    [ deBtn release ];
 	[ drawButtons retain ];
 	[add release ];
 
@@ -125,7 +136,7 @@
 
 -(void)toggleErase:(id)sel{
 	mvc.drawing.isErasing = ! mvc.drawing.isErasing;
-	eraseBtn.isErasing = mvc.drawing.isErasing;
+	eraseBtn.boolValue = mvc.drawing.isErasing;
 	mvc.isDrawToolsShowing = NO;
 }
 

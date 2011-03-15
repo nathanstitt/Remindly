@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ColorButton.h"
 #import "CountingButton.h"
-#import "DrawEraseButton.h"
+#import "ToggleButton.h"
 
 @class MainViewController,DrawingPaletteController;
 
@@ -19,8 +19,7 @@
 
 	NSArray *drawButtons;
 	NSArray *selButtons;
-	
-	DrawEraseButton *eraseBtn;
+	ToggleButton    *eraseBtn;
 	UIBarButtonItem *pickerBtn;
 	CountingButton *countBtn;
 

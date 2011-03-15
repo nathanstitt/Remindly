@@ -11,6 +11,7 @@
 #import "ColorButton.h"
 #import "UIColor+Expanded.h"
 #import "DrawingPaletteTool.h"
+#import "DrawingPaletteView.h"
 
 @implementation DrawingPaletteController
 
@@ -23,6 +24,7 @@
     [ self.view addSubview: b ];
     [ colorButtons addObject:b ];
 }
+
 -(void)makeTopButton:(NSString*)c{
     [ self makeButton:c ];
     buttonFrame.origin.x += buttonFrame.size.width+10;
@@ -33,9 +35,7 @@
     if ( ! self ){
         return nil;
     }
-
     self.color = [ UIColor colorWithHexString:[ [NSUserDefaults standardUserDefaults] stringForKey:@"lastColorUsed" ] ];
-
     tools = [ NSArray arrayWithObjects:    
              [ DrawingPaletteTool withImage: [ UIImage imageNamed:@"brush_small_picker"  ] frame: CGRectMake(230, 50, 45,70) ],
              [ DrawingPaletteTool withImage: [ UIImage imageNamed:@"brush_medium_picker" ] frame: CGRectMake(170, 50, 45,70) ],
@@ -61,16 +61,13 @@
 }
 
 -(void)loadView {
-    self.view = [[UIView alloc ] initWithFrame:CGRectMake(0, 480, 320, 320)];
+    DrawingPaletteTool *dpt = [[DrawingPaletteView alloc ] initWithFrame:CGRectMake(0, 480, 320, 320)];
+    self.view = dpt;
 
-    self.view.backgroundColor = [ UIColor colorWithHexString:@"9a9a9a" ];
-    
-    self.view.layer.cornerRadius = 45.0f;
-    
     buttonFrame = CGRectMake( 26, 20, 25, 25);
-    
+
     colorButtons = [[ NSMutableArray alloc ] init ];
-    
+
     [ self makeTopButton: @"black" ];
     [ self makeTopButton: @"beige" ];
     [ self makeTopButton: @"aqua" ];
@@ -79,16 +76,16 @@
     [ self makeTopButton: @"brown" ];
     [ self makeTopButton: @"burlywood" ];
     [ self makeTopButton: @"cadetblue" ];
-    
+
     buttonFrame = CGRectMake( 7, 50, 25, 25);
     [ self makeButton: @"chartreuse" ];
-    
+
     buttonFrame = CGRectMake( 7, 85, 25, 25);
     [ self makeButton: @"chocolate" ];
-    
+
     buttonFrame = CGRectMake( 7, 128, 25, 25);
     [ self makeButton: @"coral" ];
-    
+
     [ self makeTopButton: @"cornflowerblue" ];
     [ self makeTopButton: @"crimson" ];
     [ self makeTopButton: @"darkblue" ];
@@ -153,7 +150,7 @@
 	CGRect frame = self.view.frame;
    
 	if ( v ){
-		frame.origin.y = 260;
+		frame.origin.y = 250;
 	} else {
 		frame.origin.y = 480;
 	}

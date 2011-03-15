@@ -2,45 +2,45 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>1 Day</key>
-	<integer>1440</integer>
 	<key> </key>
 	<integer>0</integer>
-	<key>10 Minutes</key>
+	<key>1 Day</key>
+	<integer>1440</integer>
+	<key>10 Min.</key>
 	<integer>10</integer>
-	<key>12 Hours</key>
+	<key>12 Hour</key>
 	<integer>720</integer>
-	<key>15 Minutes</key>
+	<key>15 Min.</key>
 	<integer>15</integer>
 	<key>2 Days</key>
 	<integer>2880</integer>
-	<key>2 Hours</key>
+	<key>2 Hour</key>
 	<integer>120</integer>
 	<key>3 Days</key>
 	<integer>4320</integer>
-	<key>3 Hours</key>
+	<key>3 Hour</key>
 	<integer>180</integer>
-	<key>3 Minutes</key>
+	<key>3 Min.</key>
 	<integer>3</integer>
-	<key>4 Hours</key>
+	<key>4 Hour</key>
 	<integer>240</integer>
-	<key>45 Minutes</key>
+	<key>45 Min.</key>
 	<integer>45</integer>
-	<key>5 Minutes</key>
+	<key>5 Min.</key>
 	<integer>5</integer>
-	<key>6 Hours</key>
+	<key>6 Hour</key>
 	<integer>360</integer>
-	<key>8 Hours</key>
+	<key>8 Hour</key>
 	<integer>420</integer>
-	<key>Half Hour</key>
+	<key>1/2 Hour</key>
 	<integer>30</integer>
-	<key>Hour and a half</key>
+	<key>Hour &amp; 1/2</key>
 	<integer>90</integer>
 	<key>One Hour</key>
 	<integer>60</integer>
-	<key>One Week</key>
+	<key>7 Days</key>
 	<integer>10080</integer>
-	<key>Top of the Hour</key>
+	<key>Next Hour</key>
 	<integer>51</integer>
 </dict>
 </plist>

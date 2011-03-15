@@ -42,6 +42,15 @@
 	quickChoices = [ choicesTimes keysSortedByValueUsingSelector:@selector(compare:)];
 	[ quickChoices retain ];
 
+    picker.showsSelectionIndicator = NO;
+    
+    //Resize the picker, rotate it so that it is horizontal and set its position
+	CGAffineTransform rotate = CGAffineTransformMakeRotation(-3.14/2);     //horizontal angle -pi/2
+	rotate = CGAffineTransformScale(rotate, 1, 1.50);
+	CGAffineTransform t0 = CGAffineTransformMakeTranslation(1, -40.5);// (x,y) position
+	picker.transform = CGAffineTransformConcat(rotate,t0);
+	
+
 	return self;
 }
 
@@ -78,7 +87,12 @@
 
 
 -(NSDate*)date{
-	NSNumber *minutes = [ choicesTimes valueForKey: [ quickChoices objectAtIndex: [ picker selectedRowInComponent:0 ] ] ];
+    NSInteger selIndex = [ picker selectedRowInComponent:0 ];
+    NSLog(@"getDate - index: %i", selIndex );
+    if ( ! selIndex ){
+        selIndex = 1;
+    }
+	NSNumber *minutes = [ choicesTimes valueForKey: [ quickChoices objectAtIndex: selIndex] ];
 	if ( 51 == [ minutes intValue] ){
 		NSDate *now = [ NSDate date ];
 		NSDateComponents *components = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:now];
@@ -99,8 +113,45 @@
 
 #pragma mark PickerViewController delegate methods
 
+-(UIView *) pickerView:(UIPickerView *)pickerView 
+			viewForRow:(NSInteger) row
+          forComponent:(NSInteger)component 
+           reusingView:(UIView *)view {
+    
+	UILabel *label;
+
+//[ UIFont systemFontOfSize: 17 ];
+	label = [[UILabel alloc] initWithFrame:CGRectZero];
+	label.text = [ self pickerView:pickerView titleForRow:row forComponent:component];
+
+    label.numberOfLines = 0;
+    label.lineBreakMode = UILineBreakModeWordWrap;
+	label.textAlignment = UITextAlignmentCenter;
+	label.textColor = [UIColor blackColor];
+	label.textAlignment = UITextAlignmentCenter;
+	label.font = [UIFont fontWithName:@"AppleGothic" size:17.0];;
+
+	label.frame = CGRectMake(0, 0, 45, 60 );
+//							 [ self pickerView:pickerView widthForComponent:component], 
+//							 [ self pickerView:pickerView widthForComponent:component]);
+	label.backgroundColor = [UIColor clearColor];
+	label.opaque = YES;
+	
+	label.transform = CGAffineTransformRotate(label.transform, M_PI/2 );
+	return [ label autorelease ];
+}
+
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
+    return 80;
+}
+
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-	[ alarmView quickSelectionMade ];
+    if ( 0 == row ){
+        [ pickerView selectRow:1 inComponent:0 animated:YES ];
+    }
+    [ alarmView quickSelectionMade ];
+    
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {

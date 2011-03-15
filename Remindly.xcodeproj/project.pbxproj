@@ -46,6 +46,8 @@
 		4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45853369128B69BC00793A24 /* DrawingViewController.m */; };
 		459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 459402981296241000F11F95 /* AlarmQuickTimes.m */; };
 		459A438D12ECF7D3007119A1 /* ToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A438C12ECF7D3007119A1 /* ToggleButton.m */; };
+		459A4AEB132B1D8800C47BB2 /* PickerSelectionIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A4AEA132B1D8600C47BB2 /* PickerSelectionIndicator.m */; };
+		459AAD1E132EFE4D005826D6 /* DrawingPaletteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459AAD1D132EFE4C005826D6 /* DrawingPaletteView.m */; };
 		459EBCAD12FF307D00FF1DC0 /* arriving_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 459EBCA712FF307C00FF1DC0 /* arriving_icon.png */; };
 		459EBCAE12FF307D00FF1DC0 /* arriving_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 459EBCA812FF307D00FF1DC0 /* arriving_icon@2x.png */; };
 		459EBCAF12FF307D00FF1DC0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 459EBCA912FF307D00FF1DC0 /* Default.png */; };
@@ -77,7 +79,6 @@
 		45ED5AE912F121B800CF4A1D /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ED5AE612F121B800CF4A1D /* HPGrowingTextView.m */; };
 		45ED5AEA12F121B800CF4A1D /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ED5AE812F121B800CF4A1D /* HPTextViewInternal.m */; };
 		45EE569312A9F04D00732503 /* CountingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE569212A9F04D00732503 /* CountingButton.m */; };
-		45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EE571C12AB359200732503 /* DrawEraseButton.m */; };
 		45EE572F12AB383700732503 /* erase_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE572E12AB383700732503 /* erase_icon.png */; };
 		45EE582612AB5F2D00732503 /* photos_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EE582512AB5F2D00732503 /* photos_icon.png */; };
 /* End PBXBuildFile section */
@@ -142,6 +143,10 @@
 		459402981296241000F11F95 /* AlarmQuickTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmQuickTimes.m; sourceTree = "<group>"; };
 		459A438B12ECF7D3007119A1 /* ToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleButton.h; sourceTree = "<group>"; };
 		459A438C12ECF7D3007119A1 /* ToggleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToggleButton.m; sourceTree = "<group>"; };
+		459A4AE9132B1D8500C47BB2 /* PickerSelectionIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerSelectionIndicator.h; sourceTree = "<group>"; };
+		459A4AEA132B1D8600C47BB2 /* PickerSelectionIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerSelectionIndicator.m; sourceTree = "<group>"; };
+		459AAD1C132EFE4B005826D6 /* DrawingPaletteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingPaletteView.h; sourceTree = "<group>"; };
+		459AAD1D132EFE4C005826D6 /* DrawingPaletteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingPaletteView.m; sourceTree = "<group>"; };
 		459EBCA712FF307C00FF1DC0 /* arriving_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arriving_icon.png; path = Images/arriving_icon.png; sourceTree = "<group>"; };
 		459EBCA812FF307D00FF1DC0 /* arriving_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arriving_icon@2x.png"; path = "Images/arriving_icon@2x.png"; sourceTree = "<group>"; };
 		459EBCA912FF307D00FF1DC0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
@@ -185,8 +190,6 @@
 		45ED5AE812F121B800CF4A1D /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		45EE569112A9F04D00732503 /* CountingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountingButton.h; sourceTree = "<group>"; };
 		45EE569212A9F04D00732503 /* CountingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountingButton.m; sourceTree = "<group>"; };
-		45EE571B12AB359200732503 /* DrawEraseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawEraseButton.h; sourceTree = "<group>"; };
-		45EE571C12AB359200732503 /* DrawEraseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawEraseButton.m; sourceTree = "<group>"; };
 		45EE572E12AB383700732503 /* erase_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = erase_icon.png; path = Images/erase_icon.png; sourceTree = "<group>"; };
 		45EE582512AB5F2D00732503 /* photos_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = photos_icon.png; path = Images/photos_icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Remindly-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Remindly-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -303,6 +306,8 @@
 			children = (
 				45CE1409131DFAE600FEF25C /* DrawingPaletteController.h */,
 				45CE140A131DFAF000FEF25C /* DrawingPaletteController.m */,
+				459AAD1C132EFE4B005826D6 /* DrawingPaletteView.h */,
+				459AAD1D132EFE4C005826D6 /* DrawingPaletteView.m */,
 				452A33C5132080150042C4B0 /* DrawingPaletteTool.h */,
 				452A33C61320801A0042C4B0 /* DrawingPaletteTool.m */,
 				45A6C6E712A5F7E70027AF86 /* ColorButton.h */,
@@ -354,8 +359,6 @@
 				45853369128B69BC00793A24 /* DrawingViewController.m */,
 				45EE569112A9F04D00732503 /* CountingButton.h */,
 				45EE569212A9F04D00732503 /* CountingButton.m */,
-				45EE571B12AB359200732503 /* DrawEraseButton.h */,
-				45EE571C12AB359200732503 /* DrawEraseButton.m */,
 				4548DEAA12C55D0200815580 /* StoreView.h */,
 				4548DEAB12C55D0200815580 /* StoreView.m */,
 				45A6C54612A492010027AF86 /* AlarmTitleButton.h */,
@@ -411,6 +414,8 @@
 				45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationPin.m */,
 				45EC0D7912ECC54900DBD0B4 /* AlarmAnnotationLabel.h */,
 				45EC0D7A12ECC54900DBD0B4 /* AlarmAnnotationLabel.m */,
+				459A4AE9132B1D8500C47BB2 /* PickerSelectionIndicator.h */,
+				459A4AEA132B1D8600C47BB2 /* PickerSelectionIndicator.m */,
 			);
 			name = Alarm;
 			sourceTree = "<group>";
@@ -537,7 +542,6 @@
 				45A6C6E912A5F7E70027AF86 /* ColorButton.m in Sources */,
 				45BFB98F12A73604004EB7A2 /* AlarmAbsoluteTimes.m in Sources */,
 				45EE569312A9F04D00732503 /* CountingButton.m in Sources */,
-				45EE571D12AB359200732503 /* DrawEraseButton.m in Sources */,
 				4563DFB012B06C01004588A6 /* GradientButton.m in Sources */,
 				45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */,
 				4548DEAC12C55D0200815580 /* StoreView.m in Sources */,
@@ -553,6 +557,8 @@
 				4505B10E12F5C68700A057D6 /* UIColor+Expanded.m in Sources */,
 				45CE140B131DFB0100FEF25C /* DrawingPaletteController.m in Sources */,
 				452A33C7132080210042C4B0 /* DrawingPaletteTool.m in Sources */,
+				459A4AEB132B1D8800C47BB2 /* PickerSelectionIndicator.m in Sources */,
+				459AAD1E132EFE4D005826D6 /* DrawingPaletteView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,14 +629,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: nathan stitt (N2BSSH8J3G)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C5DC1EEC-05E7-44C5-9555-F5347B9CE76B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
