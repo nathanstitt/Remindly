@@ -70,6 +70,7 @@
 		45C3BEC312EC918C004CB303 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C3BEC212EC918C004CB303 /* MapKit.framework */; };
 		45CE140B131DFB0100FEF25C /* DrawingPaletteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45CE140A131DFAF000FEF25C /* DrawingPaletteController.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
+		45DE1B821336D6BB00963072 /* AlarmSounds.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DE1B811336D6BB00963072 /* AlarmSounds.m */; };
 		45EBDA3312BEFB4F001999A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EBDA3212BEFB4F001999A4 /* StoreKit.framework */; };
 		45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EBDA3712BEFC72001999A4 /* PurchaseManager.m */; };
 		45EC0C6A12ECADE900DBD0B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */; };
@@ -174,6 +175,8 @@
 		45CE1409131DFAE600FEF25C /* DrawingPaletteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingPaletteController.h; sourceTree = "<group>"; };
 		45CE140A131DFAF000FEF25C /* DrawingPaletteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingPaletteController.m; sourceTree = "<group>"; };
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
+		45DE1B801336D6BB00963072 /* AlarmSounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmSounds.h; sourceTree = "<group>"; };
+		45DE1B811336D6BB00963072 /* AlarmSounds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmSounds.m; sourceTree = "<group>"; };
 		45EBDA3212BEFB4F001999A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		45EBDA3612BEFC72001999A4 /* PurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseManager.h; sourceTree = "<group>"; };
 		45EBDA3712BEFC72001999A4 /* PurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseManager.m; sourceTree = "<group>"; };
@@ -410,6 +413,8 @@
 				45BFB98E12A73604004EB7A2 /* AlarmAbsoluteTimes.m */,
 				45C3BEB312EC908A004CB303 /* AlarmMapView.h */,
 				45C3BEB412EC908A004CB303 /* AlarmMapView.m */,
+				45DE1B801336D6BB00963072 /* AlarmSounds.h */,
+				45DE1B811336D6BB00963072 /* AlarmSounds.m */,
 				45EC0D7612ECC4C100DBD0B4 /* AlarmAnnotationPin.h */,
 				45EC0D7712ECC4C100DBD0B4 /* AlarmAnnotationPin.m */,
 				45EC0D7912ECC54900DBD0B4 /* AlarmAnnotationLabel.h */,
@@ -559,6 +564,7 @@
 				452A33C7132080210042C4B0 /* DrawingPaletteTool.m in Sources */,
 				459A4AEB132B1D8800C47BB2 /* PickerSelectionIndicator.m in Sources */,
 				459AAD1E132EFE4D005826D6 /* DrawingPaletteView.m in Sources */,
+				45DE1B821336D6BB00963072 /* AlarmSounds.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

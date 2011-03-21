@@ -23,6 +23,19 @@
 @property (nonatomic) CGRect frame;
 @end
 
+typedef enum {
+    QUICK_TIME_TYPE = 0,
+    ABS_TIME_TYPE   = 1,
+    MAP_TYPE        = 2
+} NoteAlarmType;
+
+typedef enum {
+    VOICE_TYPE      = 0,
+    BELL_TYPE       = 1,
+    TRUMPET_TYPE    = 2,
+    SYSTEM_DEF_TYPE = 3
+} NoteSoundType;
+
 @interface Note : NSObject {
 	NSMutableDictionary *plist;
 	UIImage *image;
@@ -82,7 +95,9 @@
 @property (readonly, nonatomic ) NSUInteger index;
 
 // how was this alarm set
-@property (nonatomic) NSInteger alarmTag;
+@property (nonatomic) NoteAlarmType alarmTag;
+
+@property (nonatomic) NoteSoundType soundTag;
 
 // the title is what appears above the drawing & selector controllers
 @property ( readonly, nonatomic ) NSString* alarmTitle;
@@ -95,6 +110,7 @@
 @property (assign,   nonatomic )  NSDate *fireDate;
 
 @property (retain,   nonatomic)   UILocalNotification *notification;
+
 @property (readonly, nonatomic)   NSString *directory;
 
 

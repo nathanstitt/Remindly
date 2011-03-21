@@ -185,12 +185,20 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 	return ( nil != [plist valueForKey:@"longitude"] );
 }
 
--(NSInteger)alarmTag {
+-(NoteAlarmType)alarmTag {
 	return [[ plist valueForKey:@"alarmTag" ] intValue ];
 }
 
--(void)setAlarmTag:(NSInteger)tag {
+-(void)setAlarmTag:(NoteAlarmType)tag {
 	[ plist setObject:[ NSNumber numberWithInt: tag ] forKey:@"alarmTag" ];
+}
+
+-(NoteSoundType)soundTag {
+	return [[ plist valueForKey:@"soundTag" ] intValue ];
+}
+
+-(void)setSoundTag:(NoteSoundType)tag {
+	[ plist setObject:[ NSNumber numberWithInt: tag ] forKey:@"soundTag" ];
 }
 
 -(void)save {

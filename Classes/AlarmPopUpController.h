@@ -14,6 +14,7 @@
 #import "AlarmQuickTimes.h"
 #import "AlarmAbsoluteTimes.h"
 #import "AlarmMapView.h"
+#import "AlarmSounds.h"
 
 @class AlarmPopUpController;
 
@@ -22,12 +23,14 @@
 	AlarmQuickTimes *quickTimes;
 	AlarmAbsoluteTimes *absTimes;
 	AlarmMapView *mapView;
+    AlarmSounds *sounds;
+    
 	BOOL wasSet;
 	UISegmentedControl *typeCtrl;
 	NSInteger lastTab;
 	UITabBar *tabBar;
 	Note *currentNote;
-
+    
     NSMutableArray *panels;
 }
 

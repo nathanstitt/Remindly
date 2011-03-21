@@ -101,8 +101,6 @@
 	}
 	drawImage.image = note.image;
 	[ self updateTitle:NULL ];
-
-
 }
 
 

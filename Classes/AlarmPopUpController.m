@@ -39,12 +39,11 @@
               ];
 
     [ panels retain ];
-	absTimes = [[AlarmAbsoluteTimes alloc ] initWithAlarmView:self frame:CGRectMake(  0.0,   0.0, 320.0,  90.0  ) ];
+	absTimes   = [[AlarmAbsoluteTimes alloc ] initWithAlarmView:self frame:CGRectMake(  0.0,   0.0, 320.0,  90.0  ) ];
 	quickTimes = [[ AlarmQuickTimes alloc ] initWithAlarmView:self frame:CGRectMake( -4.0, 178.0, 320.0, 320.0 ) ];
-
+    
 	[ [ panels objectAtIndex:0 ] addSubview: quickTimes.view ];
 	[ [ panels objectAtIndex:0 ] addSubview: absTimes.view ];
-
    
     UIView *lvbar = [ [UIView alloc ] initWithFrame: CGRectMake( 0, 120, 10, 200 ) ];
     lvbar.backgroundColor = [ UIColor blackColor ];
@@ -62,13 +61,16 @@
     [ hbar release ];
 
 	NSArray *titles;
-	if ( [CLLocationManager significantLocationChangeMonitoringAvailable] ){
+	if ( YES || [CLLocationManager significantLocationChangeMonitoringAvailable] ){
         mapView = [[ AlarmMapView alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 320 )];
         [ panels addObject: mapView.view ];
-		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Map", nil]; 
+		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Map", @"Sounds", nil ];
 	} else {
-		titles = [ NSArray arrayWithObjects: @"Time/Date", nil];
+		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Sound", nil ];
 	}
+
+    sounds     = [[ AlarmSounds alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 320 )];
+    [ panels addObject: sounds.view ];
 
     for ( UIView *v in panels ){
         [ self.view addSubview: v ];

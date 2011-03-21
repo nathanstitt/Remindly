@@ -160,7 +160,7 @@ NSString * formatDecimal_1(NSNumber *num) {
               newLocation.horizontalAccuracy );
 
         if ( newLocation.horizontalAccuracy < ALARM_METER_RADIUS ){
-            
+
             for ( Note *note in [ notes allValues ] ){
                 meters = MKMetersBetweenMapPoints( MKMapPointForCoordinate( newLocation.coordinate ),
                                                    MKMapPointForCoordinate( note.coordinate ) );
@@ -171,6 +171,7 @@ NSString * formatDecimal_1(NSNumber *num) {
                           note.coordinate.latitude, 
                           note.coordinate.longitude,
                           meters );
+
                 } else if ( meters > ( ALARM_METER_RADIUS * 1.5 ) && ! note.onEnterRegion ) {
                     [ self fireNoteAlarm:note ];
                     NSLog(@"Fired Exit Alarm: %f %f distance: %f", 
@@ -179,11 +180,8 @@ NSString * formatDecimal_1(NSNumber *num) {
                           meters );
                 }
             }
-            
             self.lastLocation = newLocation;
-            
 		}
-
 	}
 }
 
