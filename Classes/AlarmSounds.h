@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Note.h"
+#import <AVFoundation/AVAudioPlayer.h>
 
 @class AlarmPopUpController;
 
 
-@interface AlarmSounds : UITableViewController {
+@interface AlarmSounds : UITableViewController < AVAudioPlayerDelegate > {
     NoteSoundType snd;
 
 }

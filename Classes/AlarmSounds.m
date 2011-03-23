@@ -8,6 +8,7 @@
 
 #import "AlarmSounds.h"
 #import "AlarmPopUpController.h"
+#import <AudioToolbox/AudioServices.h>
 
 @implementation AlarmSounds
 
@@ -22,10 +23,7 @@
 
 -(void)viewDidLoad {
     [ super viewDidLoad ];
-    
     self.view.backgroundColor = [ UIColor blackColor ];
-
-    
 }
 
 -(void) setFromNote:(Note*)n {
@@ -43,17 +41,19 @@
 
 
 
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40.0;
+    return 0.0;
 }
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return SOUND_TYPE_MAX;
 }
 
 
@@ -63,9 +63,13 @@
 
 }
 
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tv accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    return snd == indexPath.row ?  UITableViewCellAccessoryCheckmark  : UITableViewCellAccessoryNone;
+//- (UITableViewCellAccessoryType)tableView:(UITableView *)tv accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
+//{
+//    return snd == indexPath.row ?  UITableViewCellAccessoryCheckmark  : UITableViewCellAccessoryNone;
+//}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
+    return 36.0;
 }
 
 
@@ -74,27 +78,75 @@
     [ tableView reloadData ];
 }
 
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [ player release ];
+}
+
+-(void)playSound:(UIButton*)btn {
+    UITableViewCell *cell = ( (UITableViewCell*) btn.superview.superview );
+    NSIndexPath *indexPath = [ self.tableView indexPathForCell:cell ];
+    NSLog(@"Row: %d", indexPath.row );
+    
+    if ( indexPath.row > 1 ){
+        NSString *path = [[NSBundle mainBundle] pathForResource:[ NSString stringWithFormat:@"%d", indexPath.row ] ofType:@"caf"];
+        if ( path ){
+            AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+            player.delegate = self;
+            [ player play ];
+        }
+
+    }
+
+
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [ tableView dequeueReusableCellWithIdentifier:@"SoundsCell" ];
+    UILabel *label;
     if (cell == nil) {
         cell = [[[ UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"SoundsCell" ] autorelease];
+        UIButton *btn = [ UIButton buttonWithType:UIButtonTypeCustom ];
+        btn.frame = CGRectMake( 8, 3, 30, 30);
+        [btn setBackgroundImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal ];
+        btn.backgroundColor = [ UIColor clearColor ];
+        [btn addTarget:self action:@selector(playSound:) forControlEvents: UIControlEventTouchUpInside ];
+        [ cell.contentView addSubview: btn ];        
+        label = [[[ UILabel alloc ] initWithFrame:CGRectMake(45, 0, 200, 30) ] autorelease];
+        [ cell.contentView addSubview:label ];
+    } else {
+        label = [cell.contentView.subviews objectAtIndex:1 ];
     }
+    cell.accessoryType = snd == indexPath.row ?  UITableViewCellAccessoryCheckmark  : UITableViewCellAccessoryNone;
+    cell.tag = indexPath.row;
     switch ( indexPath.row ) {
-        case 0:
-            cell.textLabel.text = @"Human Voice";
+        case SOUND_VOICE_TYPE:
+            label.text = @"Verbal";
             break;
-        case 1:
-            cell.textLabel.text = @"Bell";
+        case SOUND_SYSTEM_DEF_TYPE:
+            label.text = @"System Default";
             break;
-        case 2:
-            cell.textLabel.text = @"Trumpet";
+        case SOUND_BELL_TYPE:
+            label.text = @"Bell";
             break;
-        case 3:
-            cell.textLabel.text = @"System Default";
+        case SOUND_MELODY_TYPE:
+            label.text = @"Melody";
+            break;
+        case SOUND_CHIRP_TYPE:
+            label.text = @"Chirp Chrip";
+            break;
+        case SOUND_ROBOT_TYPE:
+            label.text = @"Computer Bloop";
+            break;
+        case SOUND_TIMER_TYPE:
+            label.text = @"Electronic Timer";
+            break;
+        case SOUND_KLAXOM_TYPE:
+            label.text = @"Klaxon";
             break;
         default:
             break;
     }
+    
     return cell;
 }
 

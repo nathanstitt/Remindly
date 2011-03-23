@@ -71,6 +71,15 @@
 		45CE140B131DFB0100FEF25C /* DrawingPaletteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45CE140A131DFAF000FEF25C /* DrawingPaletteController.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
 		45DE1B821336D6BB00963072 /* AlarmSounds.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DE1B811336D6BB00963072 /* AlarmSounds.m */; };
+		45DE1B9C1339972700963072 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 45DE1B9A1339972700963072 /* play.png */; };
+		45DE1B9D1339972700963072 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45DE1B9B1339972700963072 /* play@2x.png */; };
+		45DE1BA513399BFB00963072 /* 2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45DE1B9F13399BFB00963072 /* 2.caf */; };
+		45DE1BA613399BFB00963072 /* 3.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45DE1BA013399BFB00963072 /* 3.caf */; };
+		45DE1BA713399BFB00963072 /* 4.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45DE1BA113399BFB00963072 /* 4.caf */; };
+		45DE1BA813399BFB00963072 /* 5.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45DE1BA213399BFB00963072 /* 5.caf */; };
+		45DE1BA913399BFB00963072 /* 6.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45DE1BA313399BFB00963072 /* 6.caf */; };
+		45DE1BAA13399BFB00963072 /* 7.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45DE1BA413399BFB00963072 /* 7.caf */; };
+		45DE1BAC13399D4900963072 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45DE1BAB13399D4800963072 /* AVFoundation.framework */; };
 		45EBDA3312BEFB4F001999A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EBDA3212BEFB4F001999A4 /* StoreKit.framework */; };
 		45EBDA3812BEFC72001999A4 /* PurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EBDA3712BEFC72001999A4 /* PurchaseManager.m */; };
 		45EC0C6A12ECADE900DBD0B4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */; };
@@ -177,6 +186,15 @@
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
 		45DE1B801336D6BB00963072 /* AlarmSounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmSounds.h; sourceTree = "<group>"; };
 		45DE1B811336D6BB00963072 /* AlarmSounds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmSounds.m; sourceTree = "<group>"; };
+		45DE1B9A1339972700963072 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = Images/play.png; sourceTree = "<group>"; };
+		45DE1B9B1339972700963072 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "Images/play@2x.png"; sourceTree = "<group>"; };
+		45DE1B9F13399BFB00963072 /* 2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 2.caf; path = Sounds/2.caf; sourceTree = "<group>"; };
+		45DE1BA013399BFB00963072 /* 3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 3.caf; path = Sounds/3.caf; sourceTree = "<group>"; };
+		45DE1BA113399BFB00963072 /* 4.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 4.caf; path = Sounds/4.caf; sourceTree = "<group>"; };
+		45DE1BA213399BFB00963072 /* 5.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 5.caf; path = Sounds/5.caf; sourceTree = "<group>"; };
+		45DE1BA313399BFB00963072 /* 6.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 6.caf; path = Sounds/6.caf; sourceTree = "<group>"; };
+		45DE1BA413399BFB00963072 /* 7.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 7.caf; path = Sounds/7.caf; sourceTree = "<group>"; };
+		45DE1BAB13399D4800963072 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		45EBDA3212BEFB4F001999A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		45EBDA3612BEFC72001999A4 /* PurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseManager.h; sourceTree = "<group>"; };
 		45EBDA3712BEFC72001999A4 /* PurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseManager.m; sourceTree = "<group>"; };
@@ -203,6 +221,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45DE1BAC13399D4900963072 /* AVFoundation.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -267,6 +286,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				45DE1B9E13399BD800963072 /* Sounds */,
 				45D0BB9D1293874100470D80 /* alarm_times.plist */,
 				45017391128CE8C7003E71FE /* empty.plist */,
 				45823602128904C600EC555C /* Images */,
@@ -278,6 +298,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				45DE1BAB13399D4800963072 /* AVFoundation.framework */,
 				45C3BEC212EC918C004CB303 /* MapKit.framework */,
 				45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -375,6 +396,8 @@
 		45823602128904C600EC555C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				45DE1B9A1339972700963072 /* play.png */,
+				45DE1B9B1339972700963072 /* play@2x.png */,
 				452A33DE13208EC80042C4B0 /* Brushes */,
 				459EBCA912FF307D00FF1DC0 /* Default.png */,
 				456342AE12FFAD9700DDCB28 /* Default@2x.png */,
@@ -423,6 +446,19 @@
 				459A4AEA132B1D8600C47BB2 /* PickerSelectionIndicator.m */,
 			);
 			name = Alarm;
+			sourceTree = "<group>";
+		};
+		45DE1B9E13399BD800963072 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				45DE1B9F13399BFB00963072 /* 2.caf */,
+				45DE1BA013399BFB00963072 /* 3.caf */,
+				45DE1BA113399BFB00963072 /* 4.caf */,
+				45DE1BA213399BFB00963072 /* 5.caf */,
+				45DE1BA313399BFB00963072 /* 6.caf */,
+				45DE1BA413399BFB00963072 /* 7.caf */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		45ED5AE412F1218E00CF4A1D /* TextEditBox */ = {
@@ -521,6 +557,14 @@
 				452A33DB13208EC20042C4B0 /* brush_medium_picker@2x.png in Resources */,
 				452A33DC13208EC20042C4B0 /* brush_large_picker@2x.png in Resources */,
 				452A33DD13208EC20042C4B0 /* brush_large_picker.png in Resources */,
+				45DE1B9C1339972700963072 /* play.png in Resources */,
+				45DE1B9D1339972700963072 /* play@2x.png in Resources */,
+				45DE1BA513399BFB00963072 /* 2.caf in Resources */,
+				45DE1BA613399BFB00963072 /* 3.caf in Resources */,
+				45DE1BA713399BFB00963072 /* 4.caf in Resources */,
+				45DE1BA813399BFB00963072 /* 5.caf in Resources */,
+				45DE1BA913399BFB00963072 /* 6.caf in Resources */,
+				45DE1BAA13399BFB00963072 /* 7.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

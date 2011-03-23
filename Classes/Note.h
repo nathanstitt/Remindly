@@ -24,16 +24,21 @@
 @end
 
 typedef enum {
-    QUICK_TIME_TYPE = 0,
-    ABS_TIME_TYPE   = 1,
-    MAP_TYPE        = 2
+    ALARM_QUICK_TIME_TYPE = 0,
+    ALARM_ABS_TIME_TYPE   = 1,
+    ALARM_MAP_TYPE        = 2
 } NoteAlarmType;
 
 typedef enum {
-    VOICE_TYPE      = 0,
-    BELL_TYPE       = 1,
-    TRUMPET_TYPE    = 2,
-    SYSTEM_DEF_TYPE = 3
+    SOUND_VOICE_TYPE,
+    SOUND_SYSTEM_DEF_TYPE,
+    SOUND_BELL_TYPE,
+    SOUND_MELODY_TYPE,
+    SOUND_CHIRP_TYPE,
+    SOUND_ROBOT_TYPE,
+    SOUND_TIMER_TYPE,
+    SOUND_KLAXOM_TYPE,
+    SOUND_TYPE_MAX
 } NoteSoundType;
 
 @interface Note : NSObject {
