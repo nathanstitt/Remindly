@@ -84,6 +84,10 @@ typedef enum {
 -(BOOL)onEnterRegion;
 -(CLLocationCoordinate2D)coordinate;
 
+// path for sound that should be played when alarm is fired
+// returns nil if default sound should be played
+-(NSString*)soundPath;
+
 // remove the note from storage and cache
 -(void)removeSelf;
 

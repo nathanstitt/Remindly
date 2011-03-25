@@ -221,17 +221,44 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 	if ( notification ){
 		[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
 	}
+    NSLog(@"Unscedule note from note class");
 	[ LocationAlarmManager unregisterNote: self ];
 	[ plist removeObjectForKey:@"longitude" ];
 	[ plist removeObjectForKey:@"latitude" ];
     
 }
+-(NSString*)soundPath {
+    NSString *snd;
+    if ( SOUND_SYSTEM_DEF_TYPE == self.soundTag ){
+        return nil;
+    }
+     if ( SOUND_VOICE_TYPE == self.soundTag ){
+            if ( [self hasCoordinate ] && 2 == [ self alarmTag ] ){ 
+                snd = [ self onEnterRegion ] ? @"verbal-entering.caf" : @"verbal-exiting.caf";
+            } else {
+                if ( ALARM_QUICK_TIME_TYPE == self.alarmTag ){
+                    NSDictionary *times = [ [ NSDictionary alloc] initWithContentsOfFile:
+                               [ [ [ NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"alarm_times.plist"] ];
+                    snd = [ NSString stringWithFormat:@"v%@.caf", [ times objectForKey: self.alarmType ] ];
+                    [ times release ];
+                } else {
+                    snd = @"its-time.caf";
+                }
+            }
+    } else {
+        snd = [ NSString stringWithFormat:@"%d.caf", self.soundTag ];
+    }
+    return snd;
+}
 
 -(void)scedule {
 
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
+    
+
 	if ( [self hasCoordinate ] && 2 == [ self alarmTag ] ){
 		[ LocationAlarmManager registerNote: self ];
+       
 	} else if ( [ fd timeIntervalSinceNow ] > 0 ){
 		if ( notification ){
 			[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
@@ -243,9 +270,10 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
                                    self.alarmText ];
         NSLog(@"Added Alarm:\n%@",notification.alertBody);
 		notification.alertAction = @"View Note";
-		notification.soundName = UILocalNotificationDefaultSoundName;
+        NSString *snd = [self soundPath ];
+		notification.soundName =  snd ? snd : UILocalNotificationDefaultSoundName;
 		notification.applicationIconBadgeNumber = 1;
-		
+
 		NSDictionary *infoDict = [NSDictionary dictionaryWithObject: self.directory forKey:@"directory"];
 		notification.userInfo = infoDict;
 		[ [UIApplication sharedApplication] scheduleLocalNotification:notification ];

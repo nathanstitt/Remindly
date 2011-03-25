@@ -64,9 +64,9 @@
 	if ( YES || [CLLocationManager significantLocationChangeMonitoringAvailable] ){
         mapView = [[ AlarmMapView alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 320 )];
         [ panels addObject: mapView.view ];
-		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Map", @"Sounds", nil ];
+		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Map", @"Alarm Sound", nil ];
 	} else {
-		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Sound", nil ];
+		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Alarm Sound", nil ];
 	}
 
     sounds     = [[ AlarmSounds alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 320 )];
@@ -143,6 +143,7 @@
 		default:
 			break;
 	}
+    [ sounds saveToNote: currentNote ];
 	[ currentNote save ];
 	[ currentNote scedule ];
 	self.isShowing = NO;

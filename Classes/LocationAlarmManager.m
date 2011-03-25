@@ -60,14 +60,15 @@ LocationAlarmManager *instance;
 
 -(void)fireNoteAlarm:(Note*)note {
 	UILocalNotification *notification = [[UILocalNotification alloc] init];
-
+    NSLog(@"firing note");
 	notification.fireDate =  [ NSDate date ];
 	notification.timeZone =  [ NSTimeZone defaultTimeZone];
 	notification.alertBody = [ NSString stringWithFormat:@"Location %@\n%@", 
 							   note.onEnterRegion ? @"Reached" : @"Left",
 							   note.alarmText ];
 	notification.alertAction = @"View Note";
-	notification.soundName = UILocalNotificationDefaultSoundName;
+    NSString *snd = [ note soundPath ];
+    notification.soundName =  snd ? snd : UILocalNotificationDefaultSoundName;    
 	notification.applicationIconBadgeNumber = 1;
 
 	[ [UIApplication sharedApplication] presentLocalNotificationNow:notification ];

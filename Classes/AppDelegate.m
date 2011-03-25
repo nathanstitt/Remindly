@@ -20,6 +20,7 @@
 #import "NotesManager.h"
 #import "PurchaseManager.h"
 #import "LocationAlarmManager.h"
+#import <AudioToolbox/AudioServices.h>
 
 @implementation AppDelegate
 
@@ -70,6 +71,9 @@
 	}
 }
 
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [ player release ];
+}
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
 
@@ -86,6 +90,12 @@
 		Note *note = [[ NotesManager instance ] noteWithDirectory:
 					   [ notification.userInfo objectForKey:@"directory"]  ];
 		if ( note ){
+            NSURL *url = [[NSBundle mainBundle ] URLForResource:[note soundPath] withExtension:NULL  ];
+           
+            AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:NULL];
+            player.delegate = self;
+            [ player play ];
+            
 			pendingNote = note;
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"
 												 message:notification.alertBody

@@ -10,12 +10,13 @@
 #import "Note.h"
 #import <AVFoundation/AVAudioPlayer.h>
 
-@class AlarmPopUpController;
+@class AlarmPopUpController,ToggleButton;
 
 
 @interface AlarmSounds : UITableViewController < AVAudioPlayerDelegate > {
     NoteSoundType snd;
-
+    ToggleButton  *playingBtn;
+    AVAudioPlayer *player;
 }
 
 -(id)initWithAlarmView:(AlarmPopUpController*)view frame:(CGRect)frame;

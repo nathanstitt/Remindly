@@ -15,7 +15,9 @@
 #import "Note.h"
 #import "PurchaseManager.h"
 
-@interface AppDelegate : NSObject <UIApplicationDelegate,UIAlertViewDelegate> {
+@interface AppDelegate : NSObject <UIApplicationDelegate,
+                                UIAlertViewDelegate, AVAudioPlayerDelegate> 
+{
     UIWindow *window;
 	MainViewController *mvc;
 	Note *pendingNote;

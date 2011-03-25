@@ -9,14 +9,14 @@
 #import "AlarmSounds.h"
 #import "AlarmPopUpController.h"
 #import <AudioToolbox/AudioServices.h>
-
+#import "ToggleButton.h"
 @implementation AlarmSounds
 
 -(id)initWithAlarmView:(AlarmPopUpController*)view frame:(CGRect)frame
 {
     self = [super initWithStyle: UITableViewStyleGrouped ];
     if (self) {
-
+        snd = [ [NSUserDefaults standardUserDefaults] integerForKey:@"lastSoundSelected" ];
     }
     return self;
 }
@@ -24,6 +24,7 @@
 -(void)viewDidLoad {
     [ super viewDidLoad ];
     self.view.backgroundColor = [ UIColor blackColor ];
+    self.tableView.alwaysBounceVertical = NO;
 }
 
 -(void) setFromNote:(Note*)n {
@@ -36,6 +37,7 @@
 
 - (void)dealloc
 {
+    [ player release ];
     [super dealloc];
 }
 
@@ -57,16 +59,6 @@
 }
 
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
-    // id cell = [ tableView cellForRowAtIndexPath:indexPath ];
-    
-
-}
-
-//- (UITableViewCellAccessoryType)tableView:(UITableView *)tv accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-//{
-//    return snd == indexPath.row ?  UITableViewCellAccessoryCheckmark  : UITableViewCellAccessoryNone;
-//}
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
     return 36.0;
@@ -75,27 +67,42 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     snd = indexPath.row;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	[ prefs setValue: [NSNumber numberWithInt: snd ] forKey:@"lastSoundSelected" ];
+	[ prefs synchronize ];
     [ tableView reloadData ];
 }
 
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)p successfully:(BOOL)flag{
+    playingBtn.selectedIndex=0;
+    playingBtn = nil;
     [ player release ];
+    player = nil;
 }
 
--(void)playSound:(UIButton*)btn {
+-(void)playSound:(ToggleButton*)btn {
     UITableViewCell *cell = ( (UITableViewCell*) btn.superview.superview );
     NSIndexPath *indexPath = [ self.tableView indexPathForCell:cell ];
-    NSLog(@"Row: %d", indexPath.row );
     
-    if ( indexPath.row > 1 ){
-        NSString *path = [[NSBundle mainBundle] pathForResource:[ NSString stringWithFormat:@"%d", indexPath.row ] ofType:@"caf"];
-        if ( path ){
-            AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+//    if ( indexPath.row > 0 ){
+        NSURL *url = [NSURL fileURLWithPath: [[NSBundle mainBundle] pathForResource:
+                                              [ NSString stringWithFormat:@"%d", indexPath.row ] ofType:@"caf"] ];
+        if ( player ){
+            [ player stop ];
+            [ player release ];
+            player = nil;
+            playingBtn.selectedIndex = 0;
+        } 
+        if ( playingBtn == btn ) {
+            playingBtn = nil;
+        } else {
+            player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:NULL];
             player.delegate = self;
             [ player play ];
+            playingBtn = btn;
         }
 
-    }
+//    }
 
 
 }
@@ -105,12 +112,15 @@
     UILabel *label;
     if (cell == nil) {
         cell = [[[ UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"SoundsCell" ] autorelease];
-        UIButton *btn = [ UIButton buttonWithType:UIButtonTypeCustom ];
-        btn.frame = CGRectMake( 8, 3, 30, 30);
-        [btn setBackgroundImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal ];
-        btn.backgroundColor = [ UIColor clearColor ];
-        [btn addTarget:self action:@selector(playSound:) forControlEvents: UIControlEventTouchUpInside ];
-        [ cell.contentView addSubview: btn ];        
+        ToggleButton *btn = [ [ ToggleButton alloc ] initWithImages:[ NSArray arrayWithObjects:
+                                                                   [UIImage imageNamed:@"play.png"],
+                                                                   [UIImage imageNamed:@"stop.png"],
+                                                                   nil ]
+                                                              Frame:CGRectMake( 8, 3, 30, 30) ];
+        
+        [ btn addTarget:self action:@selector(playSound:) forControlEvents: UIControlEventTouchUpInside ];
+        [ cell.contentView addSubview: btn ];
+        [ btn release ];
         label = [[[ UILabel alloc ] initWithFrame:CGRectMake(45, 0, 200, 30) ] autorelease];
         [ cell.contentView addSubview:label ];
     } else {
@@ -120,7 +130,7 @@
     cell.tag = indexPath.row;
     switch ( indexPath.row ) {
         case SOUND_VOICE_TYPE:
-            label.text = @"Verbal";
+            label.text = @"Spoken";
             break;
         case SOUND_SYSTEM_DEF_TYPE:
             label.text = @"System Default";

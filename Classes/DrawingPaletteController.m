@@ -23,6 +23,7 @@
 	[ b addTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
     [ self.view addSubview: b ];
     [ colorButtons addObject:b ];
+    [ b release ];
 }
 
 -(void)makeTopButton:(NSString*)c{
