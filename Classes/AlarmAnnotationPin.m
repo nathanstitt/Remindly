@@ -25,7 +25,6 @@
         [ l release ];
 		return nil;
 	}
-    label = l;
 	button = [ [ ToggleButton alloc ] initWithImages: [ NSArray arrayWithObjects: 
 														[ UIImage imageNamed:@"departing2"],
 													    [ UIImage imageNamed:@"arriving_icon" ],nil  ] 
@@ -56,7 +55,6 @@
 }
 
 -(void)setOnEnter:(BOOL)v{
-	
     self.label.entering = button.boolValue = v;
 }
 

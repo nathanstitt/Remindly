@@ -44,7 +44,9 @@
 
     picker.showsSelectionIndicator = NO;
     
-    //Resize the picker, rotate it so that it is horizontal and set its position
+    // Resize the picker, rotate it so that it is horizontal and set its position
+    // I saw this technique explained somewhere, stackoverflow?, can't find it now :(
+    // sorry for not crediting you, unknown smart person!
 	CGAffineTransform rotate = CGAffineTransformMakeRotation(-3.14/2);     //horizontal angle -pi/2
 	rotate = CGAffineTransformScale(rotate, 1, 1.50);
 	CGAffineTransform t0 = CGAffineTransformMakeTranslation(1, -40.5);// (x,y) position
@@ -120,7 +122,6 @@
     
 	UILabel *label;
 
-//[ UIFont systemFontOfSize: 17 ];
 	label = [[UILabel alloc] initWithFrame:CGRectZero];
 	label.text = [ self pickerView:pickerView titleForRow:row forComponent:component];
 
@@ -132,11 +133,9 @@
 	label.font = [UIFont fontWithName:@"AppleGothic" size:17.0];;
 
 	label.frame = CGRectMake(0, 0, 45, 60 );
-//							 [ self pickerView:pickerView widthForComponent:component], 
-//							 [ self pickerView:pickerView widthForComponent:component]);
 	label.backgroundColor = [UIColor clearColor];
 	label.opaque = YES;
-	
+	// rotate the label to match the picker
 	label.transform = CGAffineTransformRotate(label.transform, M_PI/2 );
 	return [ label autorelease ];
 }

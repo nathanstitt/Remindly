@@ -234,7 +234,7 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
     }
      if ( SOUND_VOICE_TYPE == self.soundTag ){
             if ( [self hasCoordinate ] && 2 == [ self alarmTag ] ){ 
-                snd = [ self onEnterRegion ] ? @"verbal-entering.caf" : @"verbal-exiting.caf";
+                snd = [ self onEnterRegion ] ? @"alarm-area-entered.caf" : @"alarm-area-departed.caf";
             } else {
                 if ( ALARM_QUICK_TIME_TYPE == self.alarmTag ){
                     NSDictionary *times = [ [ NSDictionary alloc] initWithContentsOfFile:

@@ -46,7 +46,8 @@
 
 
 -(void)moveTo:(CLLocationCoordinate2D)coord {
-    pin.onEnter = NO;
+    
+   // pin.onEnter = NO;
 	pin.annotation.coordinate = coord;
 	MKCoordinateRegion region;
 	region.center = coord;
@@ -76,6 +77,9 @@
     if ( map.userLocation.location ){
         [ self moveTo: map.userLocation.location.coordinate ];
     }
+    pin.onEnter = NO;
+    [ map deselectAnnotation: pin.annotation animated: NO ];
+  	[ map selectAnnotation: pin.annotation animated:NO ];	
 }
 
 

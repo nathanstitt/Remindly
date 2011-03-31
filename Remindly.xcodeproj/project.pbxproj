@@ -88,6 +88,8 @@
 		45C856EA133C3E6700F3B7C8 /* v4320.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45C856D7133C3E6600F3B7C8 /* v4320.caf */; };
 		45C856EB133C3E6700F3B7C8 /* v10080.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45C856D8133C3E6600F3B7C8 /* v10080.caf */; };
 		45C856EE133C42E100F3B7C8 /* its-time.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45C856ED133C42E100F3B7C8 /* its-time.caf */; };
+		45C8570313442E8A00F3B7C8 /* alarm-area-departed.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45C8570113442E8A00F3B7C8 /* alarm-area-departed.caf */; };
+		45C8570413442E8A00F3B7C8 /* alarm-area-entered.caf in Resources */ = {isa = PBXBuildFile; fileRef = 45C8570213442E8A00F3B7C8 /* alarm-area-entered.caf */; };
 		45CE140B131DFB0100FEF25C /* DrawingPaletteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45CE140A131DFAF000FEF25C /* DrawingPaletteController.m */; };
 		45D0BB9E1293874100470D80 /* alarm_times.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45D0BB9D1293874100470D80 /* alarm_times.plist */; };
 		45DE1B821336D6BB00963072 /* AlarmSounds.m in Sources */ = {isa = PBXBuildFile; fileRef = 45DE1B811336D6BB00963072 /* AlarmSounds.m */; };
@@ -225,6 +227,8 @@
 		45C856D7133C3E6600F3B7C8 /* v4320.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = v4320.caf; path = Sounds/v4320.caf; sourceTree = "<group>"; };
 		45C856D8133C3E6600F3B7C8 /* v10080.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = v10080.caf; path = Sounds/v10080.caf; sourceTree = "<group>"; };
 		45C856ED133C42E100F3B7C8 /* its-time.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "its-time.caf"; path = "Sounds/its-time.caf"; sourceTree = "<group>"; };
+		45C8570113442E8A00F3B7C8 /* alarm-area-departed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "alarm-area-departed.caf"; path = "Sounds/alarm-area-departed.caf"; sourceTree = "<group>"; };
+		45C8570213442E8A00F3B7C8 /* alarm-area-entered.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "alarm-area-entered.caf"; path = "Sounds/alarm-area-entered.caf"; sourceTree = "<group>"; };
 		45CE1409131DFAE600FEF25C /* DrawingPaletteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingPaletteController.h; sourceTree = "<group>"; };
 		45CE140A131DFAF000FEF25C /* DrawingPaletteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingPaletteController.m; sourceTree = "<group>"; };
 		45D0BB9D1293874100470D80 /* alarm_times.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = alarm_times.plist; sourceTree = "<group>"; };
@@ -501,6 +505,8 @@
 		45DE1B9E13399BD800963072 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				45C8570113442E8A00F3B7C8 /* alarm-area-departed.caf */,
+				45C8570213442E8A00F3B7C8 /* alarm-area-entered.caf */,
 				45C856ED133C42E100F3B7C8 /* its-time.caf */,
 				45C856C6133C3E6600F3B7C8 /* v3.caf */,
 				45C856C7133C3E6600F3B7C8 /* v5.caf */,
@@ -661,6 +667,8 @@
 				45C856EA133C3E6700F3B7C8 /* v4320.caf in Resources */,
 				45C856EB133C3E6700F3B7C8 /* v10080.caf in Resources */,
 				45C856EE133C42E100F3B7C8 /* its-time.caf in Resources */,
+				45C8570313442E8A00F3B7C8 /* alarm-area-departed.caf in Resources */,
+				45C8570413442E8A00F3B7C8 /* alarm-area-entered.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
