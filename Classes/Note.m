@@ -19,7 +19,7 @@
 #import "NSDate+HumanInterval.h"
 #import "NotesManager.h"
 #import "LocationAlarmManager.h"
-
+#import "Appirater.h"
 
 @implementation NoteTextBlob
 
@@ -252,7 +252,8 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 }
 
 -(void)scedule {
-
+    [Appirater userDidSignificantEvent:YES];
+    
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
     
 	if ( [self hasCoordinate ] && 2 == [ self alarmTag ] ){
