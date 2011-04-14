@@ -90,7 +90,6 @@
 
 -(NSDate*)date{
     NSInteger selIndex = [ picker selectedRowInComponent:0 ];
-    NSLog(@"getDate - index: %i", selIndex );
     if ( ! selIndex ){
         selIndex = 1;
     }
@@ -119,10 +118,12 @@
 			viewForRow:(NSInteger) row
           forComponent:(NSInteger)component 
            reusingView:(UIView *)view {
-    
-	UILabel *label;
 
-	label = [[UILabel alloc] initWithFrame:CGRectZero];
+    if ( view ){
+        ((UILabel*)view).text = [ self pickerView:pickerView titleForRow:row forComponent:component];
+        return view;
+    }
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 	label.text = [ self pickerView:pickerView titleForRow:row forComponent:component];
 
     label.numberOfLines = 0;
