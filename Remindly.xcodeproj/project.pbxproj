@@ -48,6 +48,9 @@
 		459A438D12ECF7D3007119A1 /* ToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A438C12ECF7D3007119A1 /* ToggleButton.m */; };
 		459A4AEB132B1D8800C47BB2 /* PickerSelectionIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A4AEA132B1D8600C47BB2 /* PickerSelectionIndicator.m */; };
 		459AAD1E132EFE4D005826D6 /* DrawingPaletteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459AAD1D132EFE4C005826D6 /* DrawingPaletteView.m */; };
+		459BA3C81356A13500240CC4 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 459BA3C71356A13400240CC4 /* Appirater.m */; };
+		459BA3CB1356A38E00240CC4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459BA3CA1356A38E00240CC4 /* CFNetwork.framework */; };
+		459BA3CD1356A39E00240CC4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459BA3CC1356A39D00240CC4 /* SystemConfiguration.framework */; };
 		459EBCAD12FF307D00FF1DC0 /* arriving_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 459EBCA712FF307C00FF1DC0 /* arriving_icon.png */; };
 		459EBCAE12FF307D00FF1DC0 /* arriving_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 459EBCA812FF307D00FF1DC0 /* arriving_icon@2x.png */; };
 		459EBCAF12FF307D00FF1DC0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 459EBCA912FF307D00FF1DC0 /* Default.png */; };
@@ -183,6 +186,10 @@
 		459A4AEA132B1D8600C47BB2 /* PickerSelectionIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerSelectionIndicator.m; sourceTree = "<group>"; };
 		459AAD1C132EFE4B005826D6 /* DrawingPaletteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingPaletteView.h; sourceTree = "<group>"; };
 		459AAD1D132EFE4C005826D6 /* DrawingPaletteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingPaletteView.m; sourceTree = "<group>"; };
+		459BA3C61356A13400240CC4 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
+		459BA3C71356A13400240CC4 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
+		459BA3CA1356A38E00240CC4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		459BA3CC1356A39D00240CC4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		459EBCA712FF307C00FF1DC0 /* arriving_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arriving_icon.png; path = Images/arriving_icon.png; sourceTree = "<group>"; };
 		459EBCA812FF307D00FF1DC0 /* arriving_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arriving_icon@2x.png"; path = "Images/arriving_icon@2x.png"; sourceTree = "<group>"; };
 		459EBCA912FF307D00FF1DC0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Images/Default.png; sourceTree = "<group>"; };
@@ -273,6 +280,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				459BA3CD1356A39E00240CC4 /* SystemConfiguration.framework in Frameworks */,
+				459BA3CB1356A38E00240CC4 /* CFNetwork.framework in Frameworks */,
 				45DE1BAC13399D4900963072 /* AVFoundation.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -315,6 +324,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				459BA3CC1356A39D00240CC4 /* SystemConfiguration.framework */,
+				459BA3CA1356A38E00240CC4 /* CFNetwork.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -421,6 +432,8 @@
 		4569B2EA12EB967F003BD00C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				459BA3C61356A13400240CC4 /* Appirater.h */,
+				459BA3C71356A13400240CC4 /* Appirater.m */,
 				45ED5AE412F1218E00CF4A1D /* TextEditBox */,
 				459A438B12ECF7D3007119A1 /* ToggleButton.h */,
 				459A438C12ECF7D3007119A1 /* ToggleButton.m */,
@@ -713,6 +726,7 @@
 				459A4AEB132B1D8800C47BB2 /* PickerSelectionIndicator.m in Sources */,
 				459AAD1E132EFE4D005826D6 /* DrawingPaletteView.m in Sources */,
 				45DE1B821336D6BB00963072 /* AlarmSounds.m in Sources */,
+				459BA3C81356A13500240CC4 /* Appirater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
