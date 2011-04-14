@@ -21,6 +21,7 @@
 #import "PurchaseManager.h"
 #import "LocationAlarmManager.h"
 #import <AudioToolbox/AudioServices.h>
+#import "Appirater.h"
 
 @implementation AppDelegate
 
@@ -61,6 +62,9 @@
 	[ window addSubview:mvc.view ];
 
     [ window makeKeyAndVisible];
+    
+    [Appirater appLaunched:YES];
+    
     return YES;
 }
 
@@ -128,6 +132,7 @@
     /*
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
+    [Appirater appEnteredForeground:YES];
 }
 
 
