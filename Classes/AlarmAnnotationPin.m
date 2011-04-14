@@ -29,7 +29,7 @@
 														[ UIImage imageNamed:@"departing2"],
 													    [ UIImage imageNamed:@"arriving_icon" ],nil  ] 
 													Frame: CGRectMake(0, 0, 30, 30 ) ];
-    label = self.annotation;
+    label = l;
 	button.toggleOnTouch = NO;
 	self.leftCalloutAccessoryView = button;
 	self.draggable = YES;
