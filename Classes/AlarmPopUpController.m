@@ -61,7 +61,7 @@
     [ hbar release ];
 
 	NSArray *titles;
-	if ( YES || [CLLocationManager significantLocationChangeMonitoringAvailable] ){
+	if ( [CLLocationManager significantLocationChangeMonitoringAvailable] ){
         mapView = [[ AlarmMapView alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 320 )];
         [ panels addObject: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Map", @"Alarm Sound", nil ];
