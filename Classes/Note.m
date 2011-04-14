@@ -255,7 +255,6 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 
 	NSDate *fd = [ plist valueForKey: @"fireDate" ];
     
-
 	if ( [self hasCoordinate ] && 2 == [ self alarmTag ] ){
 		[ LocationAlarmManager registerNote: self ];
        
@@ -263,7 +262,7 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 		if ( notification ){
 			[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
 		}
-		notification.fireDate = fd;
+		notification.fireDate = [ fd timeIntervalSinceNow ] <= 600 ? fd : [ fd dateByAddingTimeInterval: 2 ];
 		notification.timeZone = [NSTimeZone defaultTimeZone];
 		notification.alertBody =  [ NSString stringWithFormat:@"IT'S TIME!\n%@\n%@", 
                                    self.alarmType,
