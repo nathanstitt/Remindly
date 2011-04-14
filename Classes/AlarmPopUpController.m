@@ -99,15 +99,16 @@
 	[ self.view addSubview: b ];
 	[ b release ];
 
-	b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(170, 330, 120, 35 ) ];
-	[ b addTarget:self action:@selector(saveTouched:) forControlEvents:UIControlEventTouchUpInside ];
-	[ b setTitle:@"Save" forState:UIControlStateNormal ];
-	[ b useBlueStyle ];
-	[ self.view addSubview: b ];
-	[ b release ];
+	saveBtn = [ [ GradientButton alloc ] initWithFrame: CGRectMake(170, 330, 120, 35 ) ];
+	[ saveBtn addTarget:self action:@selector(saveTouched:) forControlEvents:UIControlEventTouchUpInside ];
+	[ saveBtn setTitle:@"Save" forState:UIControlStateNormal ];
+	[ saveBtn useBlueStyle ];
+	[ self.view addSubview: saveBtn ];
+
 }
 
 -(void) viewDidUnload {
+    [ saveBtn     release ];
 	[ quickTimes  release ];
 	[ absTimes    release ];
 	[ mapView     release ];
@@ -161,6 +162,7 @@
 -(void)typeCtrlChanged:(id)tbc {
     [ self hideAll ];
     NSInteger indx = typeCtrl.selectedSegmentIndex;
+    saveBtn.hidden = ( 2 == indx );
     ((UIView*)[ panels objectAtIndex: indx ]).hidden = NO;
 }
 

@@ -16,7 +16,7 @@
 #import "AlarmMapView.h"
 #import "AlarmSounds.h"
 
-@class AlarmPopUpController;
+@class AlarmPopUpController,GradientButton;
 
 
 @interface AlarmPopUpController : UIViewController {
@@ -24,7 +24,7 @@
 	AlarmAbsoluteTimes *absTimes;
 	AlarmMapView *mapView;
     AlarmSounds *sounds;
-    
+    GradientButton *saveBtn;
 	BOOL wasSet;
 	UISegmentedControl *typeCtrl;
 	NSInteger lastTab;
