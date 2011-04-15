@@ -324,8 +324,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				459BA3CC1356A39D00240CC4 /* SystemConfiguration.framework */,
-				459BA3CA1356A38E00240CC4 /* CFNetwork.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -361,6 +359,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				459BA3CC1356A39D00240CC4 /* SystemConfiguration.framework */,
+				459BA3CA1356A38E00240CC4 /* CFNetwork.framework */,
 				45DE1BAB13399D4800963072 /* AVFoundation.framework */,
 				45C3BEC212EC918C004CB303 /* MapKit.framework */,
 				45EC0C6912ECADE900DBD0B4 /* CoreLocation.framework */,

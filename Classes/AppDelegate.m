@@ -104,8 +104,9 @@
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"
 												 message:notification.alertBody
 												 delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"View",NULL];
-			[alert show];
-			[alert release];	
+            [ note unScedule ];
+			[ alert show     ];
+			[ alert release  ];	
 		}
 	}
 }
