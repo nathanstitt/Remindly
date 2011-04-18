@@ -94,17 +94,16 @@
 		Note *note = [[ NotesManager instance ] noteWithDirectory:
 					   [ notification.userInfo objectForKey:@"directory"]  ];
 		if ( note ){
-            NSURL *url = [[NSBundle mainBundle ] URLForResource:[note soundPath] withExtension:NULL  ];
-           
-            AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:NULL];
-            player.delegate = self;
-            [ player play ];
-            
+            if ( notification.soundName && UILocalNotificationDefaultSoundName != notification.soundName ){
+                NSURL *sndURL = [[NSBundle mainBundle ] URLForResource:notification.soundName withExtension:NULL  ];
+                AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:sndURL error:NULL];
+                player.delegate = self;
+                [ player play ];
+            }
 			pendingNote = note;
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"
 												 message:notification.alertBody
 												 delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"View",NULL];
-            [ note unScedule ];
 			[ alert show     ];
 			[ alert release  ];	
 		}
