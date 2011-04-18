@@ -74,7 +74,9 @@ LocationAlarmManager *instance;
 
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject: note.directory forKey:@"directory"];
     notification.userInfo = infoDict;
-
+    
+    [ note unScedule ];
+    
 	[ [UIApplication sharedApplication] presentLocalNotificationNow:notification ];
 	[ notification release ];
 }
