@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h> 
 #import "Note.h"
 
-#define ALARM_METER_RADIUS 1500.0f
+#define ALARM_METER_RADIUS 750.0f
 
 @interface LocationAlarmManager : NSObject <CLLocationManagerDelegate> {
 	CLLocationManager *manager;
@@ -22,5 +22,5 @@
 + (void)registerNote:(Note*)note;
 + (void)unregisterNote:(Note*)note;
 + (CLLocation*)lastCoord;
-+ (NSString*)distanceStringFrom:(CLLocationCoordinate2D)coord;
++ (NSString*)distanceStringFrom:(CLLocationCoordinate2D)coord isEnter:(BOOL)isEnter;
 @end

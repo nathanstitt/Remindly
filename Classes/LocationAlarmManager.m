@@ -74,9 +74,9 @@ LocationAlarmManager *instance;
 
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject: note.directory forKey:@"directory"];
     notification.userInfo = infoDict;
-    
+
     [ note unScedule ];
-    
+
 	[ [UIApplication sharedApplication] presentLocalNotificationNow:notification ];
 	[ notification release ];
 }
@@ -121,11 +121,17 @@ NSString * formatDecimal_1(NSNumber *num) {
 	return [numFormatter stringFromNumber: num ];
 }
 
-+ (NSString*)distanceStringFrom:(CLLocationCoordinate2D)coord{
++ (NSString*)distanceStringFrom:(CLLocationCoordinate2D)coord isEnter:(BOOL)isEnter {
 	double distance = MKMetersBetweenMapPoints( MKMapPointForCoordinate( coord ),
-												MKMapPointForCoordinate( [ LocationAlarmManager lastCoord ].coordinate ) );
+					  MKMapPointForCoordinate( [ LocationAlarmManager lastCoord ].coordinate ) );
+
+    if ( ! isEnter ){
+        distance = ALARM_METER_RADIUS - distance;
+    }
+
 	NSString * unitName;
 	NSString *locale = [ [ NSLocale currentLocale ] localeIdentifier ];
+    
 	if ( [ locale isEqual:@"en_US" ]) {
 		unitName = @"mi";
 		distance = distance / 1609.344;
@@ -133,6 +139,7 @@ NSString * formatDecimal_1(NSNumber *num) {
 		unitName = @"km";
 		distance = distance / 1000;
 	}
+    
 	return [NSString stringWithFormat:@"%@ %@", formatDecimal_1( [NSNumber numberWithDouble: distance] ), unitName ];
 }
 
@@ -149,7 +156,7 @@ NSString * formatDecimal_1(NSNumber *num) {
 {
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
 
-    if (locationAge > 5.0) return;
+    if (locationAge > 5.0 || ! [ notes count ]) return;
 
     // test that the horizontal accuracy does not indicate an invalid measurement
     if (newLocation.horizontalAccuracy < 0) return;
