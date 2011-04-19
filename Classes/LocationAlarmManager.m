@@ -126,7 +126,7 @@ NSString * formatDecimal_1(NSNumber *num) {
 					  MKMapPointForCoordinate( [ LocationAlarmManager lastCoord ].coordinate ) );
 
     if ( ! isEnter ){
-        distance = ALARM_METER_RADIUS - distance;
+        distance = (ALARM_METER_RADIUS*1.5) - distance;
     }
 
 	NSString * unitName;
