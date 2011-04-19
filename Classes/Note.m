@@ -119,7 +119,7 @@ static NSMutableDictionary *_cache;
 	if ( [ self hasCoordinate ] && 2 == tag ){
 		return [ NSString stringWithFormat:@"%@ %@ from here", 
 				[ self onEnterRegion ] ? @"Entering" : @"Exiting",
-				[ LocationAlarmManager distanceStringFrom: [ self coordinate ] ]
+				[ LocationAlarmManager distanceStringFrom: [ self coordinate ] isEnter: [ self onEnterRegion ] ]
 				];
 	} else if ( fire ) {
 		return [ fire humanIntervalFromNow ];
