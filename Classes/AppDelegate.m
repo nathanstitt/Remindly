@@ -86,7 +86,7 @@
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateInactive) {
 		Note *note = [[ NotesManager instance ] noteWithDirectory:
-					   [ notification.userInfo objectForKey:@"directory"]  ];
+                      [ notification.userInfo objectForKey:@"directory"]  ];
 		if ( note ){
 			[ mvc selectNote: note ];
         }
@@ -94,6 +94,7 @@
 		Note *note = [[ NotesManager instance ] noteWithDirectory:
 					   [ notification.userInfo objectForKey:@"directory"]  ];
 		if ( note ){
+            NSLog( @"Firing Alarm Sound: %@", notification.soundName );
             if ( notification.soundName && UILocalNotificationDefaultSoundName != notification.soundName ){
                 NSURL *sndURL = [[NSBundle mainBundle ] URLForResource:notification.soundName withExtension:NULL  ];
                 AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:sndURL error:NULL];
