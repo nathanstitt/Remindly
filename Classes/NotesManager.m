@@ -90,10 +90,10 @@ static NotesManager *_instance;
 
 -(id)init{
     self = [super init ];
-	
+
 	alerts = [[ NSMutableDictionary alloc ] init ];
 	dirs   = [[ NSMutableArray      alloc ] init ];
-	
+
 	NSError *error;
 
 	NSFileManager *fm = [ NSFileManager defaultManager ];
