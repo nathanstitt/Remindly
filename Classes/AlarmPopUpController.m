@@ -34,7 +34,7 @@
 	self.view.backgroundColor = [ UIColor blackColor ];
 
     panels = [ NSMutableArray arrayWithObjects:
-              [[[ UIView alloc ] initWithFrame: CGRectMake(0, 23, 320, 390 ) ] autorelease ],
+              [[[ UIView alloc ] initWithFrame: CGRectMake(0, 33, 320, 390 ) ] autorelease ],
               NULL
               ];
 
@@ -61,24 +61,24 @@
     [ hbar release ];
 
 	NSArray *titles;
-	if ( [CLLocationManager significantLocationChangeMonitoringAvailable] ){
-        mapView = [[ AlarmMapView alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 320 )];
+	if ([CLLocationManager significantLocationChangeMonitoringAvailable] ){
+        mapView = [[ AlarmMapView alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 330 )];
         [ panels addObject: mapView.view ];
 		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Map", @"Alarm Sound", nil ];
 	} else {
 		titles = [ NSArray arrayWithObjects: @"Time/Date", @"Alarm Sound", nil ];
 	}
 
-    sounds     = [[ AlarmSounds alloc ] initWithAlarmView:self frame:CGRectMake(0, 0, 320, 320 )];
+    sounds     = [[ AlarmSounds alloc ] initWithAlarmView:self ];
     [ panels addObject: sounds.view ];
 
     for ( UIView *v in panels ){
         [ self.view addSubview: v ];
     }
-
+    sounds.tableView.frame = CGRectMake(0, 30, 320, 380 );
 	typeCtrl = [[ UISegmentedControl alloc ] initWithItems:titles];
 	typeCtrl.selectedSegmentIndex = 0;
-	typeCtrl.frame = CGRectMake( 0, -3, 320, 30 );
+	typeCtrl.frame = CGRectMake( 0, -3, 320, 40 );
 	typeCtrl.segmentedControlStyle = UISegmentedControlStyleBezeled;
 	typeCtrl.tintColor = [ UIColor darkGrayColor	];
 	[ typeCtrl addTarget:self action:@selector(typeCtrlChanged:) forControlEvents:UIControlEventValueChanged ];
@@ -88,18 +88,17 @@
     PickerSelectionIndicator *psi = [[ PickerSelectionIndicator alloc ] initWithFrame:
                                      CGRectMake( 120, 215, 72, 67) ];
     psi.backgroundColor = [ UIColor clearColor ];
-  //  psi.alpha = 0.3;
     [ [ panels objectAtIndex:0 ] addSubview: psi ];
     [ psi release ];
 
-	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(20, 330, 120, 35 ) ];
+	GradientButton *b = [ [ GradientButton alloc ] initWithFrame: CGRectMake(20, 335, 120, 35 ) ];
 	[ b addTarget:self action:@selector(cancelTouched:) forControlEvents:UIControlEventTouchUpInside ];
 	[ b setTitle:@"Cancel" forState:UIControlStateNormal ];
 	[ b useBlackStyle ];
 	[ self.view addSubview: b ];
 	[ b release ];
 
-	saveBtn = [ [ GradientButton alloc ] initWithFrame: CGRectMake(170, 330, 120, 35 ) ];
+	saveBtn = [ [ GradientButton alloc ] initWithFrame: CGRectMake(170, 335, 120, 35 ) ];
 	[ saveBtn addTarget:self action:@selector(saveTouched:) forControlEvents:UIControlEventTouchUpInside ];
 	[ saveBtn setTitle:@"Save" forState:UIControlStateNormal ];
 	[ saveBtn useBlueStyle ];
@@ -213,12 +212,15 @@
         self.view.frame = frame;
 		typeCtrl.selectedSegmentIndex = 0;
 		frame.origin.y = 90;
-	} else {
+        [ self hideAll ];
+    } else {
 		frame.origin.y = 480;
 	}
-    [UIView animateWithDuration:0.4f animations:^{
+    [UIView animateWithDuration:0.3f animations:^{
         self.view.frame = frame;
-    } completion:^ (BOOL finished) {  }];
+    } completion:^ (BOOL finished) { 
+         
+    }];
 
 }
 
