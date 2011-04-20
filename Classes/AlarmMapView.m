@@ -34,7 +34,7 @@
 	pin = [[ AlarmAnnotationPin alloc ] initWithMap:self ];
 	[ map addAnnotation: pin.annotation ];
 
-	self.circle = [MKCircle circleWithCenterCoordinate: map.userLocation.coordinate radius:1000];
+	self.circle = [MKCircle circleWithCenterCoordinate: map.userLocation.coordinate radius:ALARM_METER_RADIUS];
 	[map addOverlay:circle];
 
 	[ self.map.userLocation addObserver:self forKeyPath:@"location" options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)  
@@ -59,7 +59,7 @@
 	}
 	[ map removeOverlays:[map overlays ]];
 
-	self.circle = [MKCircle circleWithCenterCoordinate: pin.annotation.coordinate radius:1000];
+	self.circle = [MKCircle circleWithCenterCoordinate: pin.annotation.coordinate radius:ALARM_METER_RADIUS];
 	[map addOverlay:self.circle];
 }
 
@@ -147,7 +147,7 @@
 	if ( MKAnnotationViewDragStateStarting == newDragState ){
 		[ map removeOverlays:[map overlays ]];
 	} else if (  MKAnnotationViewDragStateEnding == newDragState || MKAnnotationViewDragStateCanceling == newDragState ){
-		self.circle = [MKCircle circleWithCenterCoordinate: pin.annotation.coordinate radius:1000];
+		self.circle = [MKCircle circleWithCenterCoordinate: pin.annotation.coordinate radius: ALARM_METER_RADIUS ];
 
 		pin.onEnter = ! ( ALARM_METER_RADIUS > MKMetersBetweenMapPoints(MKMapPointForCoordinate( pin.annotation.coordinate ),
 												 MKMapPointForCoordinate( map.userLocation.location.coordinate ) ) );
