@@ -41,8 +41,9 @@
 	toolbar = [[MainToolBar alloc] initWithController:self];
 	[ drawing.alarmTitle  addTarget:toolbar action:@selector(setAlarmPressed:) forControlEvents:UIControlEventTouchUpInside ];
 
-
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDisplayNote:) name:@"DisplayNote" object:nil];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onIdle:) name:@"onIdle" object:nil];
 
 	self.view.backgroundColor = [ UIColor grayColor ];
 
@@ -68,7 +69,7 @@
     if ( ! v && alarm.isShowing ){
         alarm.isShowing = NO;
     } else if ( v ) {
-        [ alarm showWithNote: drawing.note ];
+        [ alarm showWithNote: drawing.unSavedNote ];
     }
 }
 
@@ -121,6 +122,14 @@
     }
 }
 
+-(void)onIdle:(NSNotification*)notif{
+    if ( ! alarm ){
+        alarm = [[ AlarmPopUpController alloc ] init ];
+        alarm.view.frame = CGRectMake(0, 480, 320, 400);
+        [ self.view addSubview: alarm.view ];
+    }
+}
+
 -(void)onDisplayNote:(NSNotification*)notif{
 	[ self selectNote:(Note*)notif.object ];
 }
@@ -137,6 +146,12 @@
 	[ drawing viewWillAppear:animated ];
 	drawing.view.hidden = NO;
     drawing.note = [ NotesManager noteAtIndex: [ index intValue ] ];
+
+    NSNotification *note = [NSNotification notificationWithName: @"onIdle" object: self];
+    [[NSNotificationQueue defaultQueue] enqueueNotification: note
+                                               postingStyle: NSPostWhenIdle
+                                               coalesceMask: NSNotificationCoalescingOnName | NSNotificationCoalescingOnSender
+                                                   forModes: nil ];
 }
 
 
