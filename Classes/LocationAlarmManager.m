@@ -125,7 +125,9 @@ NSString * formatDecimal_1(NSNumber *num) {
 	double distance = MKMetersBetweenMapPoints( MKMapPointForCoordinate( coord ),
 					  MKMapPointForCoordinate( [ LocationAlarmManager lastCoord ].coordinate ) );
 
-    if ( ! isEnter ){
+    if ( isEnter ){
+        distance = MAX( distance - ALARM_METER_RADIUS , 0 );
+    } else {
         distance = (ALARM_METER_RADIUS*1.5) - distance;
     }
 
