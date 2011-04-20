@@ -103,6 +103,9 @@
 	[ self updateTitle:NULL ];
 }
 
+-(Note*)unSavedNote{
+    return note;
+}
 
 -(Note*)note{
 	note.image = drawImage.image;

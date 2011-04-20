@@ -43,8 +43,13 @@
 // how thick the line should be
 @property (nonatomic) CGFloat lineWidth;
 
-// which note we're working from
+// which note we're working from, with current
+// work saved to it.
 @property (nonatomic,retain) Note* note;
+
+// which note we're working from, without 
+// saving current image to it
+@property (nonatomic,readonly) Note* unSavedNote;
 
 // is the erasing tool active
 @property (nonatomic) BOOL isErasing;
