@@ -19,7 +19,7 @@
     AVAudioPlayer *player;
 }
 
--(id)initWithAlarmView:(AlarmPopUpController*)view frame:(CGRect)frame;
+-(id)initWithAlarmView:(AlarmPopUpController*)view;
 
 -(void) setFromNote:(Note*)note;
 -(void) saveToNote: (Note*)note;

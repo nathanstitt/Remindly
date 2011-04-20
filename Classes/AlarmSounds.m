@@ -12,7 +12,7 @@
 #import "ToggleButton.h"
 @implementation AlarmSounds
 
--(id)initWithAlarmView:(AlarmPopUpController*)view frame:(CGRect)frame
+-(id)initWithAlarmView:(AlarmPopUpController*)view
 {
     self = [super initWithStyle: UITableViewStyleGrouped ];
     if (self) {
