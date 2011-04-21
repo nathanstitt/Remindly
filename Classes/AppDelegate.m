@@ -72,11 +72,16 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
 	if ( buttonIndex ){
 		[ mvc selectNote:pendingNote ];
-	}
+	} else {
+        [ player stop ];
+    }
 }
 
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
-    [ player release ];
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)p successfully:(BOOL)flag{
+    [ p release ];
+    if ( p == player ){
+        player = nil;
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
@@ -97,7 +102,10 @@
             NSLog( @"Firing Alarm Sound: %@", notification.soundName );
             if ( notification.soundName && UILocalNotificationDefaultSoundName != notification.soundName ){
                 NSURL *sndURL = [[NSBundle mainBundle ] URLForResource:notification.soundName withExtension:NULL  ];
-                AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:sndURL error:NULL];
+                if ( player ){
+                    [player release];
+                }
+                player = [[AVAudioPlayer alloc] initWithContentsOfURL:sndURL error:NULL];
                 player.delegate = self;
                 [ player play ];
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);

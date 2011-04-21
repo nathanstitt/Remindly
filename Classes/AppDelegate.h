@@ -14,10 +14,12 @@
 #import "MainViewController.h"
 #import "Note.h"
 #import "PurchaseManager.h"
+#import <AudioToolbox/AudioServices.h>
 
 @interface AppDelegate : NSObject <UIApplicationDelegate,
                                 UIAlertViewDelegate, AVAudioPlayerDelegate> 
 {
+    AVAudioPlayer *player;
     UIWindow *window;
 	MainViewController *mvc;
 	Note *pendingNote;
