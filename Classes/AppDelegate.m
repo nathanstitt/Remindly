@@ -100,6 +100,7 @@
                 AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:sndURL error:NULL];
                 player.delegate = self;
                 [ player play ];
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
             }
 			pendingNote = note;
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"

@@ -45,6 +45,7 @@
 		458235EF128903F200EC555C /* NoteThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 458235EE128903F200EC555C /* NoteThumbnailView.m */; };
 		4585336A128B69BC00793A24 /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45853369128B69BC00793A24 /* DrawingViewController.m */; };
 		459402991296241000F11F95 /* AlarmQuickTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 459402981296241000F11F95 /* AlarmQuickTimes.m */; };
+		45978253135FD0000072CC94 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45978252135FD0000072CC94 /* AudioToolbox.framework */; };
 		459A438D12ECF7D3007119A1 /* ToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A438C12ECF7D3007119A1 /* ToggleButton.m */; };
 		459A4AEB132B1D8800C47BB2 /* PickerSelectionIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 459A4AEA132B1D8600C47BB2 /* PickerSelectionIndicator.m */; };
 		459AAD1E132EFE4D005826D6 /* DrawingPaletteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 459AAD1D132EFE4C005826D6 /* DrawingPaletteView.m */; };
@@ -180,6 +181,7 @@
 		45853369128B69BC00793A24 /* DrawingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingViewController.m; sourceTree = "<group>"; };
 		459402971296241000F11F95 /* AlarmQuickTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmQuickTimes.h; sourceTree = "<group>"; };
 		459402981296241000F11F95 /* AlarmQuickTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmQuickTimes.m; sourceTree = "<group>"; };
+		45978252135FD0000072CC94 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		459A438B12ECF7D3007119A1 /* ToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleButton.h; sourceTree = "<group>"; };
 		459A438C12ECF7D3007119A1 /* ToggleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToggleButton.m; sourceTree = "<group>"; };
 		459A4AE9132B1D8500C47BB2 /* PickerSelectionIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerSelectionIndicator.h; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45978253135FD0000072CC94 /* AudioToolbox.framework in Frameworks */,
 				459BA3CD1356A39E00240CC4 /* SystemConfiguration.framework in Frameworks */,
 				459BA3CB1356A38E00240CC4 /* CFNetwork.framework in Frameworks */,
 				45DE1BAC13399D4900963072 /* AVFoundation.framework in Frameworks */,
@@ -324,6 +327,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				45978252135FD0000072CC94 /* AudioToolbox.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
