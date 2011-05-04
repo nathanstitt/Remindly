@@ -57,9 +57,9 @@ LocationAlarmManager *instance;
 	self.manager = [[CLLocationManager alloc] init];
 	manager.purpose = @"In order to use geographical alarms that alert you when leaving or entering an area";
     manager.delegate = self;
-	[ manager startUpdatingLocation ];
 	[ manager release ];
-
+    [ self startOrStopMonitor ];
+    
 	return self;
 }
 
