@@ -13,7 +13,7 @@
 LocationAlarmManager *instance;
 
 @interface LocationAlarmManager()
--(void)startMonitor;
+-(void)startOrStopMonitor;
 @property (nonatomic,retain) CLLocationManager *manager;
 @property (nonatomic,readonly) NSMutableDictionary *notes;
 @property (nonatomic,retain ) CLLocation *lastLocation;
@@ -26,17 +26,20 @@ LocationAlarmManager *instance;
 + (void)startup {
     if ( ! instance ){
 		instance = [[ LocationAlarmManager alloc ] init ];
-		
 	} else {
-		[ instance startMonitor ];
+		[ instance startOrStopMonitor ];
 	}
 }
 
--(void)startMonitor {
+-(void)startOrStopMonitor {
 	NSLog(@"Started Monitor");
 	manager.delegate = self;
     manager.distanceFilter = ALARM_METER_RADIUS / 0.5;
-    [ manager startMonitoringSignificantLocationChanges];
+    if ( [notes count] ){
+        [ manager startMonitoringSignificantLocationChanges];
+    } else {
+        [ manager stopMonitoringSignificantLocationChanges ];
+    }
 }
 
 -(id) init {
@@ -48,6 +51,9 @@ LocationAlarmManager *instance;
 	for ( Note *note in [ NotesManager notesWithLocationAlarms ] ){
 		[ notes setObject: note forKey: note.directory ];
 	}
+    
+    [ notes addObserver:self forKeyPath:@"count" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:NULL];
+    
 	self.manager = [[CLLocationManager alloc] init];
 	manager.purpose = @"In order to use geographical alarms that alert you when leaving or entering an area";
     manager.delegate = self;
@@ -57,6 +63,9 @@ LocationAlarmManager *instance;
 	return self;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    [ self startOrStopMonitor ];
+}
 
 -(void)fireNoteAlarm:(Note*)note {
 	UILocalNotification *notification = [[UILocalNotification alloc] init];
