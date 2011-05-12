@@ -15,7 +15,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self setUserInteractionEnabled:NO];
     }
     return self;
 }
@@ -31,7 +31,7 @@
 							 f.size.width/2, f.size.height*perc,
 							 f.size.width/2, 0.0,
 							 0.0, 0.0 );
-    
+
     CGContextAddLineToPoint(context, f.size.width, 0.0 );
 
     CGContextAddCurveToPoint(context, 
@@ -41,37 +41,19 @@
     
 
     CGContextMoveToPoint(context, f.size.width/2, f.size.height*(1.0-perc) );
-    
+
     CGContextAddCurveToPoint(context, 
 							 f.size.width/2, f.size.height*(1.0-perc),
 							 f.size.width/2, f.size.height,
 							 f.size.width, f.size.height );
-    
+
     CGContextAddLineToPoint(context, 0.0, f.size.height );
-    
+
     CGContextAddCurveToPoint(context, 
 							 0.0, f.size.height,
 							 f.size.width/2, f.size.height,
 							 f.size.width/2, f.size.height*(1.0-perc) );
-    
-    
-//    CGContextAddLineToPoint(context, f.size.width*perc, f.size.height );
-//
-//    CGContextAddCurveToPoint(context, 
-//							 f.size.width*perc, f.size.height,
-//                             0.0, f.size.height,
-//                             0.0, f.size.height * ( 1.0 - perc ) );
 
-//    CGContextAddLineToPoint(context, f.size.width/2.0, 10.0 );
-//
-//    CGContextAddLineToPoint(context, f.size.width/2.0, f.size.height-10.0 );
-//    
-//     
-//	CGContextAddLineToPoint(context, f.size.width, f.size.height );
-//    CGContextAddLineToPoint(context, 0.0, f.size.height );
-//    CGContextAddLineToPoint(context, f.size.width/2.0, f.size.height-10.0 );
-//  
-    
 	CGContextSetLineWidth(context, 1.0);
     CGContextSetFillColorWithColor(context, [ UIColor blackColor ].CGColor );
 	CGContextDrawPath(context, kCGPathFillStroke);
