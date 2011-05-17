@@ -32,12 +32,14 @@ LocationAlarmManager *instance;
 }
 
 -(void)startOrStopMonitor {
-	NSLog(@"Started Monitor");
+	NSLog(@"startOrStopMonitor");
 	manager.delegate = self;
-    manager.distanceFilter = ALARM_METER_RADIUS / 0.5;
+    manager.distanceFilter = ALARM_METER_RADIUS / 0.1;
     if ( [notes count] ){
+        NSLog(@"startOrStopMonitor -> started monitor");
         [ manager startMonitoringSignificantLocationChanges];
     } else {
+        NSLog(@"startOrStopMonitor -> stopped monitor");
         [ manager stopMonitoringSignificantLocationChanges ];
     }
 }
@@ -52,8 +54,6 @@ LocationAlarmManager *instance;
 		[ notes setObject: note forKey: note.directory ];
 	}
     
-    [ notes addObserver:self forKeyPath:@"count" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:NULL];
-    
 	self.manager = [[CLLocationManager alloc] init];
 	manager.purpose = @"In order to use geographical alarms that alert you when leaving or entering an area";
     manager.delegate = self;
@@ -63,9 +63,6 @@ LocationAlarmManager *instance;
 	return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    [ self startOrStopMonitor ];
-}
 
 -(void)fireNoteAlarm:(Note*)note {
 	UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -102,6 +99,7 @@ LocationAlarmManager *instance;
 
 +(void)unregisterNote:(Note*)note{
 	[ instance.notes removeObjectForKey: note.directory ];
+    [ instance startOrStopMonitor ];
 }
 
 
@@ -112,6 +110,7 @@ LocationAlarmManager *instance;
 
 + (void)registerNote:(Note*)note {
 	[ instance.notes setObject:note forKey:note.directory ];
+    [ instance startOrStopMonitor ];    
 }
 
 
@@ -165,48 +164,32 @@ NSString * formatDecimal_1(NSNumber *num) {
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation 
 {
-    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    //NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
 
-    if (locationAge > 5.0 || ! [ notes count ]) return;
+    if ( ! [ notes count ]) return;
 
     // test that the horizontal accuracy does not indicate an invalid measurement
     if (newLocation.horizontalAccuracy < 0) return;
 
-	double meters = [ lastLocation distanceFromLocation: newLocation ];
-	
-    // test the measurement to see if it is more accurate than the previous measurement
-	if (lastLocation == nil || meters > 5 ) {
 
-		NSLog(@"Location: %f %f moved: %f accuracy: %f", 
-              newLocation.coordinate.latitude, 
-              newLocation.coordinate.longitude,
-              meters,
-              newLocation.horizontalAccuracy );
+    for ( Note *note in [ notes allValues ] ){
+        double distance = MKMetersBetweenMapPoints( MKMapPointForCoordinate( newLocation.coordinate ),
+                                                 MKMapPointForCoordinate( note.coordinate ) );
+        
+        if ( ( ( distance + newLocation.horizontalAccuracy ) < ALARM_METER_RADIUS && note.onEnterRegion )
+            ||
+             ( ( distance - newLocation.horizontalAccuracy ) > ( ALARM_METER_RADIUS * 1.5 ) && ! note.onEnterRegion ) ) 
+        {
+            NSLog(@"Firing %@ Alarm: %f %f distance: %f accuracy %f", 
+                  note.onEnterRegion ? @"Enter" : @"Exit",
+                  note.coordinate.latitude, 
+                  note.coordinate.longitude,
+                  distance, distance );
+            [ self fireNoteAlarm:note ];
+        }
+    }
+    
 
-        if ( newLocation.horizontalAccuracy < ALARM_METER_RADIUS ){
-
-            for ( Note *note in [ notes allValues ] ){
-                meters = MKMetersBetweenMapPoints( MKMapPointForCoordinate( newLocation.coordinate ),
-                                                   MKMapPointForCoordinate( note.coordinate ) );
-
-                if ( meters < ALARM_METER_RADIUS && note.onEnterRegion ){
-                    [ self fireNoteAlarm:note ];
-                    NSLog(@"Fired Enter Alarm: %f %f distance: %f", 
-                          note.coordinate.latitude, 
-                          note.coordinate.longitude,
-                          meters );
-
-                } else if ( meters > ( ALARM_METER_RADIUS * 1.5 ) && ! note.onEnterRegion ) {
-                    [ self fireNoteAlarm:note ];
-                    NSLog(@"Fired Exit Alarm: %f %f distance: %f", 
-                          note.coordinate.latitude, 
-                          note.coordinate.longitude,
-                          meters );
-                }
-            }
-            self.lastLocation = newLocation;
-		}
-	}
 }
 
 // this sucks balls, terribly inaccurate, alarms only fire about 1/3 of the time
