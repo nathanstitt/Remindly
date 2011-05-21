@@ -31,18 +31,6 @@ LocationAlarmManager *instance;
 	}
 }
 
--(void)startOrStopMonitor {
-	NSLog(@"startOrStopMonitor");
-	manager.delegate = self;
-    manager.distanceFilter = ALARM_METER_RADIUS / 0.1;
-    if ( [notes count] ){
-        NSLog(@"startOrStopMonitor -> started monitor");
-        [ manager startMonitoringSignificantLocationChanges];
-    } else {
-        NSLog(@"startOrStopMonitor -> stopped monitor");
-        [ manager stopMonitoringSignificantLocationChanges ];
-    }
-}
 
 -(id) init {
 	self = [ super init ];
@@ -61,6 +49,20 @@ LocationAlarmManager *instance;
     [ self startOrStopMonitor ];
     
 	return self;
+}
+
+
+-(void)startOrStopMonitor {
+	NSLog(@"startOrStopMonitor");
+	manager.delegate = self;
+    manager.distanceFilter = ALARM_METER_RADIUS / 0.1;
+    if ( [notes count] ){
+        NSLog(@"startOrStopMonitor -> started monitor");
+        [ manager startMonitoringSignificantLocationChanges];
+    } else {
+        NSLog(@"startOrStopMonitor -> stopped monitor");
+        [ manager stopMonitoringSignificantLocationChanges ];
+    }
 }
 
 
@@ -164,8 +166,6 @@ NSString * formatDecimal_1(NSNumber *num) {
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation 
 {
-    //NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
-
     if ( ! [ notes count ]) return;
 
     // test that the horizontal accuracy does not indicate an invalid measurement
