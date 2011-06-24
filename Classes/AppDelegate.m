@@ -88,36 +88,28 @@
 
 	application.applicationIconBadgeNumber = 0;
 
-    UIApplicationState state = [application applicationState];
-    if (state == UIApplicationStateInactive) {
-		Note *note = [[ NotesManager instance ] noteWithDirectory:
-                      [ notification.userInfo objectForKey:@"directory"]  ];
-		if ( note ){
-			[ mvc selectNote: note ];
-        }
-    } else {
-		Note *note = [[ NotesManager instance ] noteWithDirectory:
-					   [ notification.userInfo objectForKey:@"directory"]  ];
-		if ( note ){
-            NSLog( @"Firing Alarm Sound: %@", notification.soundName );
-            if ( notification.soundName && UILocalNotificationDefaultSoundName != notification.soundName ){
-                NSURL *sndURL = [[NSBundle mainBundle ] URLForResource:notification.soundName withExtension:NULL  ];
-                if ( player ){
-                    [player release];
-                }
-                player = [[AVAudioPlayer alloc] initWithContentsOfURL:sndURL error:NULL];
-                player.delegate = self;
-                [ player play ];
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    Note *note = [[ NotesManager instance ] noteWithDirectory:
+                  [ notification.userInfo objectForKey:@"directory"]  ];
+    if ( note ){
+        NSLog( @"Firing Alarm Sound: %@", notification.soundName );
+        if ( notification.soundName && UILocalNotificationDefaultSoundName != notification.soundName ){
+            NSURL *sndURL = [[NSBundle mainBundle ] URLForResource:notification.soundName withExtension:NULL  ];
+            if ( player ){
+                [player release];
             }
-			pendingNote = note;
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"
-												 message:notification.alertBody
-												 delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"View",NULL];
-			[ alert show     ];
-			[ alert release  ];	
-		}
-	}
+            player = [[AVAudioPlayer alloc] initWithContentsOfURL:sndURL error:NULL];
+            player.delegate = self;
+            [ player play ];
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        }
+        pendingNote = note;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alarm expired"
+                                                        message:notification.alertBody
+                                                       delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"View",NULL];
+        [ alert show     ];
+        [ alert release  ];	
+    }
+
 }
 
 	
