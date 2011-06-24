@@ -221,7 +221,6 @@ compareByPosition(NoteTextBlob *ntb1, NoteTextBlob *ntb2, void *context) {
 	if ( notification ){
 		[ [UIApplication sharedApplication] cancelLocalNotification: notification ];
 	}
-    NSLog(@"Unscedule note from note class");
     if ( [ self hasCoordinate ] ){
         [ LocationAlarmManager unregisterNote: self ];
         [ plist removeObjectForKey:@"longitude" ];
