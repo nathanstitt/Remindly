@@ -121,12 +121,7 @@
 
 - (void)reload {
 	scrollView.contentSize = CGSizeMake([NotesManager count] * scrollView.frame.size.width, scrollView.frame.size.height);
-
 	[ self clear ];
-	[ self loadPage:0 ];
-	[ self loadPage:1 ];
-
-	[ self selectNoteIndex: 0 ];
 }
 
 

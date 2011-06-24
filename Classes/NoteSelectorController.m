@@ -64,10 +64,8 @@
 }
 
 
--(void)reload:(Note*)note{
-	if ( note.index == scroller.currentPage ){
-		noteHeader.text = [ note alarmTitle ];
-	}
+-(void)reload {
+    [ scroller reload ];
 }
 
 

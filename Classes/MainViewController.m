@@ -97,11 +97,10 @@
 		Note *note = drawing.note;
         [ self.view insertSubview:selector.view belowSubview: drawing.view ];
 		drawing.view.hidden  = YES;
-		[selector selectNoteIndex: note.index ];
-
+        [ selector reload ];
+		[ selector selectNoteIndex: note.index ];
 	}
 	[ toolbar setDrawingMode:v ];
-
 }
 
 

@@ -152,6 +152,7 @@
 -(void)addNote:(id)sel{
 	NotesManager *manager = [ NotesManager instance ];
 	if ( [ manager isAllowedMoreNotes ] ){
+        [ mvc.drawing.note save ];
 		mvc.drawing.note = [ manager addNote ];
 		mvc.drawingMode = YES;
 		[ mvc.selector addNote: mvc.drawing.note ];

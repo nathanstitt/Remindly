@@ -44,9 +44,9 @@
 -(void) startScrolling;
 
 
-// reloads a note.  We need to update a note's image once it's been
-// modified
--(void) reload:(Note*)note;
+// clears all thumbnails previews
+// called before view will become active
+-(void)reload;
 
 // move scroller & other data (header, dots, etc) to correspond to index
 -(void) selectNoteIndex:(NSInteger)index;
