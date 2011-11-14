@@ -79,10 +79,9 @@
     
 
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
+
 	CGContextBeginPath(context);
-    
-    
+
 	CGContextSetFillColorWithColor(context, color.CGColor );
 	NSInteger radius = self.frame.size.width / 2;
 	CGContextMoveToPoint(context, CGRectGetMinX(rect) + self.frame.size.width, CGRectGetMinY(rect));
@@ -90,7 +89,7 @@
     CGContextAddArc(context, CGRectGetMaxX(rect) - radius, CGRectGetMaxY(rect) - radius, radius, 0, M_PI / 2, 0);
     CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMaxY(rect) - radius, radius, M_PI / 2, M_PI, 0);
     CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMinY(rect) + radius, radius, M_PI, 3 * M_PI / 2, 0);
-   
+
     CGContextClosePath(context);
     CGContextFillPath(context);
 
