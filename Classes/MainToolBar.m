@@ -49,7 +49,7 @@
 	UIBarButtonItem *space  = [[UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:NULL action:NULL ];
 
     mvc.drawing.color = mvc.drawTools.color;
-    ColorButton *b = [[ ColorButton alloc ] initWithColor: mvc.drawTools.color ];
+    ColorButton *b = [[ ColorButton alloc ] initWithButtonColor: mvc.drawTools.color ];
     [ b  setBrushImage: [ mvc.drawTools.tool imageView ].image ];
     [ b addTarget:self action:@selector(showPalette:) forControlEvents:UIControlEventTouchUpInside ];
 	pickerBtn = [[UIBarButtonItem alloc ] initWithCustomView: b ];

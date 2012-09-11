@@ -15,7 +15,7 @@
     UIImage *image;
 }
 
-- (id)initWithColor:(UIColor*)c;
+- (id)initWithButtonColor:(UIColor*)c;
 - (void)setBrushImage:(UIImage*)image;
 
 @property (retain,nonatomic) UIColor *color;

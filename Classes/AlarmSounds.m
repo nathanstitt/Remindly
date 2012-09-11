@@ -122,6 +122,7 @@
         [ cell.contentView addSubview: btn ];
         [ btn release ];
         label = [[[ UILabel alloc ] initWithFrame:CGRectMake(45, 0, 200, 30) ] autorelease];
+        [ label setBackgroundColor:[UIColor clearColor] ];
         [ cell.contentView addSubview:label ];
     } else {
         label = [cell.contentView.subviews objectAtIndex:1 ];

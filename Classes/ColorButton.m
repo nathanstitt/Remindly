@@ -22,7 +22,7 @@
 
 @synthesize color,marked;
 
-- (id)initWithColor:(UIColor*)c {
+- (id)initWithButtonColor:(UIColor*)c {
 	self = [ super initWithFrame:CGRectMake(0, 0, 25, 25) ];
     if ( ! self ) {
 		return nil;

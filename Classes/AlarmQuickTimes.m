@@ -43,7 +43,7 @@
 	[ quickChoices retain ];
 
     picker.showsSelectionIndicator = NO;
-    
+
     // Resize the picker, rotate it so that it is horizontal and set its position
     // I saw this technique explained somewhere, stackoverflow?, can't find it now :(
     // sorry for not crediting you, unknown smart person!
@@ -131,7 +131,7 @@
 	label.textAlignment = UITextAlignmentCenter;
 	label.textColor = [UIColor blackColor];
 	label.textAlignment = UITextAlignmentCenter;
-	label.font = [UIFont fontWithName:@"AppleGothic" size:17.0];;
+	label.font = [UIFont fontWithName:@"Verdana" size:16.0];
 
 	label.frame = CGRectMake(0, 0, 45, 60 );
 	label.backgroundColor = [UIColor clearColor];

@@ -52,7 +52,6 @@
 		}
     }
 
-
     CGRect windowRect = CGRectMake(0, 0, 320, 480 );
     window = [[UIWindow alloc] initWithFrame:windowRect];    
 	
@@ -87,7 +86,10 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
 
 	application.applicationIconBadgeNumber = 0;
-
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateInactive) {
+        return;
+    }
     Note *note = [[ NotesManager instance ] noteWithDirectory:
                   [ notification.userInfo objectForKey:@"directory"]  ];
     if ( note ){

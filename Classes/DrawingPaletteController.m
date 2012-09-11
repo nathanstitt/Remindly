@@ -18,7 +18,8 @@
 @synthesize color,tool;
 
 -(void)makeButton:(NSString*)c{
-	ColorButton *b = [[ ColorButton alloc ] initWithColor: [UIColor colorWithName:c] ];
+    UIColor *cl = [UIColor colorWithName:c];
+	ColorButton *b = [[ ColorButton alloc ] initWithButtonColor: cl ];
     b.frame = buttonFrame;
 	[ b addTarget:self action:@selector(colorSelected:) forControlEvents:UIControlEventTouchUpInside ];
     [ self.view addSubview: b ];
@@ -62,7 +63,7 @@
 }
 
 -(void)loadView {
-    DrawingPaletteTool *dpt = [[DrawingPaletteView alloc ] initWithFrame:CGRectMake(0, 480, 320, 320)];
+    DrawingPaletteView *dpt = [[DrawingPaletteView alloc ] initWithFrame:CGRectMake(0, 480, 320, 320)];
     self.view = dpt;
 
     buttonFrame = CGRectMake( 26, 20, 25, 25);
